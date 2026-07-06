@@ -8,6 +8,8 @@ import { initializeTheme } from "../ui/theme.js";
 import { initializeLanguage } from "../ui/language.js";
 import { initializeRouter } from "./router.js";
 import { app } from "./firebase.js";
+import { initializeAuth } from "./auth.js";
+
 class CollegeStudentLife {
 
     constructor() {
@@ -32,6 +34,8 @@ class CollegeStudentLife {
         initializeLanguage();
 
         initializeRouter();
+
+        initializeAuth();
 
         this.initializeHeaderButtons();
 
