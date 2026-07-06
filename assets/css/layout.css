@@ -1,0 +1,439 @@
+/*=========================================================
+=                   BODY & BACKGROUND                     =
+=========================================================*/
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+
+}
+
+/*=========================================================
+=                   FULL PAGE BACKGROUND                  =
+=========================================================*/
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:url("../../backgrounds/dashboard-bg.jpg");
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-size:cover;
+
+    z-index:-3;
+
+    transition:background-image .45s ease;
+
+}
+
+/*=========================================================
+=                      GLASS OVERLAY                      =
+=========================================================*/
+
+#background-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:var(--overlay);
+
+    backdrop-filter:blur(8px);
+
+    -webkit-backdrop-filter:blur(8px);
+
+    z-index:-2;
+
+}
+
+/*=========================================================
+=                       HEADER                            =
+=========================================================*/
+
+#topBar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:var(--header-height);
+
+    background:var(--surface);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 24px;
+
+    z-index:1000;
+
+    box-shadow:var(--shadow-1);
+
+}
+
+/*=========================================================
+=                    HEADER PARTS                         =
+=========================================================*/
+
+#dateTime{
+
+    width:260px;
+
+    font-size:15px;
+
+    font-weight:500;
+
+}
+
+#websiteTitle{
+
+    flex:1;
+
+    text-align:center;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    letter-spacing:.4px;
+
+}
+
+#headerButtons{
+
+    width:260px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+}
+
+/*=========================================================
+=                   HEADER BUTTONS                        =
+=========================================================*/
+
+.headerButton{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.headerButton:hover{
+
+    background:rgba(255,255,255,.25);
+
+    transform:scale(1.08);
+
+}
+
+.headerButton:active{
+
+    transform:scale(.95);
+
+}
+
+/*=========================================================
+=                     NAVIGATION                          =
+=========================================================*/
+
+#sectionBar{
+
+    position:fixed;
+
+    top:var(--header-height);
+
+    left:0;
+
+    width:100%;
+
+    height:var(--section-bar-height);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:0 16px;
+
+    overflow-x:auto;
+
+    overflow-y:hidden;
+
+    background:var(--surface);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+
+    z-index:999;
+
+    scrollbar-width:none;
+
+}
+
+#sectionBar::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+/*=========================================================
+=                   NAVIGATION BUTTONS                    =
+=========================================================*/
+
+.sectionButton{
+
+    flex-shrink:0;
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.sectionButton:hover{
+
+    background:rgba(255,255,255,.18);
+
+}
+
+.sectionButton.active{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/*=========================================================
+=                      MAIN CONTENT                       =
+=========================================================*/
+
+#content{
+
+    margin-top:calc(var(--header-height) + var(--section-bar-height));
+
+    width:100%;
+
+    height:calc(100vh - var(--header-height) - var(--section-bar-height));
+
+    overflow:auto;
+
+    padding:28px;
+
+}
+
+/*=========================================================
+=                   DEFAULT SECTION                       =
+=========================================================*/
+
+section{
+
+    width:100%;
+
+    min-height:100%;
+
+    border-radius:24px;
+
+    background:var(--surface);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow-2);
+
+    padding:32px;
+
+}
+
+/*=========================================================
+=                     COMING SOON                         =
+=========================================================*/
+
+.comingSoon{
+
+    height:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:18px;
+
+    text-align:center;
+
+}
+
+.comingSoon h1{
+
+    font-size:42px;
+
+}
+
+.comingSoon p{
+
+    font-size:20px;
+
+    color:var(--text-secondary);
+
+}
+
+/*=========================================================
+=                        FOOTER                           =
+=========================================================*/
+
+#footer{
+
+    display:none;
+
+}
+
+/*=========================================================
+=                  RESPONSIVE TABLET                      =
+=========================================================*/
+
+@media(max-width:1000px){
+
+#websiteTitle{
+
+    font-size:20px;
+
+}
+
+#dateTime{
+
+    width:180px;
+
+    font-size:13px;
+
+}
+
+#headerButtons{
+
+    width:180px;
+
+}
+
+}
+
+/*=========================================================
+=                  RESPONSIVE PHONE                       =
+=========================================================*/
+
+@media(max-width:700px){
+
+#topBar{
+
+    padding:0 10px;
+
+}
+
+#websiteTitle{
+
+    font-size:18px;
+
+}
+
+#dateTime{
+
+    display:none;
+
+}
+
+#headerButtons{
+
+    width:auto;
+
+}
+
+#content{
+
+    padding:16px;
+
+}
+
+section{
+
+    padding:20px;
+
+    border-radius:18px;
+
+}
+
+}
