@@ -98,14 +98,47 @@ export function t(path){
 
 function translatePage(){
 
+    // ==========================================
+    // TEXT
+    // ==========================================
+
     document
         .querySelectorAll("[data-i18n]")
         .forEach(element=>{
 
-            const key =
-                element.dataset.i18n;
+            const key = element.dataset.i18n;
 
             element.textContent = t(key);
+
+        });
+
+    // ==========================================
+    // PLACEHOLDER
+    // ==========================================
+
+    document
+        .querySelectorAll("[data-i18n-placeholder]")
+        .forEach(element=>{
+
+            const key =
+                element.dataset.i18nPlaceholder;
+
+            element.placeholder = t(key);
+
+        });
+
+    // ==========================================
+    // TITLE
+    // ==========================================
+
+    document
+        .querySelectorAll("[data-i18n-title]")
+        .forEach(element=>{
+
+            const key =
+                element.dataset.i18nTitle;
+
+            element.title = t(key);
 
         });
 
