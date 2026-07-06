@@ -52,21 +52,7 @@ export function initializeAuth() {
         // EMAIL NOT VERIFIED
         // ==========================
 
-        if (!user.emailVerified) {
-
-            if (!authPages.includes(page)) {
-
-                alert("Please verify your email before using the application.");
-
-                signOut(auth);
-
-                window.location.href = "login.html";
-
-            }
-
-            return;
-
-        }
+       
 
         // ==========================
         // USER CONNECTED
