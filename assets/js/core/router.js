@@ -113,25 +113,31 @@ function changeBackground(page){
 
 function loadPage(page){
 
-    const content =
-        document.getElementById("dashboardSection");
+    const content = document.getElementById("dashboardSection");
 
     if(!content) return;
 
+    content.classList.remove("fadeIn");
+
+    void content.offsetWidth;
+
+    content.classList.add("fadeIn");
+
     content.innerHTML = `
 
-        <div class="comingSoon fadeIn">
+        <div class="comingSoon">
 
             <h1>${routes[page].title}</h1>
 
             <p>
-
-                This module will be developed later.
-
+                This page is under development.
             </p>
 
         </div>
 
     `;
+
+    document.title =
+        routes[page].title + " | College Student Life";
 
 }
