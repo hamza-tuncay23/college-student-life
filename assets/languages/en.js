@@ -55,6 +55,13 @@ export default {
 
         logout:"Logout"
 
-    }
+    },
+    
+    signup:{
 
+        fullName:"Full name",
+    
+        confirmPassword:"Confirm password"
+
+    }
 };
