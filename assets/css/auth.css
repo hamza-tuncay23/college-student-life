@@ -300,3 +300,58 @@ body{
     }
 
 }
+/* =======================================================
+   LANGUAGE SELECTOR
+======================================================= */
+
+.language-selector{
+
+    position:absolute;
+
+    top:25px;
+
+    right:25px;
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    z-index:10;
+
+}
+
+.language-button{
+
+    border:none;
+
+    background:white;
+
+    padding:8px 12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.12);
+
+    transition:.2s;
+
+}
+
+.language-button:hover{
+
+    transform:translateY(-2px);
+
+    background:#f3f4f6;
+
+}
+
+html[dir="rtl"] .language-selector{
+
+    left:25px;
+
+    right:auto;
+
+}
