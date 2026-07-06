@@ -4,63 +4,163 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>College Student Life</title>
 
-    <title>Login | College Student Life</title>
-
-    <link rel="stylesheet"
-          href="assets/css/variables.css">
-
-    <link rel="stylesheet"
-          href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
 
 </head>
 
 <body>
 
-<div class="auth-container">
+<div class="auth-page">
 
-    <div class="auth-card">
+    <!-- LEFT PANEL -->
 
-        <h1>Welcome Back</h1>
+    <div class="auth-left">
 
-        <p>Sign in to continue.</p>
+        <h1>College Student Life</h1>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Email">
+        <h2>Everything a student needs in one place.</h2>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password">
+        <p>
 
-        <button id="loginButton">
+            Tasks • Budget • Habits • Calendar • Notes • Religion • Drive • Pomodoro • AI Assistant
 
-            Login
+        </p>
 
-        </button>
+    </div>
 
-        <p id="errorMessage"></p>
+    <!-- RIGHT PANEL -->
 
-        <div class="auth-links">
+    <div class="auth-right">
 
-            <a href="signup.html">
+        <!-- LOGIN -->
 
-                Create account
+        <div id="loginPanel">
 
-            </a>
+            <h2>Sign In</h2>
 
-            <a href="forgot-password.html">
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="Email">
 
-                Forgot password?
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Password">
 
-            </a>
+            <label class="remember">
+
+                <input
+                    id="rememberMe"
+                    type="checkbox">
+
+                Remember me
+
+            </label>
+
+            <button id="loginButton">
+
+                Login
+
+            </button>
+
+            <div class="links">
+
+                <a href="#" id="showSignup">
+
+                    Create account
+
+                </a>
+
+                <a href="#" id="showForgot">
+
+                    Forgot password?
+
+                </a>
+
+            </div>
 
         </div>
+
+        <!-- SIGNUP -->
+
+        <div id="signupPanel" class="hidden">
+
+            <h2>Create Account</h2>
+
+            <input
+                id="signupName"
+                type="text"
+                placeholder="Full name">
+
+            <input
+                id="signupEmail"
+                type="email"
+                placeholder="Email">
+
+            <input
+                id="signupPassword"
+                type="password"
+                placeholder="Password">
+
+            <input
+                id="signupConfirm"
+                type="password"
+                placeholder="Confirm password">
+
+            <button id="signupButton">
+
+                Create Account
+
+            </button>
+
+            <div class="links">
+
+                <a href="#" id="showLogin">
+
+                    Back to login
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- FORGOT -->
+
+        <div id="forgotPanel" class="hidden">
+
+            <h2>Reset Password</h2>
+
+            <input
+                id="forgotEmail"
+                type="email"
+                placeholder="Email">
+
+            <button id="forgotButton">
+
+                Send Reset Link
+
+            </button>
+
+            <div class="links">
+
+                <a href="#" id="showLogin2">
+
+                    Back to login
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <p id="authMessage"></p>
 
     </div>
 
