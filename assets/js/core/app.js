@@ -7,7 +7,7 @@
 import { initializeTheme } from "../ui/theme.js";
 import { initializeLanguage } from "../ui/language.js";
 import { initializeRouter } from "./router.js";
-
+import { app } from "./firebase.js";
 class CollegeStudentLife {
 
     constructor() {
@@ -22,6 +22,8 @@ class CollegeStudentLife {
             "%cCollege Student Life",
             "color:#2962ff;font-size:18px;font-weight:bold;"
         );
+
+        console.log("Firebase initialized :", app);
 
         this.startClock();
 
