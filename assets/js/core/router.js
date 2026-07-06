@@ -4,6 +4,17 @@
 // ======================================================
 
 import { renderDashboard } from "../pages/dashboard.js";
+import { renderTasks } from "../pages/tasks.js";
+import { renderHabits } from "../pages/habits.js";
+import { renderBudget } from "../pages/budget.js";
+import { renderWishlist } from "../pages/wishlist.js";
+import { renderCalendar } from "../pages/calendar.js";
+import { renderDrive } from "../pages/drive.js";
+import { renderNutrition } from "../pages/nutrition.js";
+import { renderSport } from "../pages/sport.js";
+import { renderPomodoro } from "../pages/pomodoro.js";
+import { renderReligion } from "../pages/religion.js";
+import { renderNotes } from "../pages/notes.js";
 
 const routes = {
 
@@ -131,6 +142,72 @@ function loadPage(page){
 
             content.innerHTML = renderDashboard();
 
+            break;
+
+        case "tasks":
+
+            content.innerHTML = renderTasks();
+        
+            break;
+        
+        case "habits":
+        
+            content.innerHTML = renderHabits();
+        
+            break;
+        
+        case "budget":
+        
+            content.innerHTML = renderBudget();
+        
+            break;
+        
+        case "wishlist":
+        
+            content.innerHTML = renderWishlist();
+        
+            break;
+        
+        case "calendar":
+        
+            content.innerHTML = renderCalendar();
+        
+            break;
+        
+        case "drive":
+        
+            content.innerHTML = renderDrive();
+        
+            break;
+        
+        case "nutrition":
+        
+            content.innerHTML = renderNutrition();
+        
+            break;
+        
+        case "sport":
+        
+            content.innerHTML = renderSport();
+        
+            break;
+        
+        case "pomodoro":
+        
+            content.innerHTML = renderPomodoro();
+        
+            break;
+        
+        case "religion":
+        
+            content.innerHTML = renderReligion();
+        
+            break;
+        
+        case "notes":
+        
+            content.innerHTML = renderNotes();
+        
             break;
 
         default:
