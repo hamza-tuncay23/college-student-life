@@ -42,6 +42,8 @@ export function initializeLanguage(){
 
     translatePage();
 
+    initializeLanguageButtons();
+
 }
 
 // ======================================================
@@ -128,5 +130,25 @@ function applyDirection(){
         document.documentElement.lang=currentLanguage;
 
     }
+
+}
+function initializeLanguageButtons(){
+
+    const buttons =
+        document.querySelectorAll(".language-button");
+
+    buttons.forEach(button=>{
+
+        button.addEventListener("click",()=>{
+
+            setLanguage(
+
+                button.dataset.language
+
+            );
+
+        });
+
+    });
 
 }
