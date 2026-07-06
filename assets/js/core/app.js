@@ -6,6 +6,7 @@
 
 import { initializeTheme } from "../ui/theme.js";
 import { initializeLanguage } from "../ui/language.js";
+import { initializeRouter } from "./router.js";
 
 class CollegeStudentLife {
 
@@ -27,6 +28,8 @@ class CollegeStudentLife {
         initializeTheme();
 
         initializeLanguage();
+
+        initializeRouter();
 
         this.initializeHeaderButtons();
 
