@@ -22,15 +22,57 @@ export function initializeAuth() {
 
     onAuthStateChanged(auth, (user) => {
 
-        if (user) {
+        const page = window.location.pathname.split("/").pop();
 
-            console.log("Connected :", user.email);
+        const authPages = [
 
-        } else {
+            "login.html",
+            "signup.html",
+            "forgot-password.html"
 
-            console.log("No user connected.");
+        ];
+
+        // ==========================
+        // USER NOT CONNECTED
+        // ==========================
+
+        if (!user) {
+
+            if (!authPages.includes(page)) {
+
+                window.location.href = "login.html";
+
+            }
+
+            return;
 
         }
+
+        // ==========================
+        // EMAIL NOT VERIFIED
+        // ==========================
+
+        if (!user.emailVerified) {
+
+            if (!authPages.includes(page)) {
+
+                alert("Please verify your email before using the application.");
+
+                signOut(auth);
+
+                window.location.href = "login.html";
+
+            }
+
+            return;
+
+        }
+
+        // ==========================
+        // USER CONNECTED
+        // ==========================
+
+        console.log("Connected :", user.email);
 
     });
 
