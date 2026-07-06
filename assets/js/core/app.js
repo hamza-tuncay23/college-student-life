@@ -9,6 +9,7 @@ import { initializeLanguage } from "../ui/language.js";
 import { initializeRouter } from "./router.js";
 import { app } from "./firebase.js";
 import { initializeAuth } from "./auth.js";
+import { initializeGuard } from "./guard.js";
 
 class CollegeStudentLife {
 
@@ -36,6 +37,8 @@ class CollegeStudentLife {
         initializeRouter();
 
         initializeAuth();
+
+        initializeGuard();
 
         this.initializeHeaderButtons();
 
