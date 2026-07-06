@@ -21,6 +21,14 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
+import {
+
+    initializeLanguage,
+
+    setLanguage
+
+} from "../ui/language.js";
+
 // ======================================================
 // ELEMENTS
 // ======================================================
@@ -353,3 +361,4 @@ forgotButton.onclick = async ()=>{
     }
 
 };
+initializeLanguage();
