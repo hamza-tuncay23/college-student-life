@@ -71,13 +71,24 @@ async function login() {
         loginButton.textContent = "Signing in...";
 
         await signInWithEmailAndPassword(
-
             auth,
             email,
             password
-
         );
-
+        
+        await auth.currentUser.reload();
+        
+        if (!auth.currentUser.emailVerified) {
+        
+            errorMessage.textContent =
+                "Please verify your email before logging in.";
+        
+            await auth.signOut();
+        
+            return;
+        
+        }
+        
         window.location.href = "index.html";
 
     }
