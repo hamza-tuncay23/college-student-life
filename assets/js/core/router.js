@@ -3,6 +3,8 @@
 // Router
 // ======================================================
 
+import { renderDashboard } from "../pages/dashboard.js";
+
 const routes = {
 
     dashboard: {
@@ -89,7 +91,7 @@ export function initializeRouter(){
 
             changeBackground(page);
 
-            loadPage(page);
+            (page);
 
         });
 
@@ -123,21 +125,34 @@ function loadPage(page){
 
     content.classList.add("fadeIn");
 
-    content.innerHTML = `
+    switch(page){
 
-        <div class="comingSoon">
+        case "dashboard":
 
-            <h1>${routes[page].title}</h1>
+            content.innerHTML = renderDashboard();
 
-            <p>
-                This page is under development.
-            </p>
+            break;
 
-        </div>
+        default:
 
-    `;
+            content.innerHTML = `
 
-    document.title =
-        routes[page].title + " | College Student Life";
+                <div class="comingSoon">
+
+                    <h1>${routes[page].title}</h1>
+
+                    <p>
+
+                        This page is under development.
+
+                    </p>
+
+                </div>
+
+            `;
+
+    }
+
+    document.title = routes[page].title + " | College Student Life";
 
 }
