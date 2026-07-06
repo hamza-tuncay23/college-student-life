@@ -72,7 +72,7 @@ export async function logout() {
 
         await signOut(auth);
 
-        window.location.href = "login.html";
+        window.location.replace("login.html");
 
     }
 
