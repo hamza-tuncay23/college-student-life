@@ -3,7 +3,7 @@
 // Core Application
 // Version 1.0
 // ======================================================
-
+import { initializeSettings } from "./settings.js";
 import { initializeTheme } from "../ui/theme.js";
 import { initializeLanguage } from "../ui/language.js";
 import { initializeRouter } from "./router.js";
@@ -39,6 +39,8 @@ class CollegeStudentLife {
         initializeAuth();
 
         initializeGuard();
+
+        initializeSettings();
 
         this.initializeHeaderButtons();
 
