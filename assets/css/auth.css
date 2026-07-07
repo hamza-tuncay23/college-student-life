@@ -39,7 +39,7 @@ body{
 
     grid-template-columns:1fr 1fr;
 
-    background:white;
+    background:var(--surface);
 
     border-radius:30px;
 
@@ -57,7 +57,7 @@ body{
 
     background:linear-gradient(160deg,#2563eb,#1d4ed8);
 
-    color:white;
+    color:#ffffff;
 
     display:flex;
 
@@ -133,7 +133,7 @@ body{
 
     margin-bottom:16px;
 
-    border:1px solid #ddd;
+    border:1px solid var(--border);
 
     border-radius:14px;
 
@@ -326,7 +326,7 @@ body{
 
     border:none;
 
-    background:white;
+    background:var(--surface);
 
     padding:8px 12px;
 
@@ -353,5 +353,38 @@ html[dir="rtl"] .language-selector{
     left:25px;
 
     right:auto;
+
+}
+.auth-right{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+}
+
+.auth-right input{
+
+    background:var(--surface-2);
+
+    color:var(--text);
+
+}
+
+.auth-right input::placeholder{
+
+    color:var(--text-light);
+
+}
+
+.language-button{
+
+    color:var(--text);
+
+}
+
+body{
+
+    background:var(--background);
 
 }
