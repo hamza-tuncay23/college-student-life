@@ -1,21 +1,52 @@
+// ======================================================
+// College Student Life
+// Theme Manager
+// ======================================================
+
+import { settings, updateSetting } from "../core/settings.js";
+
+// ======================================================
+
 export function initializeTheme(){
 
-    const savedTheme =
-        localStorage.getItem("theme");
+    applyTheme(settings.theme);
 
-    if(savedTheme==="dark"){
+}
 
-        document.body.classList.remove("light");
+// ======================================================
 
-        document.body.classList.add("dark");
+export function applyTheme(theme){
 
-    }
-    else{
+    document.documentElement.setAttribute(
 
-        document.body.classList.remove("dark");
+        "data-theme",
 
-        document.body.classList.add("light");
+        theme
 
-    }
+    );
+
+}
+
+// ======================================================
+
+export async function toggleTheme(){
+
+    const newTheme =
+
+        settings.theme === "light"
+
+            ? "dark"
+
+            : "light";
+
+    await updateSetting(
+
+        "theme",
+
+        newTheme
+
+    );
+
+    applyTheme(newTheme);
 
 }
