@@ -1,0 +1,133 @@
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width:1024px){
+
+    .app{
+
+        grid-template-columns:80px 1fr;
+
+    }
+
+    .sidebar{
+
+        width:80px;
+
+    }
+
+    .sidebar-logo h2,
+    .sidebar-item span,
+    .sidebar-user-info{
+
+        display:none;
+
+    }
+
+    .sidebar-item{
+
+        justify-content:center;
+
+    }
+
+    .cards-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width:768px){
+
+    .app{
+
+        display:block;
+
+    }
+
+    .sidebar{
+
+        position:fixed;
+
+        left:-260px;
+
+        top:0;
+
+        transition:.3s;
+
+    }
+
+    .sidebar.open{
+
+        left:0;
+
+    }
+
+    .main-content{
+
+        width:100%;
+
+    }
+
+    .navbar{
+
+        padding:0 16px;
+
+    }
+
+    .navbar-search{
+
+        display:none;
+
+    }
+
+    .page-content{
+
+        padding:18px;
+
+    }
+
+    .cards-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .page-title h1{
+
+        font-size:26px;
+
+    }
+
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width:480px){
+
+    .page-content{
+
+        padding:14px;
+
+    }
+
+    .section{
+
+        padding:18px;
+
+    }
+
+    .navbar-user-info{
+
+        display:none;
+
+    }
+
+}
