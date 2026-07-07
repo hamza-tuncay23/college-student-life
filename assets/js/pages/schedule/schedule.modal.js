@@ -10,10 +10,15 @@ export function initializeScheduleModal() {
 
     createModal();
 
-    document.addEventListener("schedule:add", () => {
+    document.addEventListener("schedule:add", (event) => {
 
-        openModal();
-
+        openModal({
+    
+            day: event.detail.day,
+            slot: event.detail.slot
+    
+        });
+    
     });
 
 }
