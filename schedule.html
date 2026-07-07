@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Schedule | College Student Life</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/buttons.css">
+    <link rel="stylesheet" href="assets/css/cards.css">
+    <link rel="stylesheet" href="assets/css/forms.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/schedule.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside id="sidebar"></aside>
+
+    <main class="main-content">
+
+        <!-- Navbar -->
+        <header id="navbar"></header>
+
+        <!-- =============================== -->
+        <!-- TOP BAR -->
+        <!-- =============================== -->
+
+        <section class="schedule-top">
+
+            <div class="top-left">
+
+                <div class="card option-card">
+
+                    <h4>Semester</h4>
+
+                    <div class="segmented">
+
+                        <button class="active">S1</button>
+                        <button>S2</button>
+
+                    </div>
+
+                </div>
+
+                <div class="card option-card">
+
+                    <h4>Week Type</h4>
+
+                    <div class="segmented">
+
+                        <button class="active">Normal</button>
+                        <button>Exam</button>
+                        <button>Ramadan</button>
+
+                    </div>
+
+                </div>
+
+                <div class="card option-card">
+
+                    <h4>Time Slots</h4>
+
+                    <span>4 Slots</span>
+
+                </div>
+
+            </div>
+
+            <div class="top-right">
+
+                <input
+                        id="scheduleSearch"
+                        type="text"
+                        placeholder="Search session..."
+                >
+
+                <button id="addSessionBtn" class="primary-btn">
+
+                    + Add Session
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- =============================== -->
+        <!-- CONTENT -->
+        <!-- =============================== -->
+
+        <section class="schedule-layout">
+
+            <!-- GRID -->
+
+            <section class="schedule-grid">
+
+                <div id="scheduleContainer">
+
+                    <!-- JS -->
+
+                </div>
+
+            </section>
+
+            <!-- RIGHT PANEL -->
+
+            <aside class="schedule-sidebar">
+
+                <div class="card">
+
+                    <h3>Upcoming Class</h3>
+
+                    <div id="nextClass"></div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>Subjects</h3>
+
+                        <button>
+
+                            Manage
+
+                        </button>
+
+                    </div>
+
+                    <div id="subjectsList"></div>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Quick Actions</h3>
+
+                    <div class="quick-actions">
+
+                        <button>Import</button>
+
+                        <button>Export</button>
+
+                        <button>Backup</button>
+
+                        <button>Settings</button>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- Modal -->
+
+<div id="scheduleModal"></div>
+
+<!-- Firebase -->
+
+<script type="module" src="assets/js/core/firebase.js"></script>
+
+<script type="module" src="assets/js/core/auth.js"></script>
+
+<script type="module" src="assets/js/core/guard.js"></script>
+
+<!-- Schedule -->
+
+<script type="module" src="assets/js/modules/schedule/schedule.js"></script>
+
+</body>
+
+</html>
