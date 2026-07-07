@@ -1,0 +1,195 @@
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar{
+
+    height:var(--navbar-height);
+
+    background:var(--surface);
+
+    border-bottom:1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 24px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:900;
+
+}
+
+/* LEFT */
+
+.navbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+/* MENU BUTTON */
+
+.navbar-toggle{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:var(--radius-sm);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.navbar-toggle:hover{
+
+    background:var(--surface-hover);
+
+}
+
+/* SEARCH */
+
+.navbar-search{
+
+    width:340px;
+
+    max-width:100%;
+
+    position:relative;
+
+}
+
+.navbar-search i{
+
+    position:absolute;
+
+    left:14px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:var(--text-muted);
+
+}
+
+.navbar-search input{
+
+    padding-left:42px;
+
+}
+
+/* RIGHT */
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+/* ICON BUTTON */
+
+.navbar-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.navbar-icon:hover{
+
+    background:var(--surface-hover);
+
+}
+
+/* USER */
+
+.navbar-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.navbar-avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+}
+
+.navbar-user-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.navbar-user-info strong{
+
+    font-size:14px;
+
+}
+
+.navbar-user-info small{
+
+    font-size:12px;
+
+    color:var(--text-muted);
+
+}
