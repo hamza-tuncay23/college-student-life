@@ -1,21 +1,18 @@
-import { auth } from "../core/firebase.js";
-import { getCurrentLanguage, t } from "./language.js";
-
 const MENU = [
-    { page: "index.html",      key: "dashboard", icon: "fa-solid fa-house" },
-    { page: "schedule.html",   key: "schedule",  icon: "fa-solid fa-calendar-days" },
-    { page: "tasks.html",      key: "tasks",     icon: "fa-solid fa-list-check" },
-    { page: "habits.html",     key: "habits",    icon: "fa-solid fa-fire" },
-    { page: "budget.html",     key: "budget",    icon: "fa-solid fa-wallet" },
-    { page: "wishlist.html",   key: "wishlist",  icon: "fa-solid fa-heart" },
-    { page: "calendar.html",   key: "calendar",  icon: "fa-solid fa-calendar" },
-    { page: "drive.html",      key: "drive",     icon: "fa-solid fa-cloud" },
-    { page: "nutrition.html",  key: "nutrition", icon: "fa-solid fa-apple-whole" },
-    { page: "sport.html",      key: "sport",     icon: "fa-solid fa-dumbbell" },
-    { page: "pomodoro.html",   key: "pomodoro",  icon: "fa-solid fa-clock" },
-    { page: "religion.html",   key: "religion",  icon: "fa-solid fa-mosque" },
-    { page: "notes.html",      key: "notes",     icon: "fa-solid fa-note-sticky" },
-    { page: "settings.html",   key: "settings",  icon: "fa-solid fa-gear" }
+    { title: "Dashboard", icon: "fa-solid fa-house", page: "index.html" },
+    { title: "Schedule", icon: "fa-solid fa-calendar-days", page: "schedule.html" },
+    { title: "Tasks", icon: "fa-solid fa-list-check", page: "tasks.html" },
+    { title: "Habits", icon: "fa-solid fa-fire", page: "habits.html" },
+    { title: "Budget", icon: "fa-solid fa-wallet", page: "budget.html" },
+    { title: "Wishlist", icon: "fa-solid fa-heart", page: "wishlist.html" },
+    { title: "Calendar", icon: "fa-solid fa-calendar", page: "calendar.html" },
+    { title: "Drive", icon: "fa-solid fa-cloud", page: "drive.html" },
+    { title: "Nutrition", icon: "fa-solid fa-apple-whole", page: "nutrition.html" },
+    { title: "Sport", icon: "fa-solid fa-dumbbell", page: "sport.html" },
+    { title: "Pomodoro", icon: "fa-solid fa-clock", page: "pomodoro.html" },
+    { title: "Religion", icon: "fa-solid fa-mosque", page: "religion.html" },
+    { title: "Notes", icon: "fa-solid fa-note-sticky", page: "notes.html" },
+    { title: "Settings", icon: "fa-solid fa-gear", page: "settings.html" }
 ];
 
 export function loadSidebar() {
@@ -24,15 +21,13 @@ export function loadSidebar() {
 
     if (!sidebar) return;
 
-    const currentPage = window.location.pathname.split("/").pop();
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
     sidebar.className = "sidebar";
 
     sidebar.innerHTML = `
 
         <div class="sidebar-logo">
-
-            <img src="assets/icons/logo.svg" alt="Logo">
 
             <h2>College Student Life</h2>
 
@@ -53,7 +48,7 @@ export function loadSidebar() {
 
                             <i class="${item.icon}"></i>
 
-                            <span>${t(item.key)}</span>
+                            <span>${item.title}</span>
 
                         </a>
 
@@ -71,23 +66,15 @@ export function loadSidebar() {
 
                 <div class="sidebar-avatar">
 
-                    ${(auth.currentUser?.displayName || auth.currentUser?.email || "U")[0].toUpperCase()}
+                    CSL
 
                 </div>
 
                 <div class="sidebar-user-info">
 
-                    <strong>
+                    <strong>College Student Life</strong>
 
-                        ${auth.currentUser?.displayName || "Student"}
-
-                    </strong>
-
-                    <small>
-
-                        ${auth.currentUser?.email || ""}
-
-                    </small>
+                    <small>Version 1.0</small>
 
                 </div>
 
