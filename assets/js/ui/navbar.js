@@ -1,23 +1,8 @@
-import { auth } from "../core/firebase.js";
-
 export function loadNavbar() {
 
     const navbar = document.getElementById("navbar");
 
     if (!navbar) return;
-
-    const user = auth.currentUser;
-
-    const name =
-        user?.displayName ||
-        "Student";
-
-    const email =
-        user?.email ||
-        "";
-
-    const avatar =
-        name.charAt(0).toUpperCase();
 
     navbar.className = "navbar";
 
@@ -29,9 +14,7 @@ export function loadNavbar() {
                 class="navbar-toggle"
                 id="sidebarToggle"
             >
-
                 <i class="fa-solid fa-bars"></i>
-
             </button>
 
             <div class="navbar-search">
@@ -40,7 +23,6 @@ export function loadNavbar() {
 
                 <input
                     type="text"
-                    id="globalSearch"
                     placeholder="Search..."
                 >
 
@@ -50,28 +32,19 @@ export function loadNavbar() {
 
         <div class="navbar-right">
 
-            <button
-                class="navbar-icon"
-                id="languageButton"
-            >
+            <button class="navbar-icon">
 
                 <i class="fa-solid fa-language"></i>
 
             </button>
 
-            <button
-                class="navbar-icon"
-                id="themeButton"
-            >
+            <button class="navbar-icon">
 
                 <i class="fa-solid fa-moon"></i>
 
             </button>
 
-            <button
-                class="navbar-icon"
-                id="notificationButton"
-            >
+            <button class="navbar-icon">
 
                 <i class="fa-solid fa-bell"></i>
 
@@ -81,15 +54,15 @@ export function loadNavbar() {
 
                 <div class="navbar-avatar">
 
-                    ${avatar}
+                    C
 
                 </div>
 
                 <div class="navbar-user-info">
 
-                    <strong>${name}</strong>
+                    <strong>College Student</strong>
 
-                    <small>${email}</small>
+                    <small>student@email.com</small>
 
                 </div>
 
@@ -98,5 +71,13 @@ export function loadNavbar() {
         </div>
 
     `;
+
+    const toggle = document.getElementById("sidebarToggle");
+
+    toggle.addEventListener("click", () => {
+
+        document.querySelector(".sidebar")?.classList.toggle("collapsed");
+
+    });
 
 }
