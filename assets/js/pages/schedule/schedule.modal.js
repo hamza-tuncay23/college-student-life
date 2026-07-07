@@ -148,7 +148,7 @@ function bindModalEvents() {
 
 }
 
-export function openModal(session = null) {
+export function openModal(data = null) {
 
     editingId = null;
 
@@ -159,6 +159,31 @@ export function openModal(session = null) {
     if (!session) {
 
         clearForm();
+        if (!data) return;
+
+        if (data.day) {
+        
+            document.getElementById("sessionDay").value = data.day;
+        
+        }
+        
+        if (data.slot) {
+        
+            const slots = {
+        
+                1: ["08:00","10:00"],
+                2: ["10:00","12:00"],
+                3: ["12:00","14:00"],
+                4: ["14:00","16:00"],
+                5: ["16:00","18:00"],
+                6: ["18:00","20:00"]
+        
+            };
+        
+            document.getElementById("startTime").value = slots[data.slot][0];
+            document.getElementById("endTime").value = slots[data.slot][1];
+        
+        }
 
         return;
 
