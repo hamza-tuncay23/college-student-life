@@ -2,7 +2,8 @@ import {
     renderScheduleGrid,
     renderSessions,
     renderUpcomingClass,
-    renderSubjects
+    renderSubjects,
+    initializeGridEvents
 } from "./schedule.ui.js";
 
 import {
