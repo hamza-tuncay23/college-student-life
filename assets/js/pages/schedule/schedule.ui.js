@@ -184,3 +184,47 @@ function createCard(session){
     `;
 
 }
+/* ===========================================
+   EVENTS
+=========================================== */
+
+export function initializeGridEvents() {
+
+    document.addEventListener("click", (e) => {
+
+        const button = e.target.closest(".add-session");
+
+        if (!button) return;
+
+        document.dispatchEvent(new CustomEvent("schedule:add", {
+
+            detail: {
+
+                day: button.dataset.day,
+                slot: Number(button.dataset.slot)
+
+            }
+
+        }));
+
+    });
+
+    document.addEventListener("click", (e) => {
+
+        const card = e.target.closest(".session-card");
+
+        if (!card) return;
+
+        document.dispatchEvent(new CustomEvent("schedule:edit", {
+
+            detail: {
+
+                id: card.dataset.id
+
+            }
+
+        }));
+
+    });
+
+}
