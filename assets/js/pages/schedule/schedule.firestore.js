@@ -190,3 +190,16 @@ export function getSubjects(sessions) {
     }));
 
 }
+export function hasConflict(sessions, day, slot, currentId = null) {
+
+    return sessions.some(session => {
+
+        if (currentId && session.id === currentId) {
+            return false;
+        }
+
+        return session.day === day && session.slot === slot;
+
+    });
+
+}
