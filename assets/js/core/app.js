@@ -3,6 +3,7 @@
 // Core Application
 // Version 1.0
 // ======================================================
+import { initializeTheme } from "../ui/theme.js";
 import { initializeSettings } from "./settings.js";
 import { initializeTheme } from "../ui/theme.js";
 import { initializeLanguage } from "../ui/language.js";
