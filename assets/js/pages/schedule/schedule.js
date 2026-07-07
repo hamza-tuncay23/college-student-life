@@ -22,6 +22,7 @@ function initSchedule() {
 
     // Génère la grille vide
     renderScheduleGrid();
+    initializeGridEvents();
 
     // Initialise la fenêtre Ajouter / Modifier
     initializeScheduleModal();
