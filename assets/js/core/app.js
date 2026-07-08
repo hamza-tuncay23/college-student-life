@@ -82,7 +82,23 @@ function initializeApplication(user) {
 
     document.body.dataset.page = page;
 
-    console.log("Page:", page);
+
+
+    // ==========================
+    // Page Initializer
+    // ==========================
+
+    const pageInitializer = "init" +
+        page.charAt(0).toUpperCase() +
+        page.slice(1);
+
+    if (typeof window[pageInitializer] === "function") {
+
+        window[pageInitializer]();
+
+        console.log(pageInitializer + "() loaded");
+
+    }
 
 
 
