@@ -10,11 +10,10 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
-    <!-- Chart.js pour les graphiques -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* ========== STYLES GÉNÉRAUX ========== */
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +23,7 @@
         }
 
         :root {
-            --bg-primary: #f5f7fa;
+            --bg-primary: #f0f2f8;
             --bg-secondary: #ffffff;
             --bg-card: #ffffff;
             --text-primary: #1a1a2e;
@@ -66,7 +65,6 @@
             position: relative;
         }
 
-        /* ========== BACKGROUNDS DES SECTIONS ========== */
         .section-bg {
             position: fixed;
             top: 0;
@@ -87,7 +85,7 @@
             opacity: 0.08;
         }
 
-        /* ========== TOP BAR ========== */
+        /* Top Bar */
         .top-bar {
             position: fixed;
             top: 0;
@@ -117,24 +115,54 @@
             font-weight: 600;
             color: var(--text-primary);
             font-size: 16px;
-            padding: 6px 12px;
-            border-radius: 8px;
-            background: var(--bg-primary);
-            transition: all 0.2s;
+            padding: 6px 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffd70020, #ff6b6b20);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .top-bar-left .clock::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255,215,0,0.1) 0%, transparent 70%);
+            animation: twinkle 4s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
         .top-bar-left .clock:hover {
-            background: var(--accent);
-            color: #fff;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255,215,0,0.2);
+        }
+        .top-bar-left .clock .stars {
+            position: absolute;
+            font-size: 6px;
+            color: #ffd700;
+            animation: floatStars 3s ease-in-out infinite;
+        }
+        .top-bar-left .clock .stars:nth-child(2) { animation-delay: 0.5s; left: 20%; top: 10%; }
+        .top-bar-left .clock .stars:nth-child(3) { animation-delay: 1s; left: 80%; top: 15%; }
+        .top-bar-left .clock .stars:nth-child(4) { animation-delay: 1.5s; left: 50%; top: 5%; }
+        .top-bar-left .clock .stars:nth-child(5) { animation-delay: 2s; left: 10%; top: 70%; }
+        @keyframes floatStars {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-10px) scale(1.5); opacity: 1; }
         }
 
         .top-bar-center {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            color: var(--accent);
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
-        }
-        .top-bar-center span {
-            color: var(--text-primary);
         }
 
         .top-bar-right {
@@ -146,7 +174,7 @@
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: var(--accent);
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
             color: #fff;
             display: flex;
             align-items: center;
@@ -157,10 +185,16 @@
             border: 2px solid transparent;
             transition: all 0.2s;
             position: relative;
+            overflow: hidden;
         }
         .top-bar-right .avatar:hover {
             border-color: var(--accent);
             transform: scale(1.05);
+        }
+        .top-bar-right .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .top-bar-right .settings-btn {
             background: none;
@@ -177,7 +211,7 @@
             color: var(--text-primary);
         }
 
-        /* ========== NAVIGATION ========== */
+        /* Navigation */
         .nav-bar {
             position: fixed;
             top: 60px;
@@ -230,7 +264,7 @@
             font-size: 16px;
         }
 
-        /* ========== CONTENU PRINCIPAL ========== */
+        /* Main */
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -250,7 +284,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ========== CARTES ========== */
+        /* Cards */
         .card {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -278,7 +312,6 @@
             gap: 8px;
         }
 
-        /* ========== GRILLES ========== */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -308,7 +341,6 @@
             .top-bar-left .clock { font-size: 13px; }
         }
 
-        /* ========== STATS CARDS ========== */
         .stat-card {
             padding: 16px 20px;
             border-radius: var(--radius-sm);
@@ -338,7 +370,6 @@
             margin-bottom: 6px;
         }
 
-        /* ========== TABLEAUX ========== */
         .table-wrap {
             overflow-x: auto;
             margin-top: 12px;
@@ -367,7 +398,6 @@
             background: var(--bg-primary);
         }
 
-        /* ========== FORMULAIRES ========== */
         input, select, textarea {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
@@ -435,7 +465,6 @@
             font-size: 12px;
         }
 
-        /* ========== CHECKBOX STYLES ========== */
         .checkbox-custom {
             width: 22px;
             height: 22px;
@@ -468,7 +497,6 @@
             transform: scale(1.1);
         }
 
-        /* ========== BUDGET PROGRESS ========== */
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -484,7 +512,6 @@
             transition: width 0.6s ease;
         }
 
-        /* ========== POMODORO ========== */
         .pomodoro-circle {
             width: 200px;
             height: 200px;
@@ -520,7 +547,6 @@
             transition: all 0.5s ease;
         }
 
-        /* ========== CALENDRIER ========== */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -528,24 +554,45 @@
             margin-top: 12px;
         }
         .calendar-grid .day {
-            padding: 8px 4px;
+            padding: 10px 4px;
             text-align: center;
             border-radius: var(--radius-sm);
             background: var(--bg-primary);
             font-size: 13px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 50px;
+            min-height: 80px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--border-color);
         }
         .calendar-grid .day:hover {
             background: var(--accent);
             color: #fff;
         }
+        .calendar-grid .day .day-number {
+            font-weight: 600;
+            font-size: 16px;
+        }
         .calendar-grid .day .events {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
+            max-height: 40px;
+            overflow: hidden;
+        }
+        .calendar-grid .day .events .event-item {
+            background: var(--accent);
+            color: #fff;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin: 1px 0;
+            font-size: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .calendar-grid .day-header {
             font-weight: 600;
@@ -554,8 +601,19 @@
             padding: 6px 0;
             text-align: center;
         }
+        .calendar-grid .day.today {
+            background: var(--accent);
+            color: #fff;
+        }
+        .calendar-grid .day.today .events .event-item {
+            background: #fff;
+            color: var(--accent);
+        }
+        .calendar-grid .day.prayer-done {
+            background: var(--success);
+            color: #fff;
+        }
 
-        /* ========== NOTES ========== */
         .note-editor {
             min-height: 200px;
             border: 1px solid var(--border-color);
@@ -572,7 +630,6 @@
             border-color: var(--accent);
         }
 
-        /* ========== ADMIN ========== */
         .admin-user-select {
             padding: 10px;
             border-radius: var(--radius-sm);
@@ -583,7 +640,6 @@
             max-width: 300px;
         }
 
-        /* ========== MODAL ========== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -604,7 +660,7 @@
             background: var(--bg-secondary);
             border-radius: var(--radius);
             padding: 30px;
-            max-width: 500px;
+            max-width: 600px;
             width: 92%;
             max-height: 80vh;
             overflow-y: auto;
@@ -615,7 +671,6 @@
             margin-bottom: 16px;
         }
 
-        /* ========== MISCELLANEOUS ========== */
         .flex-between {
             display: flex;
             justify-content: space-between;
@@ -661,7 +716,6 @@
             margin-bottom: 12px;
         }
 
-        /* ========== NOTIFICATIONS ========== */
         .toast-container {
             position: fixed;
             bottom: 20px;
@@ -691,13 +745,118 @@
             from { opacity: 0; transform: translateX(40px); }
             to { opacity: 1; transform: translateX(0); }
         }
+
+        .fullscreen-clock {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #0a0a2e 0%, #000000 100%);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            cursor: pointer;
+        }
+        .fullscreen-clock.show {
+            display: flex;
+        }
+        .fullscreen-clock .time {
+            font-size: 100px;
+            font-weight: 200;
+            letter-spacing: 12px;
+            background: linear-gradient(135deg, #ffd700, #ff6b6b, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 60px rgba(255,215,0,0.2);
+        }
+        .fullscreen-clock .date {
+            font-size: 28px;
+            color: #8888aa;
+            margin-top: 20px;
+        }
+        .fullscreen-clock .stars-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .fullscreen-clock .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkleStar 3s ease-in-out infinite;
+        }
+        @keyframes twinkleStar {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 4px;
+            margin-top: 12px;
+        }
+        .schedule-grid .time-slot {
+            padding: 8px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+        .schedule-grid .course-slot {
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--accent);
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .schedule-grid .course-slot .course-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .schedule-grid .course-slot .course-detail {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .marks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .marks-grid .semester-card {
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .marks-grid .semester-card .subject-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body>
 
-<!-- ============================================================ -->
-<!-- BACKGROUNDS DES SECTIONS -->
-<!-- ============================================================ -->
+<!-- BACKGROUNDS -->
 <div class="section-bg" id="bg-dashboard" style="background-image: url('backgrounds/dashboard-bg.jpg');"></div>
 <div class="section-bg" id="bg-tasks" style="background-image: url('backgrounds/tasks-bg.jpg');"></div>
 <div class="section-bg" id="bg-habits" style="background-image: url('backgrounds/habits-bg.jpg');"></div>
@@ -707,579 +866,304 @@
 <div class="section-bg" id="bg-sport" style="background-image: url('backgrounds/sport-bg.jpg');"></div>
 <div class="section-bg" id="bg-nutrition" style="background-image: url('backgrounds/nutrition-bg.jpg');"></div>
 <div class="section-bg" id="bg-pomodoro" style="background-image: url('backgrounds/pomodoro-bg.jpg');"></div>
-<div class="section-bg" id="bg-drive" style="background-image: url('backgrounds/drive-bg.jpg');"></div>
-<div class="section-bg" id="bg-note" style="background-image: url('backgrounds/note-bg.jpg');"></div>
+<div class="section-bg" id="bg-schedule" style="background-image: url('backgrounds/schedule-bg.jpg');"></div>
+<div class="section-bg" id="bg-notes" style="background-image: url('backgrounds/note-bg.jpg');"></div>
 <div class="section-bg" id="bg-religion" style="background-image: url('backgrounds/religion-bg.jpg');"></div>
+<div class="section-bg" id="bg-marks" style="background-image: url('backgrounds/marks-bg.jpg');"></div>
 
-<!-- ============================================================ -->
 <!-- TOP BAR -->
-<!-- ============================================================ -->
 <header class="top-bar">
     <div class="top-bar-left">
-        <div class="clock" id="clockDisplay" onclick="toggleFullScreenClock()">📅 00-00-0000 00:00</div>
+        <div class="clock" id="clockDisplay" onclick="toggleFullScreenClock()">
+            <span class="stars">✦</span>
+            <span class="stars">✦</span>
+            <span class="stars">✦</span>
+            <span class="stars">✦</span>
+            <span class="stars">✦</span>
+            📅 00-00-0000 00:00
+        </div>
     </div>
-    <div class="top-bar-center">
-        🎓 College <span>Student Life</span>
-    </div>
+    <div class="top-bar-center">🎓 College Student Life</div>
     <div class="top-bar-right">
         <button class="settings-btn" onclick="navigateTo('settings')" title="Paramètres">⚙️</button>
-        <div class="avatar" id="avatarDisplay" onclick="navigateTo('account')" title="Mon compte">H</div>
+        <div class="avatar" id="avatarDisplay" onclick="navigateTo('account')" title="Mon compte">
+            <span id="avatarLetter">H</span>
+        </div>
     </div>
 </header>
 
-<!-- ============================================================ -->
 <!-- NAVIGATION -->
-<!-- ============================================================ -->
 <nav class="nav-bar" id="navBar">
-    <button class="nav-item active" data-section="dashboard" onclick="navigateTo('dashboard')">
-        <span class="icon">📊</span> Tableau de bord
-    </button>
-    <button class="nav-item" data-section="tasks" onclick="navigateTo('tasks')">
-        <span class="icon">✅</span> Tâches
-    </button>
-    <button class="nav-item" data-section="habits" onclick="navigateTo('habits')">
-        <span class="icon">🔄</span> Habitudes
-    </button>
-    <button class="nav-item" data-section="budget" onclick="navigateTo('budget')">
-        <span class="icon">💰</span> Budget
-    </button>
-    <button class="nav-item" data-section="shopping" onclick="navigateTo('shopping')">
-        <span class="icon">🛒</span> Shopping
-    </button>
-    <button class="nav-item" data-section="products" onclick="navigateTo('products')">
-        <span class="icon">📦</span> Produits
-    </button>
-    <button class="nav-item" data-section="wishlist" onclick="navigateTo('wishlist')">
-        <span class="icon">⭐</span> Wishlist
-    </button>
-    <button class="nav-item" data-section="calendar" onclick="navigateTo('calendar')">
-        <span class="icon">📅</span> Calendrier
-    </button>
-    <button class="nav-item" data-section="sport" onclick="navigateTo('sport')">
-        <span class="icon">🏃</span> Sport
-    </button>
-    <button class="nav-item" data-section="nutrition" onclick="navigateTo('nutrition')">
-        <span class="icon">🍽️</span> Nutrition
-    </button>
-    <button class="nav-item" data-section="pomodoro" onclick="navigateTo('pomodoro')">
-        <span class="icon">⏱️</span> Pomodoro
-    </button>
-    <button class="nav-item" data-section="drive" onclick="navigateTo('drive')">
-        <span class="icon">📁</span> Drive
-    </button>
-    <button class="nav-item" data-section="notes" onclick="navigateTo('notes')">
-        <span class="icon">📝</span> Notes
-    </button>
-    <button class="nav-item" data-section="religion" onclick="navigateTo('religion')">
-        <span class="icon">🕌</span> Religion
-    </button>
-    <button class="nav-item" data-section="settings" onclick="navigateTo('settings')">
-        <span class="icon">⚙️</span> Paramètres
-    </button>
-    <button class="nav-item" data-section="account" onclick="navigateTo('account')">
-        <span class="icon">👤</span> Compte
-    </button>
-    <button class="nav-item" data-section="admin" onclick="navigateTo('admin')" id="adminNav" style="display:none;">
-        <span class="icon">👑</span> Admin
-    </button>
+    <button class="nav-item active" data-section="dashboard" onclick="navigateTo('dashboard')"><span class="icon">📊</span> Tableau de bord</button>
+    <button class="nav-item" data-section="tasks" onclick="navigateTo('tasks')"><span class="icon">✅</span> Tâches</button>
+    <button class="nav-item" data-section="habits" onclick="navigateTo('habits')"><span class="icon">🔄</span> Habitudes</button>
+    <button class="nav-item" data-section="budget" onclick="navigateTo('budget')"><span class="icon">💰</span> Budget</button>
+    <button class="nav-item" data-section="wishlist" onclick="navigateTo('wishlist')"><span class="icon">⭐</span> Wishlist</button>
+    <button class="nav-item" data-section="calendar" onclick="navigateTo('calendar')"><span class="icon">📅</span> Calendrier</button>
+    <button class="nav-item" data-section="sport" onclick="navigateTo('sport')"><span class="icon">🏃</span> Sport</button>
+    <button class="nav-item" data-section="nutrition" onclick="navigateTo('nutrition')"><span class="icon">🍽️</span> Nutrition</button>
+    <button class="nav-item" data-section="pomodoro" onclick="navigateTo('pomodoro')"><span class="icon">⏱️</span> Pomodoro</button>
+    <button class="nav-item" data-section="schedule" onclick="navigateTo('schedule')"><span class="icon">📋</span> Emploi du temps</button>
+    <button class="nav-item" data-section="notes" onclick="navigateTo('notes')"><span class="icon">📝</span> Notes</button>
+    <button class="nav-item" data-section="religion" onclick="navigateTo('religion')"><span class="icon">🕌</span> Religion</button>
+    <button class="nav-item" data-section="marks" onclick="navigateTo('marks')"><span class="icon">📊</span> Notes & Moyenne</button>
+    <button class="nav-item" data-section="admin" onclick="navigateTo('admin')" id="adminNav" style="display:none;"><span class="icon">👑</span> Admin</button>
 </nav>
 
-<!-- ============================================================ -->
 <!-- MAIN CONTENT -->
-<!-- ============================================================ -->
 <main class="main-content">
 
-    <!-- ==================== DASHBOARD ==================== -->
-    <section class="section-page active" id="section-dashboard">
-        <div class="card">
-            <h2 id="welcomeMsg">👋 Bonjour, Hamza !</h2>
-            <p class="text-muted" style="margin-top:4px;">Voici votre résumé du jour</p>
+<!-- DASHBOARD -->
+<section class="section-page active" id="section-dashboard">
+    <div class="card"><h2 id="welcomeMsg">👋 Bonjour, Hamza !</h2><p class="text-muted">Voici votre résumé du jour</p></div>
+    <div class="grid-4 mt-20">
+        <div class="stat-card" onclick="navigateTo('tasks')"><span class="icon-big">📋</span><div class="number" id="dashTasks">0</div><div class="label">Tâches à faire</div></div>
+        <div class="stat-card" onclick="navigateTo('habits')"><span class="icon-big">🔥</span><div class="number" id="dashHabits">0</div><div class="label">Habitudes suivies</div></div>
+        <div class="stat-card" onclick="navigateTo('budget')"><span class="icon-big">💳</span><div class="number" id="dashBudget">0%</div><div class="label">Budget restant</div></div>
+        <div class="stat-card" onclick="navigateTo('wishlist')"><span class="icon-big">⭐</span><div class="number" id="dashWish">0</div><div class="label">Wishlist</div></div>
+    </div>
+    <div class="grid-2 mt-20">
+        <div class="card"><div class="card-title">💰 Budget & Wishlist</div>
+            <div><span class="fw-600">Restant :</span> <span id="dashBudgetRestant">0 DH</span></div>
+            <div><span class="fw-600">Total Wish :</span> <span id="dashWishTotal">0 DH</span></div>
+            <div><span class="fw-600">Progression :</span> <span id="dashWishProgress">0%</span></div>
+            <div class="progress-bar"><div class="fill" id="dashWishBar" style="width:0%;"></div></div>
         </div>
+        <div class="card"><div class="card-title">🎯 Objectifs Pédagogiques</div>
+            <div id="dashPedagogique"></div>
+        </div>
+    </div>
+    <div class="card mt-20"><div class="card-title">📋 Activités proches (5h)</div><div id="dashActivities"><div class="empty-state"><span class="big-icon">⏳</span>Aucune activité à venir</div></div></div>
+</section>
 
-        <div class="grid-4 mt-20">
-            <div class="stat-card" onclick="navigateTo('tasks')">
-                <span class="icon-big">📋</span>
-                <div class="number" id="dashTasks">0</div>
-                <div class="label">Tâches à faire</div>
-            </div>
-            <div class="stat-card" onclick="navigateTo('habits')">
-                <span class="icon-big">🔥</span>
-                <div class="number" id="dashHabits">0</div>
-                <div class="label">Habitudes suivies</div>
-            </div>
-            <div class="stat-card" onclick="navigateTo('budget')">
-                <span class="icon-big">💳</span>
-                <div class="number" id="dashBudget">0%</div>
-                <div class="label">Budget restant</div>
-            </div>
-            <div class="stat-card" onclick="navigateTo('wishlist')">
-                <span class="icon-big">⭐</span>
-                <div class="number" id="dashWish">0</div>
-                <div class="label">Wishlist</div>
-            </div>
-        </div>
+<!-- TÂCHES -->
+<section class="section-page" id="section-tasks">
+    <div class="flex-between mb-12"><h2>✅ Tâches</h2><button class="btn btn-primary" onclick="openTaskModal()">+ Ajouter</button></div>
+    <div class="flex-center gap-16 mb-12">
+        <select id="taskFilterStatus" onchange="renderTasks()"><option value="all">Tous statuts</option><option value="À faire">À faire</option><option value="En cours">En cours</option><option value="Terminé">Terminé</option></select>
+        <select id="taskFilterPriority" onchange="renderTasks()"><option value="all">Toutes priorités</option><option value="Haute">Haute</option><option value="Moyenne">Moyenne</option><option value="Basse">Basse</option></select>
+        <select id="taskFilterDomain" onchange="renderTasks()"><option value="all">Tous domaines</option></select>
+        <select id="taskView" onchange="renderTasks()"><option value="list">📋 Liste</option><option value="kanban">📊 Kanban</option><option value="calendar">📅 Calendrier</option></select>
+    </div>
+    <div id="taskContainer" class="card"><div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div></div>
+</section>
 
-        <div class="grid-2 mt-20">
-            <div class="card">
-                <div class="card-title">💰 Budget & Wishlist</div>
-                <div><span class="fw-600">Restant :</span> <span id="dashBudgetRestant">0 DH</span></div>
-                <div><span class="fw-600">Total Wish :</span> <span id="dashWishTotal">0 DH</span></div>
-                <div><span class="fw-600">Progression :</span> <span id="dashWishProgress">0%</span></div>
-                <div class="progress-bar"><div class="fill" id="dashWishBar" style="width:0%;"></div></div>
-            </div>
-            <div class="card">
-                <div class="card-title">🎯 Objectifs Pédagogiques</div>
-                <div id="dashPedagogique">
-                    <div>✅ Réviser Math: <span id="dashMath">0%</span></div>
-                    <div class="progress-bar"><div class="fill" id="dashMathBar" style="width:0%;"></div></div>
-                    <div>✅ Projet Web: <span id="dashWeb">0%</span></div>
-                    <div class="progress-bar"><div class="fill" id="dashWebBar" style="width:0%;"></div></div>
-                    <div>✅ Lire 5 livres: <span id="dashBooks">0%</span></div>
-                    <div class="progress-bar"><div class="fill" id="dashBooksBar" style="width:0%;"></div></div>
-                </div>
-            </div>
-        </div>
+<!-- HABITUDES -->
+<section class="section-page" id="section-habits">
+    <div class="flex-between mb-12"><h2>🔄 Habitudes</h2><button class="btn btn-primary" onclick="openHabitModal()">+ Ajouter</button></div>
+    <div id="habitContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune habitude</div></div>
+</section>
 
-        <div class="card mt-20">
-            <div class="card-title">📋 Activités proches (5h)</div>
-            <div id="dashActivities">
-                <div class="empty-state"><span class="big-icon">⏳</span>Aucune activité à venir</div>
-            </div>
+<!-- BUDGET (Shopping + Products intégrés) -->
+<section class="section-page" id="section-budget">
+    <div class="flex-between mb-12"><h2>💰 Budget</h2>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="openBudgetModal()">+ Dépense</button>
+            <button class="btn btn-primary" onclick="openProductModal()">+ Produit</button>
+            <button class="btn btn-primary" onclick="openShoppingDayModal()">+ Jour Shopping</button>
         </div>
-    </section>
+    </div>
+    <!-- Dashboard Budget -->
+    <div class="grid-3 mb-12">
+        <div class="card"><div class="card-title">💰 Estimé</div><div id="budgetEstTotal">0 DH</div></div>
+        <div class="card"><div class="card-title">💸 Réel</div><div id="budgetRealTotal">0 DH</div></div>
+        <div class="card"><div class="card-title">📊 Reste</div><div id="budgetRemainTotal">0 DH</div></div>
+    </div>
+    <!-- Onglets Shopping / Products -->
+    <div class="flex-center gap-8 mb-12">
+        <button class="btn btn-primary" id="budgetTabShopping" onclick="switchBudgetTab('shopping')">🛒 Shopping</button>
+        <button class="btn btn-outline" id="budgetTabProducts" onclick="switchBudgetTab('products')">📦 Produits</button>
+    </div>
+    <div id="budgetShoppingView"><div id="shoppingDaysContainer" class="grid-2"></div></div>
+    <div id="budgetProductsView" style="display:none;"><div class="card"><div class="table-wrap"><table><thead><tr><th style="width:40px;">✔</th><th>Catégorie</th><th>Nom</th><th>Quantité</th><th>Estimé</th><th>Réel</th><th>Diff</th><th>Priorité</th><th>Action</th></tr></thead><tbody id="productTableBody"></tbody></table></div></div></div>
+</section>
 
-    <!-- ==================== TÂCHES ==================== -->
-    <section class="section-page" id="section-tasks">
-        <div class="flex-between mb-12">
-            <h2>✅ Tâches</h2>
-            <button class="btn btn-primary" onclick="openTaskModal()">+ Ajouter</button>
-        </div>
+<!-- WISHLIST -->
+<section class="section-page" id="section-wishlist">
+    <h2 class="mb-12">⭐ Wishlist</h2>
+    <div class="grid-2">
+        <div class="card"><div class="flex-between"><span class="card-title">🎁 Souhaits</span><button class="btn btn-primary btn-sm" onclick="openWishModal()">+ Ajouter</button></div><div id="wishListContainer"></div></div>
+        <div class="card"><div class="card-title">🎯 Objectifs pédagogiques</div><div id="pedagogicalContainer"></div><button class="btn btn-primary btn-sm mt-12" onclick="openPedagogicalModal()">+ Ajouter objectif</button></div>
+    </div>
+</section>
 
-        <div class="flex-center gap-16 mb-12">
-            <select id="taskFilterStatus" onchange="renderTasks()">
-                <option value="all">Tous statuts</option>
-                <option value="À faire">À faire</option>
-                <option value="En cours">En cours</option>
-                <option value="Terminé">Terminé</option>
-            </select>
-            <select id="taskFilterPriority" onchange="renderTasks()">
-                <option value="all">Toutes priorités</option>
-                <option value="Haute">Haute</option>
-                <option value="Moyenne">Moyenne</option>
-                <option value="Basse">Basse</option>
-            </select>
-            <select id="taskFilterDomain" onchange="renderTasks()">
-                <option value="all">Tous domaines</option>
-            </select>
-            <select id="taskView" onchange="renderTasks()">
-                <option value="list">📋 Liste</option>
-                <option value="kanban">📊 Kanban</option>
-                <option value="calendar">📅 Calendrier</option>
-            </select>
+<!-- CALENDRIER -->
+<section class="section-page" id="section-calendar">
+    <div class="flex-between mb-12">
+        <h2>📅 Calendrier</h2>
+        <div class="flex-center gap-8">
+            <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(-1)">◀</button>
+            <span id="calendarMonthDisplay" class="fw-600">Juillet 2026</span>
+            <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(1)">▶</button>
+            <select id="calendarView" onchange="renderCalendar()"><option value="month">Mois</option><option value="week">Semaine</option><option value="day">Jour</option></select>
+            <button class="btn btn-primary btn-sm" onclick="openCalendarEventModal()">+ Événement</button>
         </div>
+    </div>
+    <div class="card" id="calendarContainer"></div>
+</section>
 
-        <div id="taskContainer" class="card">
-            <div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div>
+<!-- SPORT -->
+<section class="section-page" id="section-sport">
+    <h2 class="mb-12">🏃 Sport</h2>
+    <div class="grid-2">
+        <div class="card"><div class="card-title">📊 Statistiques</div><div>🏋️ Séances: <span id="sportSessions">0</span></div><div>⏱️ Temps: <span id="sportTime">0h</span></div></div>
+        <div class="card"><div class="card-title">➕ Ajouter une séance</div>
+            <input type="text" id="sportActivity" placeholder="Activité (Course, Musculation...)" class="mb-12">
+            <input type="number" id="sportDuration" placeholder="Durée (min)" class="mb-12">
+            <input type="date" id="sportDate" class="mb-12">
+            <input type="time" id="sportTimeInput" class="mb-12">
+            <button class="btn btn-primary w-full" onclick="addSportSession()">Ajouter</button>
         </div>
-    </section>
+    </div>
+    <div class="card mt-12"><div class="card-title">📋 Séances programmées</div><div id="sportHistory"></div></div>
+</section>
 
-    <!-- ==================== HABITUDES ==================== -->
-    <section class="section-page" id="section-habits">
-        <div class="flex-between mb-12">
-            <h2>🔄 Habitudes</h2>
-            <button class="btn btn-primary" onclick="openHabitModal()">+ Ajouter</button>
-        </div>
-        <div id="habitContainer" class="grid-2">
-            <div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune habitude</div>
-        </div>
-    </section>
+<!-- NUTRITION -->
+<section class="section-page" id="section-nutrition">
+    <h2 class="mb-12">🍽️ Alimentation quotidienne</h2>
+    <div class="flex-center gap-16 mb-12">
+        <button class="btn btn-outline btn-sm" onclick="changeNutritionDay(-1)">◀</button>
+        <span id="nutritionDateDisplay" class="fw-600">05/07/2026</span>
+        <button class="btn btn-outline btn-sm" onclick="changeNutritionDay(1)">▶</button>
+    </div>
+    <div class="grid-3">
+        <div class="card"><div class="card-title">🍳 Petit-déjeuner</div><div id="breakfastItems"></div><div class="flex-center mt-12"><input type="text" id="breakfastInput" placeholder="Ajouter..." style="flex:1;"><input type="time" id="breakfastTime" style="width:80px;"><button class="btn btn-primary btn-sm" onclick="addMeal('breakfast')">+</button></div></div>
+        <div class="card"><div class="card-title">🥗 Déjeuner</div><div id="lunchItems"></div><div class="flex-center mt-12"><input type="text" id="lunchInput" placeholder="Ajouter..." style="flex:1;"><input type="time" id="lunchTime" style="width:80px;"><button class="btn btn-primary btn-sm" onclick="addMeal('lunch')">+</button></div></div>
+        <div class="card"><div class="card-title">🍲 Dîner</div><div id="dinnerItems"></div><div class="flex-center mt-12"><input type="text" id="dinnerInput" placeholder="Ajouter..." style="flex:1;"><input type="time" id="dinnerTime" style="width:80px;"><button class="btn btn-primary btn-sm" onclick="addMeal('dinner')">+</button></div></div>
+    </div>
+    <div class="card mt-12"><div class="card-title">💧 Hydratation</div><div>Eau: <span id="waterAmount">0</span>L / 3L</div><div class="progress-bar"><div class="fill" id="waterBar" style="width:0%;"></div></div><div class="flex-center mt-12"><input type="number" id="waterInput" placeholder="Ajouter eau (L)" style="width:120px;"><button class="btn btn-primary btn-sm" onclick="addWater()">+ Eau</button></div></div>
+</section>
 
-    <!-- ==================== BUDGET ==================== -->
-    <section class="section-page" id="section-budget">
-        <div class="flex-between mb-12">
-            <h2>💰 Budget</h2>
-            <button class="btn btn-primary" onclick="openBudgetModal()">+ Ajouter dépense</button>
+<!-- POMODORO -->
+<section class="section-page" id="section-pomodoro">
+    <h2 class="mb-12">⏱️ Pomodoro Timer</h2>
+    <div class="card text-center">
+        <div class="pomodoro-circle" id="pomodoroCircle"><span class="time" id="pomodoroTime">25:00</span><span class="status" id="pomodoroStatus">Prêt</span><div class="progress-ring" id="pomodoroRing"></div></div>
+        <div class="flex-center" style="justify-content:center;gap:12px;">
+            <button class="btn btn-primary" id="pomodoroStartBtn" onclick="togglePomodoro()">▶ Démarrer</button>
+            <button class="btn btn-outline" onclick="resetPomodoro()">⏹ Arrêter</button>
         </div>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-title">📊 Vue d'ensemble</div>
-                <div>Budget total: <span id="budgetTotal">0 DH</span></div>
-                <div>Dépensé: <span id="budgetSpent">0 DH</span></div>
-                <div>Restant: <span id="budgetRemaining">0 DH</span></div>
-                <div class="progress-bar"><div class="fill" id="budgetBar" style="width:0%;"></div></div>
-            </div>
-            <div class="card">
-                <div class="card-title">📈 Graphique</div>
-                <canvas id="budgetChart" height="150"></canvas>
-            </div>
+        <div class="mt-12">
+            <label>Session: <select id="pomodoroSessionSelect" style="width:200px;display:inline;" onchange="document.getElementById('pomodoroSessionInput').value=this.value"><option value="">Choisir une tâche...</option></select></label>
+            <input type="text" id="pomodoroSessionInput" placeholder="Ou ajouter une tâche" style="width:200px;display:inline;margin-top:8px;">
+            <button class="btn btn-primary btn-sm" onclick="savePomodoroSession()">Enregistrer</button>
         </div>
-        <div class="card mt-12">
-            <div class="card-title">📋 Dépenses</div>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>Catégorie</th><th>Nom</th><th>Quantité</th><th>Estimé</th><th>Réel</th><th>Diff</th><th>Priorité</th><th>Action</th></tr></thead>
-                    <tbody id="budgetTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== SHOPPING ==================== -->
-    <section class="section-page" id="section-shopping">
-        <div class="flex-between mb-12">
-            <h2>🛒 Shopping</h2>
-            <button class="btn btn-primary" onclick="openShoppingDayModal()">+ Ajouter un jour</button>
-        </div>
-        <div id="shoppingDaysContainer" class="grid-2">
-            <div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucun jour de shopping</div>
-        </div>
-    </section>
-
-    <!-- ==================== PRODUITS ==================== -->
-    <section class="section-page" id="section-products">
-        <div class="flex-between mb-12">
-            <h2>📦 Produits</h2>
-            <button class="btn btn-primary" onclick="openProductModal()">+ Ajouter produit</button>
-        </div>
-        <div class="card">
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th style="width:40px;">✔</th><th>Catégorie</th><th>Nom</th><th>Quantité</th><th>Estimé</th><th>Réel</th><th>Diff</th><th>Priorité</th><th>Action</th></tr></thead>
-                    <tbody id="productTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== WISHLIST ==================== -->
-    <section class="section-page" id="section-wishlist">
-        <h2 class="mb-12">⭐ Wishlist</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="flex-between"><span class="card-title">🎁 Souhaits</span><button class="btn btn-primary btn-sm" onclick="openWishModal()">+ Ajouter</button></div>
-                <div id="wishListContainer"></div>
-            </div>
-            <div class="card">
-                <div class="card-title">🎯 Objectifs pédagogiques</div>
-                <div id="pedagogicalContainer"></div>
-                <button class="btn btn-primary btn-sm mt-12" onclick="openPedagogicalModal()">+ Ajouter objectif</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================== CALENDRIER ==================== -->
-    <section class="section-page" id="section-calendar">
-        <div class="flex-between mb-12">
-            <h2>📅 Calendrier</h2>
-            <div class="flex-center gap-8">
-                <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(-1)">◀</button>
-                <span id="calendarMonthDisplay" class="fw-600">Juillet 2026</span>
-                <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(1)">▶</button>
-                <select id="calendarView" onchange="renderCalendar()">
-                    <option value="month">Mois</option>
-                    <option value="week">Semaine</option>
-                    <option value="day">Jour</option>
-                </select>
-            </div>
-        </div>
-        <div class="card" id="calendarContainer"></div>
-    </section>
-
-    <!-- ==================== SPORT ==================== -->
-    <section class="section-page" id="section-sport">
-        <h2 class="mb-12">🏃 Sport</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-title">📊 Statistiques</div>
-                <div>🏋️ Séances cette semaine: <span id="sportSessions">0</span></div>
-                <div>🔥 Calories brûlées: <span id="sportCalories">0</span> kcal</div>
-                <div>⏱️ Temps total: <span id="sportTime">0h</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">➕ Ajouter une séance</div>
-                <input type="text" id="sportActivity" placeholder="Activité (ex: Course, Musculation...)" class="mb-12">
-                <input type="number" id="sportDuration" placeholder="Durée (min)" class="mb-12">
-                <input type="number" id="sportCaloriesInput" placeholder="Calories brûlées" class="mb-12">
-                <button class="btn btn-primary w-full" onclick="addSportSession()">Ajouter</button>
-            </div>
-        </div>
-        <div class="card mt-12"><div id="sportHistory"></div></div>
-    </section>
-
-    <!-- ==================== NUTRITION ==================== -->
-    <section class="section-page" id="section-nutrition">
-        <h2 class="mb-12">🍽️ Alimentation quotidienne</h2>
-        <div class="flex-center gap-16 mb-12">
-            <button class="btn btn-outline btn-sm" onclick="changeNutritionDay(-1)">◀</button>
-            <span id="nutritionDateDisplay" class="fw-600">05/07/2026</span>
-            <button class="btn btn-outline btn-sm" onclick="changeNutritionDay(1)">▶</button>
-        </div>
+        <div class="mt-12 text-muted">✅ Pomodoros: <span id="pomodoroCount">0</span></div>
+        <div id="pomodoroHistory" class="mt-12 text-left"></div>
+    </div>
+    <div class="card mt-12"><div class="card-title">⚙️ Paramètres</div>
         <div class="grid-3">
-            <div class="card"><div class="card-title">🍳 Petit-déjeuner</div><div id="breakfastItems"></div><input type="text" id="breakfastInput" placeholder="Ajouter..." class="mt-12"><button class="btn btn-primary btn-sm mt-12" onclick="addMeal('breakfast')">+</button></div>
-            <div class="card"><div class="card-title">🥗 Déjeuner</div><div id="lunchItems"></div><input type="text" id="lunchInput" placeholder="Ajouter..." class="mt-12"><button class="btn btn-primary btn-sm mt-12" onclick="addMeal('lunch')">+</button></div>
-            <div class="card"><div class="card-title">🍲 Dîner</div><div id="dinnerItems"></div><input type="text" id="dinnerInput" placeholder="Ajouter..." class="mt-12"><button class="btn btn-primary btn-sm mt-12" onclick="addMeal('dinner')">+</button></div>
+            <label>Pomodoro: <input type="number" id="pomoDuration" value="25" min="1" max="60"></label>
+            <label>Short break: <input type="number" id="pomoShortBreak" value="5" min="1" max="30"></label>
+            <label>Long break: <input type="number" id="pomoLongBreak" value="15" min="1" max="60"></label>
+            <label>Long break après: <input type="number" id="pomoLongAfter" value="4" min="1" max="10"></label>
         </div>
-        <div class="card mt-12">
-            <div class="card-title">💧 Hydratation & Calories</div>
-            <div>Eau: <span id="waterAmount">0</span>L / 3L</div>
-            <div class="progress-bar"><div class="fill" id="waterBar" style="width:0%;"></div></div>
-            <div>Calories: <span id="calorieAmount">0</span> / 2200</div>
-            <div class="progress-bar"><div class="fill" id="calorieBar" style="width:0%;"></div></div>
-            <div class="flex-center gap-16 mt-12">
-                <input type="number" id="waterInput" placeholder="Ajouter eau (L)" style="width:120px;">
-                <button class="btn btn-primary btn-sm" onclick="addWater()">+ Eau</button>
-                <input type="number" id="calorieInput" placeholder="Calories" style="width:120px;">
-                <button class="btn btn-primary btn-sm" onclick="addCalories()">+ Cal</button>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ==================== POMODORO ==================== -->
-    <section class="section-page" id="section-pomodoro">
-        <h2 class="mb-12">⏱️ Pomodoro Timer</h2>
-        <div class="card text-center">
-            <div class="pomodoro-circle" id="pomodoroCircle">
-                <span class="time" id="pomodoroTime">25:00</span>
-                <span class="status" id="pomodoroStatus">Prêt</span>
-                <div class="progress-ring" id="pomodoroRing" style="border-color: var(--accent);"></div>
-            </div>
-            <div class="flex-center" style="justify-content:center;gap:12px;">
-                <button class="btn btn-primary" id="pomodoroStartBtn" onclick="togglePomodoro()">▶ Démarrer</button>
-                <button class="btn btn-outline" onclick="resetPomodoro()">⏹ Arrêter</button>
-            </div>
-            <div class="mt-12">
-                <label>Session: <input type="text" id="pomodoroSession" placeholder="Réviser Maths" style="width:200px;display:inline;"></label>
-                <button class="btn btn-primary btn-sm" onclick="savePomodoroSession()">Enregistrer</button>
-            </div>
-            <div class="mt-12 text-muted">✅ Pomodoros complétés: <span id="pomodoroCount">0</span></div>
-            <div id="pomodoroHistory" class="mt-12 text-left"></div>
+<!-- EMPLOI DU TEMPS -->
+<section class="section-page" id="section-schedule">
+    <div class="flex-between mb-12"><h2>📋 Emploi du temps</h2>
+        <div class="flex-center gap-8">
+            <select id="scheduleWeekType"><option value="normal">Normal</option><option value="exam">Exam</option><option value="ramadan">Ramadan</option></select>
+            <select id="scheduleSlots"><option value="4">4 slots</option><option value="6">6 slots</option><option value="8">8 slots</option></select>
+            <button class="btn btn-primary btn-sm" onclick="openCourseModal()">+ Cours</button>
+            <button class="btn btn-danger btn-sm" onclick="openExamModal()">+ DS/Exam</button>
         </div>
-        <div class="card mt-12">
-            <div class="card-title">⚙️ Paramètres</div>
-            <div class="grid-3">
-                <label>Pomodoro: <input type="number" id="pomoDuration" value="25" min="1" max="60"></label>
-                <label>Short break: <input type="number" id="pomoShortBreak" value="5" min="1" max="30"></label>
-                <label>Long break: <input type="number" id="pomoLongBreak" value="15" min="1" max="60"></label>
-                <label>Long break après: <input type="number" id="pomoLongAfter" value="4" min="1" max="10"></label>
-            </div>
-        </div>
-    </section>
+    </div>
+    <div class="card" id="scheduleContainer"></div>
+</section>
 
-    <!-- ==================== DRIVE ==================== -->
-    <section class="section-page" id="section-drive">
-        <div class="flex-between mb-12">
-            <h2>📁 Mon Drive</h2>
-            <div class="flex-center gap-8">
-                <button class="btn btn-primary btn-sm" onclick="openDriveModal()">+ Ajouter fichier</button>
-                <button class="btn btn-outline btn-sm" onclick="createDriveFolder()">📂 Nouveau dossier</button>
-            </div>
-        </div>
-        <div class="card" id="driveContainer">
-            <div class="empty-state"><span class="big-icon">📁</span>Aucun dossier</div>
-        </div>
-    </section>
+<!-- NOTES -->
+<section class="section-page" id="section-notes">
+    <div class="flex-between mb-12"><h2>📝 Notes</h2><button class="btn btn-primary" onclick="openNoteModal()">+ Nouvelle note</button></div>
+    <div id="notesContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune note</div></div>
+</section>
 
-    <!-- ==================== NOTES ==================== -->
-    <section class="section-page" id="section-notes">
-        <div class="flex-between mb-12">
-            <h2>📝 Notes</h2>
-            <button class="btn btn-primary" onclick="openNoteModal()">+ Nouvelle note</button>
+<!-- RELIGION -->
+<section class="section-page" id="section-religion" dir="rtl">
+    <h2 class="mb-12">🕌 الدين</h2>
+    <div class="grid-2">
+        <div class="card"><div class="card-title">📿 صلوات اليوم</div>
+            <div class="flex-center" style="justify-content:space-around;">
+                <label>☀️ الفجر <input type="checkbox" id="prayer-fajr" onchange="updatePrayers()"></label>
+                <label>☀️ الظهر <input type="checkbox" id="prayer-dhuhr" onchange="updatePrayers()"></label>
+                <label>☀️ العصر <input type="checkbox" id="prayer-asr" onchange="updatePrayers()"></label>
+                <label>🌙 المغرب <input type="checkbox" id="prayer-maghrib" onchange="updatePrayers()"></label>
+                <label>🌙 العشاء <input type="checkbox" id="prayer-isha" onchange="updatePrayers()"></label>
+            </div>
+            <div class="mt-12 text-center" id="prayerStats">✅ 0/5 صلوات اليوم</div>
         </div>
-        <div id="notesContainer" class="grid-2">
-            <div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune note</div>
+        <div class="card"><div class="card-title">📅 تقويم الصلوات</div><div id="prayerCalendar"></div></div>
+    </div>
+    <div class="grid-2 mt-12">
+        <div class="card"><div class="card-title">📖 القرآن</div><div class="flex-center gap-8"><select id="quranSurah" style="width:auto;"><option value="1">الفاتحة</option><option value="2">البقرة</option><option value="3">آل عمران</option><option value="4">النساء</option><option value="5">المائدة</option></select><button class="btn btn-primary btn-sm" onclick="openQuran()">📖 اقرأ</button></div></div>
+        <div class="card"><div class="card-title">📿 الأذكار</div>
+            <div class="flex-center gap-8"><select id="dhikrCategory" style="width:auto;"><option value="morning">⭐ الصباح</option><option value="evening">🌙 المساء</option><option value="sleep">😴 النوم</option><option value="diverse">📿 متنوع</option></select><button class="btn btn-primary btn-sm" onclick="showDhikr()">📿 عرض</button></div>
+            <div id="dhikrDisplay" class="mt-12"></div>
+            <button class="btn btn-outline btn-sm mt-12" onclick="editDhikr()">✏️ تعديل الأذكار</button>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ==================== RELIGION ==================== -->
-    <section class="section-page" id="section-religion" dir="rtl">
-        <h2 class="mb-12">🕌 الدين</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-title">📿 صلوات اليوم</div>
-                <div class="flex-center" style="justify-content:space-around;">
-                    <label>☀️ الفجر <input type="checkbox" id="prayer-fajr" onchange="updatePrayers()"></label>
-                    <label>☀️ الظهر <input type="checkbox" id="prayer-dhuhr" onchange="updatePrayers()"></label>
-                    <label>☀️ العصر <input type="checkbox" id="prayer-asr" onchange="updatePrayers()"></label>
-                    <label>🌙 المغرب <input type="checkbox" id="prayer-maghrib" onchange="updatePrayers()"></label>
-                    <label>🌙 العشاء <input type="checkbox" id="prayer-isha" onchange="updatePrayers()"></label>
-                </div>
-                <div class="mt-12 text-center" id="prayerStats">✅ 0/5 صلوات اليوم</div>
-            </div>
-            <div class="card">
-                <div class="card-title">📅 تقويم الصلوات</div>
-                <div id="prayerCalendar"></div>
-            </div>
+<!-- NOTES & MOYENNE -->
+<section class="section-page" id="section-marks">
+    <div class="flex-between mb-12"><h2>📊 Notes & Moyenne</h2>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary btn-sm" onclick="addSemester()">+ Semestre</button>
         </div>
-        <div class="grid-2 mt-12">
-            <div class="card">
-                <div class="card-title">📖 القرآن</div>
-                <div class="flex-center gap-8">
-                    <select id="quranSurah" style="width:auto;"><option value="1">الفاتحة</option><option value="2">البقرة</option><option value="3">آل عمران</option><option value="4">النساء</option><option value="5">المائدة</option></select>
-                    <button class="btn btn-primary btn-sm" onclick="openQuran()">📖 اقرأ</button>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">📿 الأذكار</div>
-                <div class="flex-center gap-8">
-                    <select id="dhikrCategory" style="width:auto;"><option value="morning">⭐ الصباح</option><option value="evening">🌙 المساء</option><option value="sleep">😴 النوم</option><option value="diverse">📿 متنوع</option></select>
-                    <button class="btn btn-primary btn-sm" onclick="showDhikr()">📿 عرض</button>
-                </div>
-                <div id="dhikrDisplay" class="mt-12"></div>
-            </div>
-        </div>
-    </section>
+    </div>
+    <div id="marksContainer" class="marks-grid"></div>
+    <div class="card mt-12"><div class="card-title">📈 Moyenne Générale</div><div id="marksGeneralAverage" class="text-center" style="font-size:32px;font-weight:700;color:var(--accent);">0.00</div></div>
+</section>
 
-    <!-- ==================== PARAMÈTRES ==================== -->
-    <section class="section-page" id="section-settings">
-        <h2 class="mb-12">⚙️ Paramètres</h2>
-        <div class="card">
-            <div class="grid-2">
-                <div>
-                    <label>🌐 Langue</label>
-                    <select id="settingsLanguage" onchange="changeLanguage(this.value)">
-                        <option value="fr">Français</option>
-                        <option value="en">English</option>
-                        <option value="ar">العربية</option>
-                        <option value="tr">Türkçe</option>
-                        <option value="ja">日本語</option>
-                    </select>
-                </div>
-                <div>
-                    <label>🌓 Thème</label>
-                    <div class="flex-center gap-8">
-                        <button class="btn btn-outline btn-sm" onclick="setTheme('light')">☀️ Clair</button>
-                        <button class="btn btn-outline btn-sm" onclick="setTheme('dark')">🌙 Sombre</button>
-                    </div>
-                </div>
-                <div>
-                    <label>💰 Devise</label>
-                    <select id="settingsCurrency" onchange="changeCurrency(this.value)">
-                        <option value="DH">DH (Dirham)</option>
-                        <option value="₺">₺ (Lire turque)</option>
-                        <option value="¥">¥ (Yen japonais)</option>
-                        <option value="€">€ (Euro)</option>
-                        <option value="$">$ (Dollar)</option>
-                        <option value="£">£ (Livre sterling)</option>
-                    </select>
-                </div>
-                <div>
-                    <label>🔔 Notifications</label>
-                    <div><label><input type="checkbox" id="notifPush" checked> Push</label></div>
-                    <div><label><input type="checkbox" id="notifEmail" checked> Email</label></div>
-                    <div><label><input type="checkbox" id="notifSound" checked> Sons</label></div>
-                </div>
-            </div>
-            <div class="mt-12 flex-center gap-8">
-                <button class="btn btn-outline" onclick="exportData()">📤 Exporter CSV</button>
-                <button class="btn btn-outline" onclick="exportJSON()">📤 Exporter JSON</button>
-                <button class="btn btn-danger" onclick="deleteAccount()">🗑️ Supprimer mon compte</button>
-            </div>
+<!-- ADMIN -->
+<section class="section-page" id="section-admin">
+    <h2 class="mb-12">👑 Panneau d'Administration</h2>
+    <div class="grid-2">
+        <div class="card"><div class="card-title">📊 Statistiques Globales</div>
+            <div>Total utilisateurs: <span id="adminUsers">0</span></div>
+            <div>Tâches totales: <span id="adminTasks">0</span></div>
+            <div>Habitudes totales: <span id="adminHabits">0</span></div>
         </div>
-    </section>
-
-    <!-- ==================== COMPTE ==================== -->
-    <section class="section-page" id="section-account">
-        <h2 class="mb-12">👤 Mon Compte</h2>
-        <div class="card">
-            <div class="flex-center gap-16">
-                <div class="avatar" style="width:80px;height:80px;font-size:32px;">H</div>
-                <div>
-                    <h3 id="accountName">Hamza Margal</h3>
-                    <p class="text-muted" id="accountEmail">hamzamp2026@gmail.com</p>
-                </div>
-            </div>
-            <div class="grid-2 mt-20">
-                <label>Prénom: <input type="text" id="accountFirstname" value="Hamza"></label>
-                <label>Nom: <input type="text" id="accountLastname" value="Margal"></label>
-                <label>Téléphone: <input type="text" id="accountPhone" value="0612345678"></label>
-                <label>Université: <input type="text" id="accountUniv" value="Université X"></label>
-                <label>Filière: <input type="text" id="accountMajor" value="Informatique"></label>
-                <label>Année: <input type="text" id="accountYear" value="3ème année"></label>
-            </div>
-            <div class="mt-20">
-                <h4>🔑 Changer mot de passe</h4>
-                <div class="grid-3">
-                    <input type="password" id="oldPassword" placeholder="Ancien">
-                    <input type="password" id="newPassword" placeholder="Nouveau">
-                    <input type="password" id="confirmPassword" placeholder="Confirmer">
-                </div>
-                <button class="btn btn-primary mt-12" onclick="changePassword()">Mettre à jour</button>
-            </div>
-            <div class="mt-20">
-                <h4>📊 Statistiques personnelles</h4>
-                <div>Inscrit depuis: <span id="accountSince">01/07/2026</span></div>
-                <div>Tâches complétées: <span id="accountTasksDone">0</span></div>
-                <div>Habitudes maintenues: <span id="accountHabitsDone">0</span>/30 jours</div>
-                <div>Budget moyen mensuel: <span id="accountAvgBudget">0 DH</span></div>
-            </div>
-            <button class="btn btn-danger mt-20" onclick="logout()">🚪 Changer d'utilisateur</button>
+        <div class="card"><div class="card-title">👥 Utilisateurs</div>
+            <select class="admin-user-select" id="adminUserSelect" onchange="loadUserData(this.value)"><option value="">-- Sélectionner --</option></select>
+            <div id="adminUserData" class="mt-12"></div>
         </div>
-    </section>
-
-    <!-- ==================== ADMIN ==================== -->
-    <section class="section-page" id="section-admin">
-        <h2 class="mb-12">👑 Panneau d'Administration</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-title">📊 Statistiques Globales</div>
-                <div>Total utilisateurs: <span id="adminUsers">0</span></div>
-                <div>Tâches totales: <span id="adminTasks">0</span></div>
-                <div>Habitudes totales: <span id="adminHabits">0</span></div>
-                <div>Budget moyen: <span id="adminAvgBudget">0 DH</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">👥 Utilisateurs</div>
-                <select class="admin-user-select" id="adminUserSelect" onchange="loadUserData(this.value)">
-                    <option value="">-- Sélectionner --</option>
-                </select>
-                <div id="adminUserData" class="mt-12"></div>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
 </main>
 
-<!-- ============================================================ -->
 <!-- MODAL -->
-<!-- ============================================================ -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-    <div class="modal-content" id="modalContent">
-        <div id="modalBody"></div>
-    </div>
+    <div class="modal-content" id="modalContent"><div id="modalBody"></div></div>
 </div>
 
-<!-- ============================================================ -->
-<!-- TOAST CONTAINER -->
-<!-- ============================================================ -->
+<!-- TOAST -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ============================================================ -->
 <!-- FULLSCREEN CLOCK -->
-<!-- ============================================================ -->
-<div id="fullscreenClock" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a1a;z-index:9999;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-family:'Segoe UI',sans-serif;cursor:pointer;" onclick="this.style.display='none'">
-    <div style="font-size:80px;font-weight:200;letter-spacing:8px;" id="fullscreenTime">00:00:00</div>
-    <div style="font-size:24px;color:#888;margin-top:20px;" id="fullscreenDate">00-00-0000</div>
-    <div style="margin-top:40px;font-size:16px;color:#555;">Appuyez sur Échap ou cliquez pour fermer</div>
+<div class="fullscreen-clock" id="fullscreenClock" onclick="this.classList.remove('show')">
+    <div class="stars-bg" id="starsBg"></div>
+    <div class="time" id="fullscreenTime">00:00:00</div>
+    <div class="date" id="fullscreenDate">00-00-0000</div>
+    <div style="margin-top:40px;font-size:16px;color:#555;position:relative;z-index:1;">Appuyez sur Échap ou cliquez pour fermer</div>
 </div>
 
-<!-- ============================================================ -->
-<!-- JAVASCRIPT -->
-<!-- ============================================================ -->
 <script>
 // ================================================================
-// CONFIGURATION FIREBASE
+// FIREBASE CONFIG
 // ================================================================
 const firebaseConfig = {
-  apiKey: "AIzaSyAF33_gGGfro5NXFAktJKlqfd0bMbfwo98",
-  authDomain: "college-student-life-a17bf.firebaseapp.com",
-  projectId: "college-student-life-a17bf",
-  storageBucket: "college-student-life-a17bf.firebasestorage.app",
-  messagingSenderId: "41108268695",
-  appId: "1:41108268695:web:61a3b8a03dddb57d68abd2",
-  measurementId: "G-612YY709BK"
+    apiKey: "VOTRE_API_KEY",
+    authDomain: "VOTRE_PROJECT.firebaseapp.com",
+    projectId: "VOTRE_PROJECT_ID",
+    storageBucket: "VOTRE_PROJECT.appspot.com",
+    messagingSenderId: "VOTRE_SENDER_ID",
+    appId: "VOTRE_APP_ID"
 };
 
-// Initialisation Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -1297,11 +1181,14 @@ let allShoppingDays = [];
 let allWishes = [];
 let allPedagogical = [];
 let allNotes = [];
-let allDriveFolders = [];
 let allSportSessions = [];
+let allCourses = [];
+let allExams = [];
 let allMeals = { breakfast: [], lunch: [], dinner: [] };
 let waterAmount = 0;
-let calorieAmount = 0;
+let allPrayers = {};
+let allDhikrs = { morning: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أصبحنا'], evening: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أمسينا'], sleep: ['اللهم باسمك أموت وأحيا', 'سبحان الله (33x)', 'الحمد لله (33x)', 'الله أكبر (34x)'], diverse: ['لا إله إلا الله', 'سبحان الله', 'الحمد لله', 'الله أكبر', 'أستغفر الله'] };
+let allSemesters = [];
 let pomodoroRunning = false;
 let pomodoroInterval = null;
 let pomodoroTimeLeft = 25 * 60;
@@ -1310,47 +1197,53 @@ let pomodoroHistory = [];
 let calendarDate = new Date();
 let nutritionDate = new Date();
 let currentLanguage = 'fr';
+let currentBudgetTab = 'shopping';
 
 // ================================================================
 // INITIALISATION
 // ================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Vérifier si l'utilisateur est connecté
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
             document.getElementById('accountEmail').textContent = user.email;
-            document.getElementById('avatarDisplay').textContent = user.displayName ? user.displayName[0].toUpperCase() : 'U';
-            // Charger les données
+            document.getElementById('avatarLetter').textContent = user.displayName ? user.displayName[0].toUpperCase() : 'U';
             loadAllData();
-            // Vérifier si admin
             if (user.email === 'hamzamp2026@gmail.com') {
                 document.getElementById('adminNav').style.display = 'flex';
             }
         } else {
-            // Afficher la page de connexion
             showLoginScreen();
         }
     });
-
-    // Mise à jour de l'horloge
     updateClock();
     setInterval(updateClock, 1000);
-
-    // Gestion des touches
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            document.getElementById('fullscreenClock').style.display = 'none';
+            document.getElementById('fullscreenClock').classList.remove('show');
             closeModal();
         }
     });
-
-    // Charger les domaines pour les tâches
     populateTaskDomains();
+    createStars();
 });
 
+function createStars() {
+    const container = document.getElementById('starsBg');
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 5 + 's';
+        star.style.width = (Math.random() * 3 + 1) + 'px';
+        star.style.height = star.style.width;
+        container.appendChild(star);
+    }
+}
+
 // ================================================================
-// AUTHENTIFICATION
+// AUTH
 // ================================================================
 function showLoginScreen() {
     const loginHTML = `
@@ -1375,25 +1268,14 @@ function showLoginScreen() {
     document.querySelector('.main-content').innerHTML = loginHTML;
 }
 
-function showLogin() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('signupForm').style.display = 'none';
-}
-
-function showSignup() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('signupForm').style.display = 'block';
-}
+function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
+function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
 
 async function login() {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
-    try {
-        await auth.signInWithEmailAndPassword(email, password);
-        location.reload();
-    } catch(e) {
-        showToast('Erreur de connexion: ' + e.message, 'error');
-    }
+    try { await auth.signInWithEmailAndPassword(email, password); location.reload(); } 
+    catch(e) { showToast('Erreur: ' + e.message, 'error'); }
 }
 
 async function signup() {
@@ -1403,262 +1285,89 @@ async function signup() {
     try {
         const cred = await auth.createUserWithEmailAndPassword(email, password);
         await cred.user.updateProfile({ displayName: name });
-        // Créer un document utilisateur dans Firestore
-        await db.collection('users').doc(cred.user.uid).set({
-            name: name,
-            email: email,
-            createdAt: new Date()
-        });
+        await db.collection('users').doc(cred.user.uid).set({ name, email, createdAt: new Date() });
         location.reload();
-    } catch(e) {
-        showToast('Erreur d\'inscription: ' + e.message, 'error');
-    }
+    } catch(e) { showToast('Erreur: ' + e.message, 'error'); }
 }
 
-function logout() {
-    auth.signOut();
-    location.reload();
-}
+function logout() { auth.signOut(); location.reload(); }
 
 // ================================================================
-// CHARGEMENT DES DONNÉES
+// CHARGEMENT DONNÉES
 // ================================================================
 async function loadAllData() {
     if (!currentUser) return;
     const uid = currentUser.uid;
     try {
-        // Charger les tâches
         const tasksSnap = await db.collection('users').doc(uid).collection('tasks').get();
         allTasks = tasksSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les habitudes
         const habitsSnap = await db.collection('users').doc(uid).collection('habits').get();
         allHabits = habitsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger le budget
         const budgetSnap = await db.collection('users').doc(uid).collection('budget').get();
         allBudget = budgetSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les produits
         const productsSnap = await db.collection('users').doc(uid).collection('products').get();
         allProducts = productsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les jours de shopping
         const shoppingSnap = await db.collection('users').doc(uid).collection('shoppingDays').get();
         allShoppingDays = shoppingSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les wishes
         const wishesSnap = await db.collection('users').doc(uid).collection('wishes').get();
         allWishes = wishesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les objectifs pédagogiques
         const pedaSnap = await db.collection('users').doc(uid).collection('pedagogical').get();
         allPedagogical = pedaSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les notes
         const notesSnap = await db.collection('users').doc(uid).collection('notes').get();
         allNotes = notesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les dossiers Drive
-        const driveSnap = await db.collection('users').doc(uid).collection('drive').get();
-        allDriveFolders = driveSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les sessions sport
         const sportSnap = await db.collection('users').doc(uid).collection('sport').get();
         allSportSessions = sportSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        // Charger les repas
+        const coursesSnap = await db.collection('users').doc(uid).collection('courses').get();
+        allCourses = coursesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const examsSnap = await db.collection('users').doc(uid).collection('exams').get();
+        allExams = examsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         const mealsSnap = await db.collection('users').doc(uid).collection('meals').get();
         const mealsData = mealsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         allMeals = { breakfast: [], lunch: [], dinner: [] };
-        mealsData.forEach(m => {
-            if (m.type === 'breakfast') allMeals.breakfast.push(m);
-            else if (m.type === 'lunch') allMeals.lunch.push(m);
-            else if (m.type === 'dinner') allMeals.dinner.push(m);
-        });
-        
-        // Charger l'eau et les calories
+        mealsData.forEach(m => { if (m.type) allMeals[m.type].push(m); });
         const statsSnap = await db.collection('users').doc(uid).collection('stats').doc('daily').get();
-        if (statsSnap.exists) {
-            waterAmount = statsSnap.data().water || 0;
-            calorieAmount = statsSnap.data().calories || 0;
-        }
-        
-        // Charger l'historique Pomodoro
+        if (statsSnap.exists) waterAmount = statsSnap.data().water || 0;
         const pomoSnap = await db.collection('users').doc(uid).collection('pomodoro').get();
         pomodoroHistory = pomoSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         pomodoroSessionCount = pomodoroHistory.length;
-        
-        // Mettre à jour l'UI
+        const prayersSnap = await db.collection('users').doc(uid).collection('prayers').doc('calendar').get();
+        if (prayersSnap.exists) allPrayers = prayersSnap.data() || {};
+        const semestersSnap = await db.collection('users').doc(uid).collection('semesters').get();
+        allSemesters = semestersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (allSemesters.length === 0) {
+            allSemesters = [{ id: 's1', name: 'S1', subjects: [] }, { id: 's2', name: 'S2', subjects: [] }];
+            allSemesters.forEach(s => db.collection('users').doc(uid).collection('semesters').doc(s.id).set(s));
+        }
         updateAllUI();
-        
-    } catch(e) {
-        console.error('Erreur chargement:', e);
-        showToast('Erreur de chargement des données', 'error');
-    }
+    } catch(e) { console.error(e); showToast('Erreur chargement', 'error'); }
 }
 
 // ================================================================
-// SAUVEGARDE DES DONNÉES
+// SAUVEGARDE
 // ================================================================
-async function saveTask(task) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (task.id) {
-        await db.collection('users').doc(uid).collection('tasks').doc(task.id).update(task);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('tasks').add(task);
-        task.id = ref.id;
-    }
-}
-
-async function saveHabit(habit) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (habit.id) {
-        await db.collection('users').doc(uid).collection('habits').doc(habit.id).update(habit);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('habits').add(habit);
-        habit.id = ref.id;
-    }
-}
-
-async function saveBudget(item) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (item.id) {
-        await db.collection('users').doc(uid).collection('budget').doc(item.id).update(item);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('budget').add(item);
-        item.id = ref.id;
-    }
-}
-
-async function saveProduct(product) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (product.id) {
-        await db.collection('users').doc(uid).collection('products').doc(product.id).update(product);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('products').add(product);
-        product.id = ref.id;
-    }
-}
-
-async function saveShoppingDay(day) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (day.id) {
-        await db.collection('users').doc(uid).collection('shoppingDays').doc(day.id).update(day);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('shoppingDays').add(day);
-        day.id = ref.id;
-    }
-}
-
-async function saveWish(wish) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (wish.id) {
-        await db.collection('users').doc(uid).collection('wishes').doc(wish.id).update(wish);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('wishes').add(wish);
-        wish.id = ref.id;
-    }
-}
-
-async function savePedagogical(p) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (p.id) {
-        await db.collection('users').doc(uid).collection('pedagogical').doc(p.id).update(p);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('pedagogical').add(p);
-        p.id = ref.id;
-    }
-}
-
-async function saveNote(note) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (note.id) {
-        await db.collection('users').doc(uid).collection('notes').doc(note.id).update(note);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('notes').add(note);
-        note.id = ref.id;
-    }
-}
-
-async function saveDriveFolder(folder) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (folder.id) {
-        await db.collection('users').doc(uid).collection('drive').doc(folder.id).update(folder);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('drive').add(folder);
-        folder.id = ref.id;
-    }
-}
-
-async function saveSportSession(session) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (session.id) {
-        await db.collection('users').doc(uid).collection('sport').doc(session.id).update(session);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('sport').add(session);
-        session.id = ref.id;
-    }
-}
-
-async function saveMeal(meal) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    if (meal.id) {
-        await db.collection('users').doc(uid).collection('meals').doc(meal.id).update(meal);
-    } else {
-        const ref = await db.collection('users').doc(uid).collection('meals').add(meal);
-        meal.id = ref.id;
-    }
-}
-
-async function saveStats(water, calories) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    await db.collection('users').doc(uid).collection('stats').doc('daily').set({
-        water: water,
-        calories: calories,
-        updatedAt: new Date()
-    });
-}
-
-async function savePomodoroSession(session) {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
-    const ref = await db.collection('users').doc(uid).collection('pomodoro').add(session);
-    session.id = ref.id;
-    pomodoroHistory.push(session);
-}
+async function saveTask(t) { if(!currentUser)return; const uid=currentUser.uid; if(t.id) await db.collection('users').doc(uid).collection('tasks').doc(t.id).update(t); else {const ref=await db.collection('users').doc(uid).collection('tasks').add(t); t.id=ref.id;} }
+async function saveHabit(h) { if(!currentUser)return; const uid=currentUser.uid; if(h.id) await db.collection('users').doc(uid).collection('habits').doc(h.id).update(h); else {const ref=await db.collection('users').doc(uid).collection('habits').add(h); h.id=ref.id;} }
+async function saveBudget(b) { if(!currentUser)return; const uid=currentUser.uid; if(b.id) await db.collection('users').doc(uid).collection('budget').doc(b.id).update(b); else {const ref=await db.collection('users').doc(uid).collection('budget').add(b); b.id=ref.id;} }
+async function saveProduct(p) { if(!currentUser)return; const uid=currentUser.uid; if(p.id) await db.collection('users').doc(uid).collection('products').doc(p.id).update(p); else {const ref=await db.collection('users').doc(uid).collection('products').add(p); p.id=ref.id;} }
+async function saveShoppingDay(d) { if(!currentUser)return; const uid=currentUser.uid; if(d.id) await db.collection('users').doc(uid).collection('shoppingDays').doc(d.id).update(d); else {const ref=await db.collection('users').doc(uid).collection('shoppingDays').add(d); d.id=ref.id;} }
+async function saveWish(w) { if(!currentUser)return; const uid=currentUser.uid; if(w.id) await db.collection('users').doc(uid).collection('wishes').doc(w.id).update(w); else {const ref=await db.collection('users').doc(uid).collection('wishes').add(w); w.id=ref.id;} }
+async function savePedagogical(p) { if(!currentUser)return; const uid=currentUser.uid; if(p.id) await db.collection('users').doc(uid).collection('pedagogical').doc(p.id).update(p); else {const ref=await db.collection('users').doc(uid).collection('pedagogical').add(p); p.id=ref.id;} }
+async function saveNote(n) { if(!currentUser)return; const uid=currentUser.uid; if(n.id) await db.collection('users').doc(uid).collection('notes').doc(n.id).update(n); else {const ref=await db.collection('users').doc(uid).collection('notes').add(n); n.id=ref.id;} }
+async function saveSportSession(s) { if(!currentUser)return; const uid=currentUser.uid; if(s.id) await db.collection('users').doc(uid).collection('sport').doc(s.id).update(s); else {const ref=await db.collection('users').doc(uid).collection('sport').add(s); s.id=ref.id;} }
+async function saveCourse(c) { if(!currentUser)return; const uid=currentUser.uid; if(c.id) await db.collection('users').doc(uid).collection('courses').doc(c.id).update(c); else {const ref=await db.collection('users').doc(uid).collection('courses').add(c); c.id=ref.id;} }
+async function saveExam(e) { if(!currentUser)return; const uid=currentUser.uid; if(e.id) await db.collection('users').doc(uid).collection('exams').doc(e.id).update(e); else {const ref=await db.collection('users').doc(uid).collection('exams').add(e); e.id=ref.id;} }
+async function saveMeal(m) { if(!currentUser)return; const uid=currentUser.uid; if(m.id) await db.collection('users').doc(uid).collection('meals').doc(m.id).update(m); else {const ref=await db.collection('users').doc(uid).collection('meals').add(m); m.id=ref.id;} }
+async function saveStats(w) { if(!currentUser)return; const uid=currentUser.uid; await db.collection('users').doc(uid).collection('stats').doc('daily').set({water:w, updatedAt:new Date()}); }
+async function savePrayers(p) { if(!currentUser)return; const uid=currentUser.uid; await db.collection('users').doc(uid).collection('prayers').doc('calendar').set(p); }
+async function saveSemester(s) { if(!currentUser)return; const uid=currentUser.uid; await db.collection('users').doc(uid).collection('semesters').doc(s.id).set(s); }
 
 // ================================================================
-// MISE À JOUR DE L'UI
+// UI UPDATE
 // ================================================================
 function updateAllUI() {
-    updateDashboard();
-    renderTasks();
-    renderHabits();
-    renderBudget();
-    renderProducts();
-    renderShoppingDays();
-    renderWishlist();
-    renderCalendar();
-    renderSport();
-    renderNutrition();
-    renderDrive();
-    renderNotes();
-    renderPrayerCalendar();
-    updateAccountStats();
-    updateAdminPanel();
+    updateDashboard(); renderTasks(); renderHabits(); renderBudget(); renderProducts(); renderShoppingDays();
+    renderWishlist(); renderCalendar(); renderSport(); renderNutrition(); renderSchedule(); renderNotes();
+    renderPrayerCalendar(); renderMarks(); updateAdminPanel(); updatePomodoroSelect();
 }
 
 function updateClock() {
@@ -1668,104 +1377,75 @@ function updateClock() {
     const y = now.getFullYear();
     const h = String(now.getHours()).padStart(2,'0');
     const min = String(now.getMinutes()).padStart(2,'0');
-    document.getElementById('clockDisplay').textContent = `📅 ${d}-${m}-${y} ${h}:${min}`;
-    document.getElementById('fullscreenTime').textContent = `${h}:${min}:${String(now.getSeconds()).padStart(2,'0')}`;
+    const sec = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clockDisplay').innerHTML = `
+        <span class="stars">✦</span><span class="stars">✦</span><span class="stars">✦</span><span class="stars">✦</span><span class="stars">✦</span>
+        📅 ${d}-${m}-${y} ${h}:${min}
+    `;
+    document.getElementById('fullscreenTime').textContent = `${h}:${min}:${sec}`;
     document.getElementById('fullscreenDate').textContent = `${d}-${m}-${y}`;
 }
 
 function toggleFullScreenClock() {
-    const el = document.getElementById('fullscreenClock');
-    if (el.style.display === 'flex') {
-        el.style.display = 'none';
-    } else {
-        el.style.display = 'flex';
-        updateClock();
-    }
+    document.getElementById('fullscreenClock').classList.toggle('show');
+    updateClock();
 }
 
-// ================================================================
-// NAVIGATION
-// ================================================================
 function navigateTo(section) {
-    // Cacher toutes les sections
     document.querySelectorAll('.section-page').forEach(el => el.classList.remove('active'));
-    // Afficher la section ciblée
     const target = document.getElementById('section-' + section);
     if (target) target.classList.add('active');
-    
-    // Mettre à jour la navigation
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     const navBtn = document.querySelector(`.nav-item[data-section="${section}"]`);
     if (navBtn) navBtn.classList.add('active');
-    
     currentSection = section;
-    
-    // Mettre à jour le background
     document.querySelectorAll('.section-bg').forEach(el => el.classList.remove('active'));
     const bg = document.getElementById('bg-' + section);
     if (bg) bg.classList.add('active');
-    
-    // Re-rendre certaines sections
     if (section === 'dashboard') updateDashboard();
     if (section === 'calendar') renderCalendar();
+    if (section === 'schedule') renderSchedule();
+    if (section === 'marks') renderMarks();
+    if (section === 'budget') switchBudgetTab(currentBudgetTab);
 }
 
 // ================================================================
 // DASHBOARD
 // ================================================================
 function updateDashboard() {
-    // Nombre de tâches à faire
     const tasksTodo = allTasks.filter(t => t.status !== 'Terminé').length;
     document.getElementById('dashTasks').textContent = tasksTodo;
-    
-    // Habitudes suivies ce mois
     document.getElementById('dashHabits').textContent = allHabits.length;
-    
-    // Budget restant
-    const totalBudget = allBudget.reduce((sum, b) => sum + (b.estime || 0), 0);
-    const spentBudget = allBudget.reduce((sum, b) => sum + (b.reel || 0), 0);
+    const totalBudget = allBudget.reduce((s, b) => s + (b.estime || 0), 0);
+    const spentBudget = allBudget.reduce((s, b) => s + (b.reel || 0), 0);
     const remaining = totalBudget - spentBudget;
     const pct = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
     document.getElementById('dashBudget').textContent = pct + '%';
     document.getElementById('dashBudgetRestant').textContent = remaining + ' DH';
-    
-    // Wishlist
-    const wishTotal = allWishes.reduce((sum, w) => sum + (w.price || 0), 0);
+    const wishTotal = allWishes.reduce((s, w) => s + (w.price || 0), 0);
     document.getElementById('dashWish').textContent = allWishes.length;
     document.getElementById('dashWishTotal').textContent = wishTotal + ' DH';
-    
-    // Progression wishlist (par rapport à un objectif fictif)
     const progress = wishTotal > 0 ? Math.min(100, Math.round((remaining / wishTotal) * 100)) : 0;
     document.getElementById('dashWishProgress').textContent = progress + '%';
     document.getElementById('dashWishBar').style.width = progress + '%';
-    
-    // Objectifs pédagogiques
-    const pedaItems = allPedagogical;
-    const mathP = pedaItems.find(p => p.name && p.name.toLowerCase().includes('math')) || { progress: 0 };
-    const webP = pedaItems.find(p => p.name && p.name.toLowerCase().includes('web')) || { progress: 0 };
-    const bookP = pedaItems.find(p => p.name && p.name.toLowerCase().includes('livre')) || { progress: 0 };
-    document.getElementById('dashMath').textContent = (mathP.progress || 0) + '%';
-    document.getElementById('dashMathBar').style.width = (mathP.progress || 0) + '%';
-    document.getElementById('dashWeb').textContent = (webP.progress || 0) + '%';
-    document.getElementById('dashWebBar').style.width = (webP.progress || 0) + '%';
-    document.getElementById('dashBooks').textContent = (bookP.progress || 0) + '%';
-    document.getElementById('dashBooksBar').style.width = (bookP.progress || 0) + '%';
-    
-    // Activités proches (5h)
+    const pedaContainer = document.getElementById('dashPedagogique');
+    if (allPedagogical.length === 0) pedaContainer.innerHTML = '<div class="text-muted">Aucun objectif</div>';
+    else pedaContainer.innerHTML = allPedagogical.map(p => `
+        <div>✅ ${p.name}: <span>${p.progress || 0}%</span></div>
+        <div class="progress-bar"><div class="fill" style="width:${p.progress || 0}%;"></div></div>
+    `).join('');
     const now = new Date();
     const upcoming = [];
-    // Tâches
     allTasks.forEach(t => {
         if (t.dueDate) {
-            const due = new Date(t.dueDate);
+            const due = new Date(t.dueDate + 'T' + (t.time || '00:00'));
             if (due > now && due - now < 5 * 60 * 60 * 1000) {
                 upcoming.push({ time: due, text: `📋 ${t.title}`, type: 'task' });
             }
         }
     });
-    // Habitudes avec heure
     allHabits.forEach(h => {
-        if (h.time) {
+        if (h.time && h.days && h.days.includes(now.getDay())) {
             const [hour, min] = h.time.split(':').map(Number);
             const hDate = new Date(now);
             hDate.setHours(hour, min, 0, 0);
@@ -1774,33 +1454,28 @@ function updateDashboard() {
             }
         }
     });
-    // Repas
-    ['breakfast', 'lunch', 'dinner'].forEach(meal => {
-        allMeals[meal].forEach(m => {
-            if (m.time) {
-                const [hour, min] = m.time.split(':').map(Number);
-                const mDate = new Date(now);
-                mDate.setHours(hour, min, 0, 0);
-                if (mDate > now && mDate - now < 5 * 60 * 60 * 1000) {
-                    upcoming.push({ time: mDate, text: `🍽️ ${m.name}`, type: 'meal' });
-                }
+    allCourses.forEach(c => {
+        if (c.day && c.startTime) {
+            const days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+            const dayIdx = days.indexOf(c.day);
+            const cDate = new Date(now);
+            cDate.setDate(now.getDate() + (dayIdx - now.getDay() + 7) % 7);
+            const [hour, min] = c.startTime.split(':').map(Number);
+            cDate.setHours(hour, min, 0, 0);
+            if (cDate > now && cDate - now < 5 * 60 * 60 * 1000) {
+                upcoming.push({ time: cDate, text: `📚 ${c.name}`, type: 'course' });
             }
-        });
+        }
     });
-    // Trier par heure
     upcoming.sort((a, b) => a.time - b.time);
-    
     const container = document.getElementById('dashActivities');
-    if (upcoming.length === 0) {
-        container.innerHTML = `<div class="empty-state"><span class="big-icon">⏳</span>Aucune activité à venir</div>`;
-    } else {
-        container.innerHTML = upcoming.map(a => 
-            `<div style="padding:6px 0;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;">
-                <span>${a.text}</span>
-                <span class="text-muted">${a.time.toLocaleTimeString('fr', {hour:'2-digit',minute:'2-digit'})}</span>
-            </div>`
-        ).join('');
-    }
+    if (upcoming.length === 0) container.innerHTML = `<div class="empty-state"><span class="big-icon">⏳</span>Aucune activité à venir</div>`;
+    else container.innerHTML = upcoming.map(a => 
+        `<div style="padding:6px 0;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;">
+            <span>${a.text}</span>
+            <span class="text-muted">${a.time.toLocaleTimeString('fr', {hour:'2-digit',minute:'2-digit'})}</span>
+        </div>`
+    ).join('');
 }
 
 // ================================================================
@@ -1809,12 +1484,7 @@ function updateDashboard() {
 function populateTaskDomains() {
     const domains = ['Études', 'Projet', 'Personnel', 'Travail', 'Maison', 'Santé', 'Autre'];
     const select = document.getElementById('taskFilterDomain');
-    domains.forEach(d => {
-        const opt = document.createElement('option');
-        opt.value = d;
-        opt.textContent = d;
-        select.appendChild(opt);
-    });
+    domains.forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.textContent = d; select.appendChild(opt); });
 }
 
 function openTaskModal(task) {
@@ -1822,14 +1492,12 @@ function openTaskModal(task) {
     const modal = document.getElementById('modalBody');
     const domains = ['Études', 'Projet', 'Personnel', 'Travail', 'Maison', 'Santé', 'Autre'];
     const domainOpts = domains.map(d => `<option value="${d}" ${task?.domain === d ? 'selected' : ''}>${d}</option>`).join('');
-    
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une tâche</h3>
         <input type="text" id="taskTitle" placeholder="Titre" value="${task?.title || ''}" style="margin-bottom:10px;">
         <textarea id="taskDesc" placeholder="Description" style="margin-bottom:10px;min-height:60px;">${task?.desc || ''}</textarea>
         <select id="taskDomain" style="margin-bottom:10px;">${domainOpts}</select>
-        <input type="date" id="taskDue" value="${task?.dueDate || ''}" style="margin-bottom:10px;">
-        <input type="time" id="taskTime" value="${task?.time || ''}" style="margin-bottom:10px;">
+        <input type="datetime-local" id="taskDue" value="${task?.dueDate ? task.dueDate + 'T' + (task.time || '00:00') : ''}" style="margin-bottom:10px;">
         <select id="taskPriority" style="margin-bottom:10px;">
             <option value="Haute" ${task?.priority === 'Haute' ? 'selected' : ''}>Haute</option>
             <option value="Moyenne" ${task?.priority === 'Moyenne' ? 'selected' : ''}>Moyenne</option>
@@ -1850,30 +1518,28 @@ function openTaskModal(task) {
 }
 
 async function saveTaskFromModal(id) {
+    const dueValue = document.getElementById('taskDue').value;
+    let dueDate = '', time = '';
+    if (dueValue) {
+        const parts = dueValue.split('T');
+        dueDate = parts[0];
+        time = parts[1] || '00:00';
+    }
     const task = {
         title: document.getElementById('taskTitle').value,
         desc: document.getElementById('taskDesc').value,
         domain: document.getElementById('taskDomain').value,
-        dueDate: document.getElementById('taskDue').value,
-        time: document.getElementById('taskTime').value,
+        dueDate, time,
         priority: document.getElementById('taskPriority').value,
         status: document.getElementById('taskStatus').value,
         duration: parseInt(document.getElementById('taskDuration').value) || 0,
         subtasks: []
     };
     if (id) task.id = id;
-    
     await saveTask(task);
     if (!id) allTasks.push(task);
-    else {
-        const idx = allTasks.findIndex(t => t.id === id);
-        if (idx >= 0) allTasks[idx] = task;
-    }
-    closeModal();
-    renderTasks();
-    updateDashboard();
-    showToast('Tâche enregistrée !', 'success');
-    playSound('pop');
+    else { const idx = allTasks.findIndex(t => t.id === id); if (idx >= 0) allTasks[idx] = task; }
+    closeModal(); renderTasks(); updateDashboard(); showToast('Tâche enregistrée !', 'success'); playSound('pop');
 }
 
 function renderTasks() {
@@ -1881,93 +1547,65 @@ function renderTasks() {
     const priorityFilter = document.getElementById('taskFilterPriority').value;
     const domainFilter = document.getElementById('taskFilterDomain').value;
     const view = document.getElementById('taskView').value;
-    
     let filtered = allTasks;
     if (statusFilter !== 'all') filtered = filtered.filter(t => t.status === statusFilter);
     if (priorityFilter !== 'all') filtered = filtered.filter(t => t.priority === priorityFilter);
     if (domainFilter !== 'all') filtered = filtered.filter(t => t.domain === domainFilter);
-    
     const container = document.getElementById('taskContainer');
-    
-    if (filtered.length === 0) {
-        container.innerHTML = `<div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div>`;
-        return;
-    }
-    
+    if (filtered.length === 0) { container.innerHTML = `<div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div>`; return; }
     if (view === 'list') {
-        container.innerHTML = `
-            <div class="table-wrap">
-                <table>
-                    <thead><tr><th>Titre</th><th>Domaine</th><th>Échéance</th><th>Priorité</th><th>Statut</th><th>Action</th></tr></thead>
-                    <tbody>${filtered.map(t => `
-                        <tr>
-                            <td>${t.title}</td>
-                            <td>${t.domain || '-'}</td>
-                            <td>${t.dueDate || '-'}</td>
-                            <td><span class="badge badge-${t.priority?.toLowerCase() || 'low'}">${t.priority || 'Basse'}</span></td>
-                            <td>${t.status || 'À faire'}</td>
-                            <td>
-                                <button class="btn btn-primary btn-sm" onclick="openTaskModal(allTasks.find(a=>a.id==='${t.id}'))">✏️</button>
-                                <button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')">🗑️</button>
-                                ${t.status !== 'Terminé' ? `<button class="btn btn-success btn-sm" onclick="completeTask('${t.id}')">✅</button>` : ''}
-                            </td>
-                        </tr>
-                    `).join('')}</tbody>
-                </table>
-            </div>
-        `;
+        container.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Titre</th><th>Domaine</th><th>Échéance</th><th>Priorité</th><th>Statut</th><th>Action</th></tr></thead><tbody>${filtered.map(t => `
+            <tr>
+                <td>${t.title}</td>
+                <td>${t.domain || '-'}</td>
+                <td>${t.dueDate || '-'} ${t.time || ''}</td>
+                <td><span class="badge badge-${t.priority?.toLowerCase() || 'low'}">${t.priority || 'Basse'}</span></td>
+                <td>${t.status || 'À faire'}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="openTaskModal(allTasks.find(a=>a.id==='${t.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')">🗑️</button>
+                    <button class="btn btn-${t.status === 'Terminé' ? 'warning' : 'success'} btn-sm" onclick="toggleTaskStatus('${t.id}')">${t.status === 'Terminé' ? '↩️' : '✅'}</button>
+                </td>
+            </tr>
+        `).join('')}</tbody></table></div>`;
     } else if (view === 'kanban') {
         const columns = ['À faire', 'En cours', 'Terminé'];
-        container.innerHTML = `
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-                ${columns.map(col => `
-                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:12px;">
-                        <h4 style="text-align:center;color:var(--text-muted);">${col}</h4>
-                        ${filtered.filter(t => t.status === col).map(t => `
-                            <div style="background:var(--bg-card);border-radius:8px;padding:10px;margin-bottom:8px;border-left:3px solid var(--accent);">
-                                <div style="font-weight:600;">${t.title}</div>
-                                <div style="font-size:12px;color:var(--text-muted);">${t.domain || ''} - ${t.priority || ''}</div>
-                            </div>
-                        `).join('') || '<div class="text-muted text-center" style="padding:8px;">Vide</div>'}
+        container.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">${columns.map(col => `
+            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:12px;">
+                <h4 style="text-align:center;color:var(--text-muted);">${col}</h4>
+                ${filtered.filter(t => t.status === col).map(t => `
+                    <div style="background:var(--bg-card);border-radius:8px;padding:10px;margin-bottom:8px;border-left:3px solid var(--accent);">
+                        <div style="font-weight:600;">${t.title}</div>
+                        <div style="font-size:12px;color:var(--text-muted);">${t.domain || ''} - ${t.priority || ''}</div>
                     </div>
-                `).join('')}
+                `).join('') || '<div class="text-muted text-center" style="padding:8px;">Vide</div>'}
             </div>
-        `;
+        `).join('')}</div>`;
     } else {
-        // Vue calendrier (simplifiée)
-        container.innerHTML = `
-            <div class="calendar-grid">
-                ${filtered.map(t => `
-                    <div class="day" style="background:var(--accent);color:#fff;">
-                        ${t.dueDate ? new Date(t.dueDate).getDate() : '?'}
-                        <div class="events">${t.title}</div>
-                    </div>
-                `).join('')}
+        container.innerHTML = `<div class="calendar-grid">${filtered.map(t => `
+            <div class="day" style="background:var(--accent);color:#fff;">
+                <div class="day-number">${t.dueDate ? new Date(t.dueDate).getDate() : '?'}</div>
+                <div class="events">${t.title}</div>
             </div>
-        `;
+        `).join('')}</div>`;
     }
 }
 
 async function deleteTask(id) {
-    if (!confirm('Supprimer cette tâche ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('tasks').doc(id).delete();
     allTasks = allTasks.filter(t => t.id !== id);
-    renderTasks();
-    updateDashboard();
-    playSound('woosh');
+    renderTasks(); updateDashboard(); playSound('woosh');
 }
 
-async function completeTask(id) {
+async function toggleTaskStatus(id) {
     const task = allTasks.find(t => t.id === id);
-    if (task) {
-        task.status = 'Terminé';
-        await saveTask(task);
-        renderTasks();
-        updateDashboard();
-        playSound('ting');
-        showToast('✅ Tâche complétée !', 'success');
-    }
+    if (!task) return;
+    task.status = task.status === 'Terminé' ? 'À faire' : 'Terminé';
+    await saveTask(task);
+    renderTasks(); updateDashboard(); playSound('ting');
+    showToast(task.status === 'Terminé' ? '✅ Tâche complétée !' : '↩️ Tâche réouverte', 'success');
 }
 
 // ================================================================
@@ -1978,15 +1616,14 @@ function openHabitModal(habit) {
     const modal = document.getElementById('modalBody');
     const categories = ['Études', 'Sport', 'Productivité', 'Personnelles', 'Santé', 'Créativité', 'Digital'];
     const catOpts = categories.map(c => `<option value="${c}" ${habit?.category === c ? 'selected' : ''}>${c}</option>`).join('');
-    
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une habitude</h3>
-        <input type="text" id="habitName" placeholder="Nom de l'habitude" value="${habit?.name || ''}" style="margin-bottom:10px;">
+        <input type="text" id="habitName" placeholder="Nom" value="${habit?.name || ''}" style="margin-bottom:10px;">
         <select id="habitCategory" style="margin-bottom:10px;">${catOpts}</select>
         <input type="time" id="habitTime" value="${habit?.time || ''}" style="margin-bottom:10px;">
-        <input type="number" id="habitGoal" placeholder="Objectif (ex: 30 min)" value="${habit?.goal || ''}" style="margin-bottom:10px;">
+        <input type="number" id="habitGoal" placeholder="Objectif (min)" value="${habit?.goal || ''}" style="margin-bottom:10px;">
         <div style="margin-bottom:10px;">
-            <label>Jours de répétition:</label>
+            <label>Jours:</label>
             <div class="flex-center gap-8">
                 ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map((d,i) => `
                     <label><input type="checkbox" class="habit-day" value="${i}" ${habit?.days && habit.days.includes(i) ? 'checked' : ''}> ${d}</label>
@@ -2013,52 +1650,68 @@ async function saveHabitFromModal(id) {
         history: []
     };
     if (id) habit.id = id;
-    
     await saveHabit(habit);
     if (!id) allHabits.push(habit);
-    else {
-        const idx = allHabits.findIndex(h => h.id === id);
-        if (idx >= 0) allHabits[idx] = habit;
-    }
-    closeModal();
-    renderHabits();
-    updateDashboard();
-    showToast('Habitude enregistrée !', 'success');
-    playSound('pop');
+    else { const idx = allHabits.findIndex(h => h.id === id); if (idx >= 0) allHabits[idx] = habit; }
+    closeModal(); renderHabits(); updateDashboard(); showToast('Habitude enregistrée !', 'success'); playSound('pop');
 }
 
 function renderHabits() {
     const container = document.getElementById('habitContainer');
-    if (allHabits.length === 0) {
-        container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune habitude</div>`;
-        return;
-    }
+    if (allHabits.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune habitude</div>`; return; }
     container.innerHTML = allHabits.map(h => `
-        <div class="card">
+        <div class="card" onclick="showHabitMonth('${h.id}')" style="cursor:pointer;">
             <div class="flex-between">
                 <div><span style="font-size:20px;">${h.category === 'Études' ? '🧠' : h.category === 'Sport' ? '🏃' : h.category === 'Productivité' ? '💼' : h.category === 'Personnelles' ? '🎯' : h.category === 'Santé' ? '🍎' : h.category === 'Créativité' ? '🎨' : '📱'}</span> ${h.name}</div>
                 <div>
-                    <button class="btn btn-primary btn-sm" onclick="openHabitModal(allHabits.find(a=>a.id==='${h.id}'))">✏️</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteHabit('${h.id}')">🗑️</button>
+                    <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHabitModal(allHabits.find(a=>a.id==='${h.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteHabit('${h.id}')">🗑️</button>
                 </div>
             </div>
             <div>⏰ ${h.time || '--:--'} | 🎯 ${h.goal || 0} min</div>
             <div>🔥 Streak: ${h.streak || 0} jours</div>
             <div class="flex-center gap-8 mt-12">
-                <button class="btn btn-success btn-sm" onclick="checkHabit('${h.id}')">✅ Check-in aujourd'hui</button>
+                <button class="btn btn-${h.history && h.history.includes(new Date().toISOString().split('T')[0]) ? 'warning' : 'success'} btn-sm" onclick="event.stopPropagation();checkHabit('${h.id}')">
+                    ${h.history && h.history.includes(new Date().toISOString().split('T')[0]) ? '✅ Fait' : '☑️ Check-in'}
+                </button>
             </div>
         </div>
     `).join('');
 }
 
+function showHabitMonth(id) {
+    const habit = allHabits.find(h => h.id === id);
+    if (!habit) return;
+    const modal = document.getElementById('modalBody');
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let html = `<h3>📅 ${habit.name} - ${now.toLocaleString('fr', {month:'long', year:'numeric'})}</h3><div class="calendar-grid">`;
+    ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].forEach(d => html += `<div class="day-header">${d}</div>`);
+    const firstDay = new Date(year, month, 1).getDay();
+    const offset = (firstDay === 0 ? 6 : firstDay - 1);
+    for (let i = 0; i < offset; i++) html += '<div></div>';
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const done = habit.history && habit.history.includes(dateStr);
+        const isHabitDay = habit.days && habit.days.includes(new Date(year, month, d).getDay());
+        html += `<div class="day ${done ? 'prayer-done' : ''}" style="${isHabitDay ? 'border:2px solid var(--accent);' : ''}">
+            <div class="day-number">${d}</div>
+            <div class="events">${done ? '✅' : isHabitDay ? '◯' : ''}</div>
+        </div>`;
+    }
+    html += '</div><button class="btn btn-outline mt-12" onclick="closeModal()">Fermer</button>';
+    modal.innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
 async function deleteHabit(id) {
-    if (!confirm('Supprimer cette habitude ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('habits').doc(id).delete();
     allHabits = allHabits.filter(h => h.id !== id);
-    renderHabits();
-    updateDashboard();
-    playSound('woosh');
+    renderHabits(); updateDashboard(); playSound('woosh');
 }
 
 async function checkHabit(id) {
@@ -2067,54 +1720,73 @@ async function checkHabit(id) {
     const today = new Date().toISOString().split('T')[0];
     if (!habit.history) habit.history = [];
     if (habit.history.includes(today)) {
-        showToast('Déjà fait aujourd\'hui !', 'warning');
+        showToast('Déjà fait aujourd\'hui', 'warning');
         return;
     }
     habit.history.push(today);
-    // Calculer le streak
+    // Streak: compter uniquement les jours où l'habitude est programmée
     habit.streak = calculateStreak(habit.history, habit.days);
     await saveHabit(habit);
-    renderHabits();
-    updateDashboard();
-    playSound('ting');
+    renderHabits(); updateDashboard(); playSound('ting');
     showToast('✅ Habitude validée !', 'success');
 }
 
 function calculateStreak(history, days) {
-    // Simplifié: compte les jours consécutifs dans l'historique
-    if (!history || history.length === 0) return 0;
+    if (!history || history.length === 0 || !days || days.length === 0) return 0;
     let streak = 0;
     const sorted = [...history].sort();
-    let last = new Date(sorted[sorted.length - 1]);
-    let today = new Date();
-    // Vérifier si aujourd'hui est dans les jours autorisés
-    if (days && !days.includes(today.getDay())) return 0;
-    for (let i = sorted.length - 1; i >= 0; i--) {
-        const d = new Date(sorted[i]);
-        const diff = (last - d) / (1000 * 60 * 60 * 24);
-        if (diff <= 1) streak++;
-        else break;
-        last = d;
+    // Vérifier à partir d'aujourd'hui en arrière
+    let checkDate = new Date();
+    while (true) {
+        const dateStr = checkDate.toISOString().split('T')[0];
+        const dayOfWeek = checkDate.getDay();
+        // Si le jour est dans les jours programmés
+        if (days.includes(dayOfWeek)) {
+            if (sorted.includes(dateStr)) {
+                streak++;
+            } else {
+                break;
+            }
+        }
+        checkDate.setDate(checkDate.getDate() - 1);
     }
     return streak;
 }
 
 // ================================================================
-// BUDGET
+// BUDGET (Shopping + Products)
 // ================================================================
+function switchBudgetTab(tab) {
+    currentBudgetTab = tab;
+    document.getElementById('budgetTabShopping').className = tab === 'shopping' ? 'btn btn-primary' : 'btn btn-outline';
+    document.getElementById('budgetTabProducts').className = tab === 'products' ? 'btn btn-primary' : 'btn btn-outline';
+    document.getElementById('budgetShoppingView').style.display = tab === 'shopping' ? 'block' : 'none';
+    document.getElementById('budgetProductsView').style.display = tab === 'products' ? 'block' : 'none';
+    if (tab === 'shopping') renderShoppingDays();
+    else renderProducts();
+    updateBudgetTotals();
+}
+
+function updateBudgetTotals() {
+    const est = allProducts.reduce((s, p) => s + (p.estime || 0), 0);
+    const real = allProducts.reduce((s, p) => s + (p.reel || 0), 0);
+    document.getElementById('budgetEstTotal').textContent = est + ' DH';
+    document.getElementById('budgetRealTotal').textContent = real + ' DH';
+    document.getElementById('budgetRemainTotal').textContent = (est - real) + ' DH';
+}
+
 function openBudgetModal(item) {
     const isEdit = !!item;
     const modal = document.getElementById('modalBody');
     const categories = ['Féculents', 'Conserves', 'Produits laitiers', 'Viandes et protéines', 'Légumes', 'Fruits', 'Gourmandises', 'Boissons', 'Epices et huile', 'Hygiène', 'Transport', 'Santé', 'Études', 'Épargnes', 'Perte'];
     const catOpts = categories.map(c => `<option value="${c}" ${item?.category === c ? 'selected' : ''}>${c}</option>`).join('');
-    
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une dépense</h3>
         <select id="budgetCategory" style="margin-bottom:10px;">${catOpts}</select>
         <input type="text" id="budgetName" placeholder="Nom" value="${item?.name || ''}" style="margin-bottom:10px;">
         <input type="number" id="budgetQty" placeholder="Quantité" value="${item?.qty || 1}" style="margin-bottom:10px;">
-        <input type="number" id="budgetEst" placeholder="Prix estimé" value="${item?.estime || ''}" style="margin-bottom:10px;">
-        <input type="number" id="budgetReal" placeholder="Prix réel" value="${item?.reel || ''}" style="margin-bottom:10px;">
+        <input type="number" id="budgetEst" placeholder="Estimé" value="${item?.estime || ''}" style="margin-bottom:10px;">
+        <input type="number" id="budgetReal" placeholder="Réel" value="${item?.reel || ''}" style="margin-bottom:10px;">
         <select id="budgetPriority" style="margin-bottom:10px;">
             <option value="Basse" ${item?.priority === 'Basse' ? 'selected' : ''}>Basse</option>
             <option value="Moyenne" ${item?.priority === 'Moyenne' ? 'selected' : ''}>Moyenne</option>
@@ -2138,105 +1810,29 @@ async function saveBudgetFromModal(id) {
         priority: document.getElementById('budgetPriority').value
     };
     if (id) item.id = id;
-    
     await saveBudget(item);
     if (!id) allBudget.push(item);
-    else {
-        const idx = allBudget.findIndex(b => b.id === id);
-        if (idx >= 0) allBudget[idx] = item;
-    }
-    closeModal();
-    renderBudget();
-    updateDashboard();
-    showToast('Dépense enregistrée !', 'success');
-    playSound('pop');
+    else { const idx = allBudget.findIndex(b => b.id === id); if (idx >= 0) allBudget[idx] = item; }
+    closeModal(); renderBudget(); updateDashboard(); showToast('Dépense enregistrée !', 'success'); playSound('pop');
 }
 
 function renderBudget() {
-    // Tableau
-    const tbody = document.getElementById('budgetTableBody');
-    if (allBudget.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">Aucune dépense</td></tr>`;
-    } else {
-        tbody.innerHTML = allBudget.map(b => `
-            <tr>
-                <td>${b.category || '-'}</td>
-                <td>${b.name || '-'}</td>
-                <td>${b.qty || 1}</td>
-                <td>${b.estime || 0} DH</td>
-                <td>${b.reel || 0} DH</td>
-                <td>${((b.reel || 0) - (b.estime || 0)).toFixed(2)} DH</td>
-                <td><span class="badge badge-${b.priority?.toLowerCase() || 'low'}">${b.priority || 'Basse'}</span></td>
-                <td>
-                    <button class="btn btn-primary btn-sm" onclick="openBudgetModal(allBudget.find(a=>a.id==='${b.id}'))">✏️</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteBudget('${b.id}')">🗑️</button>
-                </td>
-            </tr>
-        `).join('');
-    }
-    
-    // Totaux
-    const total = allBudget.reduce((s, b) => s + (b.estime || 0), 0);
-    const spent = allBudget.reduce((s, b) => s + (b.reel || 0), 0);
-    const remaining = total - spent;
-    document.getElementById('budgetTotal').textContent = total + ' DH';
-    document.getElementById('budgetSpent').textContent = spent + ' DH';
-    document.getElementById('budgetRemaining').textContent = remaining + ' DH';
-    const pct = total > 0 ? Math.round((spent / total) * 100) : 0;
-    document.getElementById('budgetBar').style.width = Math.min(100, pct) + '%';
-    
-    // Graphique
-    drawBudgetChart();
+    // Juste pour les totaux
+    updateBudgetTotals();
 }
 
-function drawBudgetChart() {
-    const ctx = document.getElementById('budgetChart').getContext('2d');
-    // Aggrégation par catégorie
-    const cats = {};
-    allBudget.forEach(b => {
-        if (!cats[b.category]) cats[b.category] = 0;
-        cats[b.category] += b.reel || 0;
-    });
-    const labels = Object.keys(cats);
-    const data = Object.values(cats);
-    
-    if (window.budgetChartInstance) window.budgetChartInstance.destroy();
-    window.budgetChartInstance = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels,
-            datasets: [{ data: data, backgroundColor: ['#6c5ce7', '#00b894', '#fdcb6e', '#e17055', '#74b9ff', '#fd79a8', '#00cec9'] }]
-        },
-        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-    });
-}
-
-async function deleteBudget(id) {
-    if (!confirm('Supprimer cette dépense ?')) return;
-    if (!currentUser) return;
-    await db.collection('users').doc(currentUser.uid).collection('budget').doc(id).delete();
-    allBudget = allBudget.filter(b => b.id !== id);
-    renderBudget();
-    updateDashboard();
-    playSound('woosh');
-}
-
-// ================================================================
-// PRODUITS
-// ================================================================
 function openProductModal(product) {
     const isEdit = !!product;
     const modal = document.getElementById('modalBody');
     const categories = ['Féculents', 'Conserves', 'Produits laitiers', 'Viandes et protéines', 'Légumes', 'Fruits', 'Gourmandises', 'Boissons', 'Epices et huile', 'Hygiène', 'Transport', 'Santé', 'Études', 'Épargnes', 'Perte'];
     const catOpts = categories.map(c => `<option value="${c}" ${product?.category === c ? 'selected' : ''}>${c}</option>`).join('');
-    
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un produit</h3>
         <select id="productCategory" style="margin-bottom:10px;">${catOpts}</select>
         <input type="text" id="productName" placeholder="Nom" value="${product?.name || ''}" style="margin-bottom:10px;">
-        <input type="text" id="productQty" placeholder="Quantité (ex: 1kg, 2L, 3 pièces)" value="${product?.qty || ''}" style="margin-bottom:10px;">
-        <input type="number" id="productEst" placeholder="Prix estimé" value="${product?.estime || ''}" style="margin-bottom:10px;">
-        <input type="number" id="productReal" placeholder="Prix réel" value="${product?.reel || ''}" style="margin-bottom:10px;">
+        <input type="text" id="productQty" placeholder="Quantité" value="${product?.qty || '1'}" style="margin-bottom:10px;">
+        <input type="number" id="productEst" placeholder="Estimé" value="${product?.estime || ''}" style="margin-bottom:10px;">
+        <input type="number" id="productReal" placeholder="Réel" value="${product?.reel || ''}" style="margin-bottom:10px;">
         <select id="productPriority" style="margin-bottom:10px;">
             <option value="Basse" ${product?.priority === 'Basse' ? 'selected' : ''}>Basse</option>
             <option value="Moyenne" ${product?.priority === 'Moyenne' ? 'selected' : ''}>Moyenne</option>
@@ -2258,37 +1854,24 @@ async function saveProductFromModal(id) {
         estime: parseFloat(document.getElementById('productEst').value) || 0,
         reel: parseFloat(document.getElementById('productReal').value) || 0,
         priority: document.getElementById('productPriority').value,
-        checked: false // 0 = vide, 1 = orange, 2 = vert, 3 = rouge
+        checked: 0
     };
-    if (id) product.id = id;
-    
-    // Déterminer le statut du checkbox
     const real = product.reel || 0;
     const est = product.estime || 0;
     if (real === 0) product.checked = 0;
     else if (real >= est * 0.5 && real < est) product.checked = 1;
     else if (real >= est) product.checked = 2;
     else product.checked = 3;
-    
+    if (id) product.id = id;
     await saveProduct(product);
     if (!id) allProducts.push(product);
-    else {
-        const idx = allProducts.findIndex(p => p.id === id);
-        if (idx >= 0) allProducts[idx] = product;
-    }
-    closeModal();
-    renderProducts();
-    updateDashboard();
-    showToast('Produit enregistré !', 'success');
-    playSound('pop');
+    else { const idx = allProducts.findIndex(p => p.id === id); if (idx >= 0) allProducts[idx] = product; }
+    closeModal(); renderProducts(); updateDashboard(); updateBudgetTotals(); showToast('Produit enregistré !', 'success'); playSound('pop');
 }
 
 function renderProducts() {
     const tbody = document.getElementById('productTableBody');
-    if (allProducts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">Aucun produit</td></tr>`;
-        return;
-    }
+    if (allProducts.length === 0) { tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">Aucun produit</td></tr>`; return; }
     tbody.innerHTML = allProducts.map(p => {
         const checkClass = p.checked === 0 ? '' : p.checked === 1 ? 'orange' : p.checked === 2 ? 'green' : 'red';
         const checkLabel = p.checked === 0 ? '◯' : p.checked === 1 ? '◔' : p.checked === 2 ? '✓' : '◉';
@@ -2299,7 +1882,7 @@ function renderProducts() {
                 <td>${p.name || '-'}</td>
                 <td>${p.qty || '1'}</td>
                 <td>${p.estime || 0} DH</td>
-                <td>${p.reel || 0} DH</td>
+                <td>${p.reel || 0} DH <button class="btn btn-outline btn-sm" onclick="adjustProductReal('${p.id}', -1)">-</button><button class="btn btn-outline btn-sm" onclick="adjustProductReal('${p.id}', 1)">+</button></td>
                 <td>${((p.reel || 0) - (p.estime || 0)).toFixed(2)} DH</td>
                 <td><span class="badge badge-${p.priority?.toLowerCase() || 'low'}">${p.priority || 'Basse'}</span></td>
                 <td>
@@ -2311,39 +1894,45 @@ function renderProducts() {
     }).join('');
 }
 
+async function adjustProductReal(id, delta) {
+    const p = allProducts.find(a => a.id === id);
+    if (!p) return;
+    p.reel = Math.max(0, (p.reel || 0) + delta);
+    const real = p.reel || 0;
+    const est = p.estime || 0;
+    if (real === 0) p.checked = 0;
+    else if (real >= est * 0.5 && real < est) p.checked = 1;
+    else if (real >= est) p.checked = 2;
+    else p.checked = 3;
+    await saveProduct(p);
+    renderProducts(); updateBudgetTotals(); updateDashboard(); playSound('pop');
+}
+
 async function toggleProductCheck(id) {
     const p = allProducts.find(a => a.id === id);
     if (!p) return;
-    // Cycle: 0 -> 1 -> 2 -> 3 -> 0
     p.checked = (p.checked + 1) % 4;
     await saveProduct(p);
-    renderProducts();
-    updateDashboard();
-    playSound('ting');
+    renderProducts(); updateDashboard(); updateBudgetTotals(); playSound('ting');
 }
 
 async function deleteProduct(id) {
-    if (!confirm('Supprimer ce produit ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('products').doc(id).delete();
     allProducts = allProducts.filter(p => p.id !== id);
-    renderProducts();
-    updateDashboard();
-    playSound('woosh');
+    renderProducts(); updateDashboard(); updateBudgetTotals(); playSound('woosh');
 }
 
-// ================================================================
-// SHOPPING DAYS
-// ================================================================
+// Shopping Days
 function openShoppingDayModal() {
     const modal = document.getElementById('modalBody');
     const categories = ['Féculents', 'Conserves', 'Produits laitiers', 'Viandes et protéines', 'Légumes', 'Fruits', 'Gourmandises', 'Boissons', 'Epices et huile', 'Hygiène', 'Transport', 'Santé', 'Études', 'Épargnes', 'Perte'];
-    
     modal.innerHTML = `
         <h3>🛒 Nouveau jour de shopping</h3>
         <input type="date" id="shoppingDate" value="${new Date().toISOString().split('T')[0]}" style="margin-bottom:10px;">
         <div style="margin-bottom:10px;">
-            <label>Sélectionner une catégorie:</label>
+            <label>Catégorie:</label>
             <select id="shoppingCategory" style="margin-bottom:10px;">${categories.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
             <button class="btn btn-primary btn-sm" onclick="addProductToShoppingDay()">➕ Ajouter produit</button>
         </div>
@@ -2354,27 +1943,23 @@ function openShoppingDayModal() {
         </div>
     `;
     document.getElementById('modalOverlay').classList.add('show');
-    // Initialiser la liste des produits
     updateShoppingProductList();
 }
+
+let shoppingProductsCache = [];
 
 function updateShoppingProductList() {
     const container = document.getElementById('shoppingProductList');
     const cat = document.getElementById('shoppingCategory').value;
     const products = allProducts.filter(p => p.category === cat);
-    if (products.length === 0) {
-        container.innerHTML = '<div class="text-muted">Aucun produit dans cette catégorie</div>';
-    } else {
-        container.innerHTML = products.map(p => `
-            <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border-color);">
-                <input type="checkbox" class="shopping-product-check" value="${p.id}">
-                <span>${p.name} - ${p.qty} - ${p.estime} DH</span>
-            </div>
-        `).join('');
-    }
+    if (products.length === 0) container.innerHTML = '<div class="text-muted">Aucun produit dans cette catégorie</div>';
+    else container.innerHTML = products.map(p => `
+        <div style="display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <input type="checkbox" class="shopping-product-check" value="${p.id}">
+            <span>${p.name} - ${p.qty} - ${p.estime} DH</span>
+        </div>
+    `).join('');
 }
-
-let shoppingProductsCache = [];
 
 function addProductToShoppingDay() {
     const checks = document.querySelectorAll('.shopping-product-check:checked');
@@ -2410,23 +1995,9 @@ function removeFromShoppingCache(id) {
 
 async function saveShoppingDayFromModal() {
     const date = document.getElementById('shoppingDate').value;
-    if (!date) { showToast('Veuillez sélectionner une date', 'error'); return; }
+    if (!date) { showToast('Sélectionnez une date', 'error'); return; }
     if (shoppingProductsCache.length === 0) { showToast('Ajoutez au moins un produit', 'warning'); return; }
-    
-    const day = {
-        date: date,
-        items: shoppingProductsCache.map(p => ({
-            id: p.id,
-            name: p.name,
-            category: p.category,
-            qty: p.qty,
-            estime: p.estime,
-            reel: p.reel || 0,
-            boughtQty: p.boughtQty || 0,
-            checked: p.checked || 0
-        }))
-    };
-    
+    const day = { date, items: shoppingProductsCache.map(p => ({ id: p.id, name: p.name, category: p.category, qty: p.qty, estime: p.estime, reel: p.reel || 0, boughtQty: p.boughtQty || 0, checked: p.checked || 0 })) };
     await saveShoppingDay(day);
     allShoppingDays.push(day);
     shoppingProductsCache = [];
@@ -2438,16 +2009,10 @@ async function saveShoppingDayFromModal() {
 
 function renderShoppingDays() {
     const container = document.getElementById('shoppingDaysContainer');
-    if (allShoppingDays.length === 0) {
-        container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucun jour de shopping</div>`;
-        return;
-    }
+    if (allShoppingDays.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucun jour de shopping</div>`; return; }
     container.innerHTML = allShoppingDays.map(d => `
         <div class="card">
-            <div class="flex-between">
-                <div><span style="font-size:20px;">📅</span> ${d.date}</div>
-                <button class="btn btn-danger btn-sm" onclick="deleteShoppingDay('${d.id}')">🗑️</button>
-            </div>
+            <div class="flex-between"><div><span style="font-size:20px;">📅</span> ${d.date}</div><button class="btn btn-danger btn-sm" onclick="deleteShoppingDay('${d.id}')">🗑️</button></div>
             <div>${d.items.map(i => `${i.name} (${i.qty}) - ${i.reel} DH`).join('<br>')}</div>
             <div class="mt-12 text-muted">Total: ${d.items.reduce((s, i) => s + (i.reel || 0), 0)} DH</div>
         </div>
@@ -2455,12 +2020,11 @@ function renderShoppingDays() {
 }
 
 async function deleteShoppingDay(id) {
-    if (!confirm('Supprimer ce jour de shopping ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('shoppingDays').doc(id).delete();
     allShoppingDays = allShoppingDays.filter(d => d.id !== id);
-    renderShoppingDays();
-    playSound('woosh');
+    renderShoppingDays(); playSound('woosh');
 }
 
 // ================================================================
@@ -2472,13 +2036,13 @@ function openWishModal(wish) {
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un souhait</h3>
         <input type="text" id="wishName" placeholder="Nom" value="${wish?.name || ''}" style="margin-bottom:10px;">
-        <input type="number" id="wishPrice" placeholder="Prix estimé" value="${wish?.price || ''}" style="margin-bottom:10px;">
+        <input type="number" id="wishPrice" placeholder="Prix" value="${wish?.price || ''}" style="margin-bottom:10px;">
         <select id="wishPriority" style="margin-bottom:10px;">
             <option value="Urgent" ${wish?.priority === 'Urgent' ? 'selected' : ''}>Urgent</option>
             <option value="Bientôt" ${wish?.priority === 'Bientôt' ? 'selected' : ''}>Bientôt</option>
             <option value="Rêve" ${wish?.priority === 'Rêve' ? 'selected' : ''}>Rêve</option>
         </select>
-        <input type="text" id="wishLink" placeholder="Lien (optionnel)" value="${wish?.link || ''}" style="margin-bottom:10px;">
+        <input type="text" id="wishLink" placeholder="Lien" value="${wish?.link || ''}" style="margin-bottom:10px;">
         <div class="flex-center gap-8">
             <button class="btn btn-primary" onclick="saveWishFromModal('${isEdit ? wish.id : ''}')">Enregistrer</button>
             <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
@@ -2488,64 +2052,50 @@ function openWishModal(wish) {
 }
 
 async function saveWishFromModal(id) {
-    const wish = {
-        name: document.getElementById('wishName').value,
-        price: parseFloat(document.getElementById('wishPrice').value) || 0,
-        priority: document.getElementById('wishPriority').value,
-        link: document.getElementById('wishLink').value
-    };
+    const wish = { name: document.getElementById('wishName').value, price: parseFloat(document.getElementById('wishPrice').value) || 0, priority: document.getElementById('wishPriority').value, link: document.getElementById('wishLink').value };
     if (id) wish.id = id;
-    
     await saveWish(wish);
     if (!id) allWishes.push(wish);
-    else {
-        const idx = allWishes.findIndex(w => w.id === id);
-        if (idx >= 0) allWishes[idx] = wish;
-    }
-    closeModal();
-    renderWishlist();
-    updateDashboard();
-    showToast('Souhait enregistré !', 'success');
-    playSound('pop');
+    else { const idx = allWishes.findIndex(w => w.id === id); if (idx >= 0) allWishes[idx] = wish; }
+    closeModal(); renderWishlist(); updateDashboard(); showToast('Souhait enregistré !', 'success'); playSound('pop');
 }
 
 function renderWishlist() {
     const container = document.getElementById('wishListContainer');
-    if (allWishes.length === 0) {
-        container.innerHTML = '<div class="text-muted">Aucun souhait</div>';
-    } else {
-        container.innerHTML = allWishes.map(w => `
-            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-color);">
-                <div>${w.name}</div>
-                <div>${w.price} DH <span class="badge badge-${w.priority?.toLowerCase() === 'urgent' ? 'high' : w.priority?.toLowerCase() === 'bientôt' ? 'medium' : 'low'}">${w.priority}</span></div>
-                <div>
-                    <button class="btn btn-primary btn-sm" onclick="openWishModal(allWishes.find(a=>a.id==='${w.id}'))">✏️</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑️</button>
-                </div>
-            </div>
-        `).join('');
-    }
+    if (allWishes.length === 0) container.innerHTML = '<div class="text-muted">Aucun souhait</div>';
+    else container.innerHTML = allWishes.map(w => `
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-color);">
+            <div>${w.name}</div>
+            <div>${w.price} DH <span class="badge badge-${w.priority?.toLowerCase() === 'urgent' ? 'high' : w.priority?.toLowerCase() === 'bientôt' ? 'medium' : 'low'}">${w.priority}</span></div>
+            <div><button class="btn btn-primary btn-sm" onclick="openWishModal(allWishes.find(a=>a.id==='${w.id}'))">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑️</button></div>
+        </div>
+    `).join('');
+    // Pédagogiques
+    const pedaContainer = document.getElementById('pedagogicalContainer');
+    if (allPedagogical.length === 0) pedaContainer.innerHTML = '<div class="text-muted">Aucun objectif</div>';
+    else pedaContainer.innerHTML = allPedagogical.map(p => `
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <span>${p.name}</span>
+            <span>${p.progress || 0}%</span>
+            <div><button class="btn btn-primary btn-sm" onclick="openPedagogicalModal(allPedagogical.find(a=>a.id==='${p.id}'))">✏️</button><button class="btn btn-danger btn-sm" onclick="deletePedagogical('${p.id}')">🗑️</button></div>
+        </div>
+    `).join('');
 }
 
 async function deleteWish(id) {
-    if (!confirm('Supprimer ce souhait ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('wishes').doc(id).delete();
     allWishes = allWishes.filter(w => w.id !== id);
-    renderWishlist();
-    updateDashboard();
-    playSound('woosh');
+    renderWishlist(); updateDashboard(); playSound('woosh');
 }
 
-// ================================================================
-// OBJECTIFS PÉDAGOGIQUES
-// ================================================================
 function openPedagogicalModal(p) {
     const isEdit = !!p;
     const modal = document.getElementById('modalBody');
     modal.innerHTML = `
-        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un objectif pédagogique</h3>
-        <input type="text" id="pedaName" placeholder="Nom (ex: Réviser Math)" value="${p?.name || ''}" style="margin-bottom:10px;">
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un objectif</h3>
+        <input type="text" id="pedaName" placeholder="Nom" value="${p?.name || ''}" style="margin-bottom:10px;">
         <input type="number" id="pedaProgress" placeholder="Progression (0-100)" value="${p?.progress || 0}" style="margin-bottom:10px;" min="0" max="100">
         <div class="flex-center gap-8">
             <button class="btn btn-primary" onclick="savePedagogicalFromModal('${isEdit ? p.id : ''}')">Enregistrer</button>
@@ -2556,23 +2106,20 @@ function openPedagogicalModal(p) {
 }
 
 async function savePedagogicalFromModal(id) {
-    const p = {
-        name: document.getElementById('pedaName').value,
-        progress: parseInt(document.getElementById('pedaProgress').value) || 0
-    };
+    const p = { name: document.getElementById('pedaName').value, progress: parseInt(document.getElementById('pedaProgress').value) || 0 };
     if (id) p.id = id;
-    
     await savePedagogical(p);
     if (!id) allPedagogical.push(p);
-    else {
-        const idx = allPedagogical.findIndex(pp => pp.id === id);
-        if (idx >= 0) allPedagogical[idx] = p;
-    }
-    closeModal();
-    renderWishlist();
-    updateDashboard();
-    showToast('Objectif enregistré !', 'success');
-    playSound('pop');
+    else { const idx = allPedagogical.findIndex(pp => pp.id === id); if (idx >= 0) allPedagogical[idx] = p; }
+    closeModal(); renderWishlist(); updateDashboard(); showToast('Objectif enregistré !', 'success'); playSound('pop');
+}
+
+async function deletePedagogical(id) {
+    if (!confirm('Supprimer ?')) return;
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('pedagogical').doc(id).delete();
+    allPedagogical = allPedagogical.filter(p => p.id !== id);
+    renderWishlist(); updateDashboard(); playSound('woosh');
 }
 
 // ================================================================
@@ -2581,6 +2128,33 @@ async function savePedagogicalFromModal(id) {
 function changeCalendarMonth(delta) {
     calendarDate.setMonth(calendarDate.getMonth() + delta);
     renderCalendar();
+}
+
+function openCalendarEventModal() {
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>📅 Ajouter un événement</h3>
+        <input type="text" id="calEventTitle" placeholder="Titre" style="margin-bottom:10px;">
+        <input type="date" id="calEventDate" value="${new Date().toISOString().split('T')[0]}" style="margin-bottom:10px;">
+        <input type="time" id="calEventTime" style="margin-bottom:10px;">
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveCalendarEvent()">Ajouter</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveCalendarEvent() {
+    const title = document.getElementById('calEventTitle').value;
+    const date = document.getElementById('calEventDate').value;
+    const time = document.getElementById('calEventTime').value;
+    if (!title || !date) { showToast('Remplissez les champs', 'warning'); return; }
+    // Sauvegarder comme tâche
+    const task = { title, desc: 'Événement calendrier', domain: 'Personnel', dueDate: date, time: time || '00:00', priority: 'Moyenne', status: 'À faire', duration: 0, subtasks: [] };
+    await saveTask(task);
+    allTasks.push(task);
+    closeModal(); renderCalendar(); updateDashboard(); showToast('Événement ajouté !', 'success'); playSound('pop');
 }
 
 function renderCalendar() {
@@ -2594,40 +2168,57 @@ function renderCalendar() {
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
         const today = new Date();
-        let html = `
-            <div class="calendar-grid">
-                ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(d => `<div class="day-header">${d}</div>`).join('')}
-        `;
-        // Décalage pour commencer lundi
+        let html = `<div class="calendar-grid">${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(d => `<div class="day-header">${d}</div>`).join('')}`;
         const offset = (firstDay === 0 ? 6 : firstDay - 1);
         for (let i = 0; i < offset; i++) html += '<div></div>';
         for (let d = 1; d <= daysInMonth; d++) {
             const date = new Date(year, month, d);
             const isToday = date.toDateString() === today.toDateString();
-            // Événements du jour
+            const dateStr = date.toISOString().split('T')[0];
             const events = [];
-            allTasks.forEach(t => {
-                if (t.dueDate && new Date(t.dueDate).toDateString() === date.toDateString()) {
-                    events.push(t.title);
-                }
+            allTasks.forEach(t => { if (t.dueDate && t.dueDate === dateStr) events.push({ text: t.title, type: 'task' }); });
+            allHabits.forEach(h => { if (h.history && h.history.includes(dateStr)) events.push({ text: '✅ ' + h.name, type: 'habit' }); });
+            allCourses.forEach(c => {
+                const days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+                if (c.day === days[date.getDay()]) events.push({ text: '📚 ' + c.name, type: 'course' });
             });
-            allHabits.forEach(h => {
-                if (h.history && h.history.includes(date.toISOString().split('T')[0])) {
-                    events.push('✅ ' + h.name);
-                }
-            });
-            html += `
-                <div class="day" style="${isToday ? 'background:var(--accent);color:#fff;' : ''}">
-                    ${d}
-                    <div class="events">${events.slice(0,2).join('<br>')}${events.length > 2 ? '...' : ''}</div>
-                </div>
-            `;
+            allExams.forEach(e => { if (e.date === dateStr) events.push({ text: '📝 ' + e.name, type: 'exam' }); });
+            const hasPrayers = allPrayers[dateStr] && allPrayers[dateStr] >= 5;
+            html += `<div class="day ${isToday ? 'today' : ''} ${hasPrayers ? 'prayer-done' : ''}">
+                <div class="day-number">${d}</div>
+                <div class="events">${events.slice(0,3).map(e => `<div class="event-item">${e.text}</div>`).join('')}${events.length > 3 ? `<div class="event-item">+${events.length-3}</div>` : ''}</div>
+            </div>`;
         }
         html += '</div>';
         container.innerHTML = html;
     } else {
-        // Vue semaine ou jour (simplifiée)
-        container.innerHTML = `<div class="empty-state"><span class="big-icon">📅</span>Vue ${view} en développement</div>`;
+        // Vue semaine/jour simplifiée
+        let days = [];
+        let start = new Date(calendarDate);
+        if (view === 'week') {
+            start.setDate(start.getDate() - start.getDay() + 1);
+            for (let i = 0; i < 7; i++) { const d = new Date(start); d.setDate(d.getDate() + i); days.push(d); }
+        } else {
+            days = [new Date(calendarDate)];
+        }
+        let html = `<div style="display:flex;flex-direction:column;gap:8px;">`;
+        days.forEach(day => {
+            const dateStr = day.toISOString().split('T')[0];
+            const events = [];
+            allTasks.forEach(t => { if (t.dueDate === dateStr) events.push({ text: t.title, time: t.time || '00:00' }); });
+            allCourses.forEach(c => {
+                const daysNames = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+                if (c.day === daysNames[day.getDay()]) events.push({ text: '📚 ' + c.name, time: c.startTime || '00:00' });
+            });
+            allExams.forEach(e => { if (e.date === dateStr) events.push({ text: '📝 ' + e.name, time: '09:00' }); });
+            events.sort((a,b) => (a.time || '00:00').localeCompare(b.time || '00:00'));
+            html += `<div style="padding:8px;border:1px solid var(--border-color);border-radius:8px;">
+                <strong>${day.toLocaleDateString('fr', {weekday:'long', day:'numeric', month:'long'})}</strong>
+                ${events.length === 0 ? '<div class="text-muted">Aucun événement</div>' : events.map(e => `<div>${e.time ? e.time.slice(0,5) + ' - ' : ''}${e.text}</div>`).join('')}
+            </div>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
     }
 }
 
@@ -2637,15 +2228,10 @@ function renderCalendar() {
 function addSportSession() {
     const activity = document.getElementById('sportActivity').value;
     const duration = parseInt(document.getElementById('sportDuration').value) || 0;
-    const calories = parseInt(document.getElementById('sportCaloriesInput').value) || 0;
-    if (!activity) { showToast('Veuillez entrer une activité', 'warning'); return; }
-    
-    const session = {
-        activity: activity,
-        duration: duration,
-        calories: calories,
-        date: new Date().toISOString()
-    };
+    const date = document.getElementById('sportDate').value || new Date().toISOString().split('T')[0];
+    const time = document.getElementById('sportTimeInput').value || '00:00';
+    if (!activity) { showToast('Entrez une activité', 'warning'); return; }
+    const session = { activity, duration, date, time };
     saveSportSession(session);
     allSportSessions.push(session);
     renderSport();
@@ -2653,27 +2239,28 @@ function addSportSession() {
     playSound('pop');
     document.getElementById('sportActivity').value = '';
     document.getElementById('sportDuration').value = '';
-    document.getElementById('sportCaloriesInput').value = '';
 }
 
 function renderSport() {
-    const totalSessions = allSportSessions.length;
-    const totalCal = allSportSessions.reduce((s, a) => s + (a.calories || 0), 0);
+    document.getElementById('sportSessions').textContent = allSportSessions.length;
     const totalTime = allSportSessions.reduce((s, a) => s + (a.duration || 0), 0);
-    document.getElementById('sportSessions').textContent = totalSessions;
-    document.getElementById('sportCalories').textContent = totalCal;
-    document.getElementById('sportTime').textContent = Math.round(totalTime / 60) + 'h';
-    
+    document.getElementById('sportTime').textContent = Math.round(totalTime / 60) + 'h' + (totalTime % 60) + 'min';
     const history = document.getElementById('sportHistory');
-    if (allSportSessions.length === 0) {
-        history.innerHTML = '<div class="text-muted">Aucune séance</div>';
-    } else {
-        history.innerHTML = allSportSessions.slice().reverse().slice(0, 10).map(s => `
-            <div style="padding:4px 0;border-bottom:1px solid var(--border-color);">
-                ${s.date ? new Date(s.date).toLocaleDateString() : ''} - ${s.activity} (${s.duration}min, ${s.calories}kcal)
-            </div>
-        `).join('');
-    }
+    if (allSportSessions.length === 0) history.innerHTML = '<div class="text-muted">Aucune séance</div>';
+    else history.innerHTML = allSportSessions.slice().reverse().map(s => `
+        <div style="padding:4px 0;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;">
+            <span>${s.date || ''} ${s.time || ''} - ${s.activity} (${s.duration}min)</span>
+            <button class="btn btn-danger btn-sm" onclick="deleteSportSession('${s.id}')">🗑️</button>
+        </div>
+    `).join('');
+}
+
+async function deleteSportSession(id) {
+    if (!confirm('Supprimer ?')) return;
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('sport').doc(id).delete();
+    allSportSessions = allSportSessions.filter(s => s.id !== id);
+    renderSport(); playSound('woosh');
 }
 
 // ================================================================
@@ -2686,70 +2273,57 @@ function changeNutritionDay(delta) {
 
 function addMeal(type) {
     const input = document.getElementById(type + 'Input');
+    const timeInput = document.getElementById(type + 'Time');
     const text = input.value.trim();
     if (!text) return;
-    const meal = {
-        name: text,
-        type: type,
-        date: nutritionDate.toISOString().split('T')[0],
-        time: new Date().toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' })
-    };
+    const meal = { name: text, type, date: nutritionDate.toISOString().split('T')[0], time: timeInput.value || new Date().toLocaleTimeString('fr', {hour:'2-digit',minute:'2-digit'}) };
     saveMeal(meal);
     allMeals[type].push(meal);
     renderNutrition();
     input.value = '';
+    if (timeInput) timeInput.value = '';
     playSound('pop');
 }
 
 function renderNutrition() {
     const dateStr = nutritionDate.toISOString().split('T')[0];
     document.getElementById('nutritionDateDisplay').textContent = nutritionDate.toLocaleDateString('fr');
-    
     ['breakfast', 'lunch', 'dinner'].forEach(type => {
         const container = document.getElementById(type + 'Items');
         const items = allMeals[type].filter(m => m.date === dateStr);
         container.innerHTML = items.length === 0 ? '<div class="text-muted">Aucun</div>' :
             items.map(m => `<div>• ${m.name} ${m.time ? '('+m.time+')' : ''}</div>`).join('');
     });
-    
-    // Eau et calories
     document.getElementById('waterAmount').textContent = waterAmount.toFixed(1);
     document.getElementById('waterBar').style.width = Math.min(100, (waterAmount / 3) * 100) + '%';
-    document.getElementById('calorieAmount').textContent = calorieAmount;
-    document.getElementById('calorieBar').style.width = Math.min(100, (calorieAmount / 2200) * 100) + '%';
 }
 
 function addWater() {
     const val = parseFloat(document.getElementById('waterInput').value) || 0;
     waterAmount += val;
-    saveStats(waterAmount, calorieAmount);
+    saveStats(waterAmount);
     renderNutrition();
     document.getElementById('waterInput').value = '';
-    playSound('pop');
-}
-
-function addCalories() {
-    const val = parseInt(document.getElementById('calorieInput').value) || 0;
-    calorieAmount += val;
-    saveStats(waterAmount, calorieAmount);
-    renderNutrition();
-    document.getElementById('calorieInput').value = '';
     playSound('pop');
 }
 
 // ================================================================
 // POMODORO
 // ================================================================
+function updatePomodoroSelect() {
+    const select = document.getElementById('pomodoroSessionSelect');
+    select.innerHTML = '<option value="">Choisir une tâche...</option>' + 
+        allTasks.filter(t => t.status !== 'Terminé').map(t => `<option value="${t.title}">${t.title}</option>`).join('');
+}
+
 function togglePomodoro() {
     if (pomodoroRunning) {
-        // Pause
         pomodoroRunning = false;
         clearInterval(pomodoroInterval);
         document.getElementById('pomodoroStartBtn').textContent = '▶ Reprendre';
         document.getElementById('pomodoroStatus').textContent = 'Pause';
         playSound('ding');
     } else {
-        // Démarrer ou reprendre
         pomodoroRunning = true;
         document.getElementById('pomodoroStartBtn').textContent = '⏸ Pause';
         document.getElementById('pomodoroStatus').textContent = 'En cours...';
@@ -2768,15 +2342,10 @@ function togglePomodoro() {
                 document.getElementById('pomodoroStartBtn').textContent = '▶ Démarrer';
                 document.getElementById('pomodoroStatus').textContent = 'Terminé !';
                 playSound('alarme');
-                // Sauvegarder la session
-                const session = document.getElementById('pomodoroSession').value || 'Session';
+                const session = document.getElementById('pomodoroSessionInput').value || document.getElementById('pomodoroSessionSelect').value || 'Session';
                 pomodoroSessionCount++;
                 document.getElementById('pomodoroCount').textContent = pomodoroSessionCount;
-                savePomodoroSession({
-                    name: session,
-                    date: new Date().toISOString(),
-                    duration: parseInt(document.getElementById('pomoDuration').value) || 25
-                });
+                savePomodoroSessionData(session);
                 renderPomodoroHistory();
                 showToast('⏱️ Pomodoro terminé !', 'success');
             }
@@ -2798,133 +2367,136 @@ function resetPomodoro() {
 function updatePomodoroDisplay() {
     const mins = Math.floor(pomodoroTimeLeft / 60);
     const secs = pomodoroTimeLeft % 60;
-    document.getElementById('pomodoroTime').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    // Mettre à jour le cercle
+    document.getElementById('pomodoroTime').textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
     const duration = parseInt(document.getElementById('pomoDuration').value) || 25;
     const total = duration * 60;
     const pct = 1 - (pomodoroTimeLeft / total);
     const ring = document.getElementById('pomodoroRing');
     ring.style.borderColor = pct > 0.7 ? 'var(--success)' : pct > 0.3 ? 'var(--warning)' : 'var(--accent)';
-    ring.style.borderWidth = '8px';
     ring.style.transform = `rotate(${-90 + (pct * 360)}deg)`;
 }
 
 function savePomodoroSession() {
-    const session = document.getElementById('pomodoroSession').value || 'Session';
+    const session = document.getElementById('pomodoroSessionInput').value || document.getElementById('pomodoroSessionSelect').value || 'Session';
     if (pomodoroSessionCount === 0) { showToast('Faites d\'abord un pomodoro', 'warning'); return; }
-    // Déjà sauvegardé automatiquement à la fin
     showToast('Session enregistrée !', 'success');
     playSound('pop');
 }
 
+async function savePomodoroSessionData(name) {
+    if (!currentUser) return;
+    const session = { name, date: new Date().toISOString(), duration: parseInt(document.getElementById('pomoDuration').value) || 25 };
+    const ref = await db.collection('users').doc(currentUser.uid).collection('pomodoro').add(session);
+    session.id = ref.id;
+    pomodoroHistory.push(session);
+}
+
 function renderPomodoroHistory() {
     const container = document.getElementById('pomodoroHistory');
-    if (pomodoroHistory.length === 0) {
-        container.innerHTML = '<div class="text-muted">Aucun historique</div>';
-    } else {
-        container.innerHTML = pomodoroHistory.slice().reverse().slice(0, 10).map(s => `
-            <div>${s.date ? new Date(s.date).toLocaleDateString() : ''} - ${s.name} (${s.duration}min)</div>
-        `).join('');
-    }
+    if (pomodoroHistory.length === 0) container.innerHTML = '<div class="text-muted">Aucun historique</div>';
+    else container.innerHTML = pomodoroHistory.slice().reverse().slice(0, 10).map(s => 
+        `<div>${s.date ? new Date(s.date).toLocaleDateString() : ''} - ${s.name} (${s.duration}min)</div>`
+    ).join('');
 }
 
 // ================================================================
-// DRIVE
+// EMPLOI DU TEMPS
 // ================================================================
-function createDriveFolder() {
-    const name = prompt('Nom du dossier :');
-    if (!name) return;
-    const folder = {
-        name: name,
-        files: [],
-        createdAt: new Date().toISOString()
-    };
-    saveDriveFolder(folder);
-    allDriveFolders.push(folder);
-    renderDrive();
-    playSound('pop');
-}
-
-function openDriveModal() {
+function openCourseModal() {
     const modal = document.getElementById('modalBody');
     modal.innerHTML = `
-        <h3>📁 Ajouter un fichier</h3>
-        <select id="driveFolderSelect" style="margin-bottom:10px;">
-            ${allDriveFolders.map(f => `<option value="${f.id}">${f.name}</option>`).join('')}
+        <h3>📚 Ajouter un cours</h3>
+        <input type="text" id="courseName" placeholder="Nom du cours" style="margin-bottom:10px;">
+        <input type="text" id="courseTeacher" placeholder="Enseignant" style="margin-bottom:10px;">
+        <input type="text" id="courseRoom" placeholder="Salle" style="margin-bottom:10px;">
+        <select id="courseDay" style="margin-bottom:10px;">
+            ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(d => `<option value="${d}">${d}</option>`).join('')}
         </select>
-        <input type="text" id="driveFileName" placeholder="Nom du fichier" style="margin-bottom:10px;">
-        <input type="text" id="driveFileType" placeholder="Type (pdf, xlsx, docx, png...)" style="margin-bottom:10px;">
-        <input type="file" id="driveFileUpload" style="margin-bottom:10px;">
+        <input type="time" id="courseStart" placeholder="Début" style="margin-bottom:10px;">
+        <input type="time" id="courseEnd" placeholder="Fin" style="margin-bottom:10px;">
+        <select id="courseType" style="margin-bottom:10px;">
+            <option value="Cours">Cours</option>
+            <option value="TD">TD</option>
+            <option value="TP">TP</option>
+        </select>
         <div class="flex-center gap-8">
-            <button class="btn btn-primary" onclick="saveDriveFile()">Ajouter</button>
+            <button class="btn btn-primary" onclick="saveCourseFromModal()">Ajouter</button>
             <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
         </div>
     `;
     document.getElementById('modalOverlay').classList.add('show');
 }
 
-async function saveDriveFile() {
-    const folderId = document.getElementById('driveFolderSelect').value;
-    const name = document.getElementById('driveFileName').value;
-    const type = document.getElementById('driveFileType').value;
-    const fileInput = document.getElementById('driveFileUpload');
-    
-    if (!folderId || !name) { showToast('Veuillez remplir tous les champs', 'warning'); return; }
-    
-    const folder = allDriveFolders.find(f => f.id === folderId);
-    if (!folder) return;
-    
-    // Gestion du fichier (simulée, en réalité on stockerait dans Firebase Storage)
-    const fileData = {
-        name: name,
-        type: type || 'fichier',
-        uploadedAt: new Date().toISOString()
+async function saveCourseFromModal() {
+    const course = {
+        name: document.getElementById('courseName').value,
+        teacher: document.getElementById('courseTeacher').value,
+        room: document.getElementById('courseRoom').value,
+        day: document.getElementById('courseDay').value,
+        startTime: document.getElementById('courseStart').value,
+        endTime: document.getElementById('courseEnd').value,
+        type: document.getElementById('courseType').value
     };
-    if (fileInput.files.length > 0) {
-        fileData.fileName = fileInput.files[0].name;
-        fileData.size = fileInput.files[0].size;
-    }
-    
-    if (!folder.files) folder.files = [];
-    folder.files.push(fileData);
-    await saveDriveFolder(folder);
-    renderDrive();
-    closeModal();
-    showToast('Fichier ajouté !', 'success');
-    playSound('pop');
+    if (!course.name) { showToast('Nom requis', 'warning'); return; }
+    await saveCourse(course);
+    allCourses.push(course);
+    closeModal(); renderSchedule(); showToast('Cours ajouté !', 'success'); playSound('pop');
 }
 
-function renderDrive() {
-    const container = document.getElementById('driveContainer');
-    if (allDriveFolders.length === 0) {
-        container.innerHTML = `<div class="empty-state"><span class="big-icon">📁</span>Aucun dossier</div>`;
-        return;
-    }
-    container.innerHTML = allDriveFolders.map(f => `
-        <div style="margin-bottom:16px;border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:12px;">
-            <div class="flex-between">
-                <span style="font-weight:600;">📂 ${f.name}</span>
-                <button class="btn btn-danger btn-sm" onclick="deleteDriveFolder('${f.id}')">🗑️</button>
-            </div>
-            ${(f.files || []).length === 0 ? '<div class="text-muted">Aucun fichier</div>' :
-                (f.files || []).map(file => `
-                    <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
-                        <span>📄 ${file.name}.${file.type || 'file'}</span>
-                        <span class="text-muted">${file.uploadedAt ? new Date(file.uploadedAt).toLocaleDateString() : ''}</span>
-                    </div>
-                `).join('')
-            }
+function openExamModal() {
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>📝 Ajouter un DS/Exam</h3>
+        <input type="text" id="examName" placeholder="Nom (ex: DS Maths)" style="margin-bottom:10px;">
+        <input type="date" id="examDate" style="margin-bottom:10px;">
+        <input type="time" id="examTime" style="margin-bottom:10px;">
+        <input type="text" id="examRoom" placeholder="Salle" style="margin-bottom:10px;">
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveExamFromModal()">Ajouter</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
         </div>
-    `).join('');
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
 }
 
-async function deleteDriveFolder(id) {
-    if (!confirm('Supprimer ce dossier ?')) return;
-    if (!currentUser) return;
-    await db.collection('users').doc(currentUser.uid).collection('drive').doc(id).delete();
-    allDriveFolders = allDriveFolders.filter(f => f.id !== id);
-    renderDrive();
-    playSound('woosh');
+async function saveExamFromModal() {
+    const exam = {
+        name: document.getElementById('examName').value,
+        date: document.getElementById('examDate').value,
+        time: document.getElementById('examTime').value,
+        room: document.getElementById('examRoom').value
+    };
+    if (!exam.name || !exam.date) { showToast('Nom et date requis', 'warning'); return; }
+    await saveExam(exam);
+    allExams.push(exam);
+    closeModal(); renderSchedule(); showToast('Exam ajouté !', 'success'); playSound('pop');
+}
+
+function renderSchedule() {
+    const container = document.getElementById('scheduleContainer');
+    const slots = parseInt(document.getElementById('scheduleSlots').value) || 4;
+    const weekType = document.getElementById('scheduleWeekType').value;
+    const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    const times = ['08:00', '10:00', '14:00', '16:00'];
+    if (slots === 6) times.push('18:00', '20:00');
+    if (slots === 8) times.push('18:00', '20:00', '22:00');
+    
+    let html = `<div class="schedule-grid"><div></div>${days.map(d => `<div class="day-header">${d}</div>`).join('')}`;
+    times.forEach((time, idx) => {
+        html += `<div class="time-slot">${time}</div>`;
+        days.forEach(day => {
+            const courses = allCourses.filter(c => c.day === day && c.startTime === time);
+            const exams = allExams.filter(e => e.date === new Date().toISOString().split('T')[0] && e.time === time);
+            let content = '';
+            courses.forEach(c => content += `<div class="course-slot"><div class="course-name">${c.name}</div><div class="course-detail">${c.teacher || ''} - ${c.room || ''} - ${c.type || ''}</div></div>`);
+            exams.forEach(e => content += `<div class="course-slot" style="border-left-color:var(--danger);"><div class="course-name">📝 ${e.name}</div><div class="course-detail">${e.room || ''}</div></div>`);
+            html += `<div style="min-height:60px;background:var(--bg-primary);border-radius:var(--radius-sm);padding:4px;">${content || '<div class="text-muted" style="font-size:11px;text-align:center;">-</div>'}</div>`;
+        });
+    });
+    html += '</div>';
+    // Exams list
+    html += `<div class="mt-12"><strong>📝 DS & Exams:</strong> ${allExams.map(e => `${e.name} (${e.date} ${e.time || ''})`).join(', ') || 'Aucun'}</div>`;
+    container.innerHTML = html;
 }
 
 // ================================================================
@@ -2955,44 +2527,24 @@ function openNoteModal(note) {
     document.getElementById('modalOverlay').classList.add('show');
 }
 
-function formatNote(command, value) {
-    document.execCommand(command, false, value);
-}
+function formatNote(command, value) { document.execCommand(command, false, value); }
 
 async function saveNoteFromModal(id) {
-    const note = {
-        title: document.getElementById('noteTitle').value || 'Sans titre',
-        content: document.getElementById('noteEditor').innerHTML,
-        updatedAt: new Date().toISOString()
-    };
+    const note = { title: document.getElementById('noteTitle').value || 'Sans titre', content: document.getElementById('noteEditor').innerHTML, updatedAt: new Date().toISOString() };
     if (id) note.id = id;
-    
     await saveNote(note);
     if (!id) allNotes.push(note);
-    else {
-        const idx = allNotes.findIndex(n => n.id === id);
-        if (idx >= 0) allNotes[idx] = note;
-    }
-    closeModal();
-    renderNotes();
-    showToast('Note enregistrée !', 'success');
-    playSound('pop');
+    else { const idx = allNotes.findIndex(n => n.id === id); if (idx >= 0) allNotes[idx] = note; }
+    closeModal(); renderNotes(); showToast('Note enregistrée !', 'success'); playSound('pop');
 }
 
 function renderNotes() {
     const container = document.getElementById('notesContainer');
-    if (allNotes.length === 0) {
-        container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune note</div>`;
-        return;
-    }
+    if (allNotes.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucune note</div>`; return; }
     container.innerHTML = allNotes.map(n => `
         <div class="card">
-            <div class="flex-between">
-                <span style="font-weight:600;">${n.title}</span>
-                <div>
-                    <button class="btn btn-primary btn-sm" onclick="openNoteModal(allNotes.find(a=>a.id==='${n.id}'))">✏️</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteNote('${n.id}')">🗑️</button>
-                </div>
+            <div class="flex-between"><span style="font-weight:600;">${n.title}</span>
+                <div><button class="btn btn-primary btn-sm" onclick="openNoteModal(allNotes.find(a=>a.id==='${n.id}'))">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteNote('${n.id}')">🗑️</button></div>
             </div>
             <div style="font-size:14px;color:var(--text-secondary);max-height:100px;overflow:hidden;">${n.content ? n.content.replace(/<[^>]*>/g, '').substring(0, 100) : ''}...</div>
             <div class="text-muted" style="font-size:11px;">${n.updatedAt ? new Date(n.updatedAt).toLocaleDateString() : ''}</div>
@@ -3001,12 +2553,11 @@ function renderNotes() {
 }
 
 async function deleteNote(id) {
-    if (!confirm('Supprimer cette note ?')) return;
+    if (!confirm('Supprimer ?')) return;
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('notes').doc(id).delete();
     allNotes = allNotes.filter(n => n.id !== id);
-    renderNotes();
-    playSound('woosh');
+    renderNotes(); playSound('woosh');
 }
 
 // ================================================================
@@ -3016,6 +2567,11 @@ function updatePrayers() {
     const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
     const count = prayers.filter(p => document.getElementById('prayer-' + p).checked).length;
     document.getElementById('prayerStats').textContent = `✅ ${count}/5 صلوات اليوم`;
+    const today = new Date().toISOString().split('T')[0];
+    if (!allPrayers[today]) allPrayers[today] = 0;
+    allPrayers[today] = count;
+    savePrayers(allPrayers);
+    renderPrayerCalendar();
     playSound('ting');
 }
 
@@ -3026,17 +2582,15 @@ function renderPrayerCalendar() {
     const month = now.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const today = now.getDate();
-    
     let html = `<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:12px;">`;
-    ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => html += `<div style="text-align:center;font-weight:600;color:var(--text-muted);">${d}</div>`);
+    ['S','M','T','W','T','F','S'].forEach(d => html += `<div style="text-align:center;font-weight:600;color:var(--text-muted);">${d}</div>`);
     const offset = firstDay;
     for (let i = 0; i < offset; i++) html += '<div></div>';
     for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === today;
-        // Simuler quelques jours avec prières
-        const hasPrayers = d % 2 === 0;
-        html += `<div style="text-align:center;padding:4px;${isToday ? 'background:var(--accent);color:#fff;border-radius:50%;' : ''}">${d}${hasPrayers ? ' ✅' : ''}</div>`;
+        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const prayers = allPrayers[dateStr] || 0;
+        const isToday = d === now.getDate();
+        html += `<div style="text-align:center;padding:4px;${isToday ? 'background:var(--accent);color:#fff;border-radius:50%;' : ''}${prayers >= 5 ? 'background:var(--success);color:#fff;border-radius:4px;' : ''}">${d}${prayers >= 5 ? ' ✅' : ''}</div>`;
     }
     html += '</div>';
     container.innerHTML = html;
@@ -3044,73 +2598,161 @@ function renderPrayerCalendar() {
 
 function openQuran() {
     const surah = document.getElementById('quranSurah').value;
-    showToast(`📖 Ouverture de la Sourate ${surah}... (PDF intégré)`);
-    // En réalité, on ouvrirait un PDF ou une page de coran
+    showToast(`📖 Ouverture de la Sourate ${surah}...`, 'info');
     playSound('ding');
 }
 
 function showDhikr() {
     const category = document.getElementById('dhikrCategory').value;
-    const dhikrs = {
-        morning: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أصبحنا'],
-        evening: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أمسينا'],
-        sleep: ['اللهم باسمك أموت وأحيا', 'سبحان الله (33x)', 'الحمد لله (33x)', 'الله أكبر (34x)'],
-        diverse: ['لا إله إلا الله', 'سبحان الله', 'الحمد لله', 'الله أكبر', 'أستغفر الله']
-    };
-    const list = dhikrs[category] || [];
+    const list = allDhikrs[category] || [];
     document.getElementById('dhikrDisplay').innerHTML = list.map(d => `<div>• ${d}</div>`).join('');
     playSound('pop');
 }
 
-// ================================================================
-// COMPTE
-// ================================================================
-function updateAccountStats() {
-    const tasksDone = allTasks.filter(t => t.status === 'Terminé').length;
-    document.getElementById('accountTasksDone').textContent = tasksDone;
-    const habitsDone = allHabits.reduce((sum, h) => sum + (h.history ? h.history.length : 0), 0);
-    document.getElementById('accountHabitsDone').textContent = habitsDone;
-    const avgBudget = allBudget.length > 0 ? allBudget.reduce((s, b) => s + (b.estime || 0), 0) / allBudget.length : 0;
-    document.getElementById('accountAvgBudget').textContent = Math.round(avgBudget) + ' DH';
+function editDhikr() {
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>✏️ تعديل الأذكار</h3>
+        <div style="margin-bottom:10px;">
+            <label>الصباح:</label>
+            <textarea id="dhikrMorning" style="min-height:80px;">${(allDhikrs.morning || []).join('\n')}</textarea>
+        </div>
+        <div style="margin-bottom:10px;">
+            <label>المساء:</label>
+            <textarea id="dhikrEvening" style="min-height:80px;">${(allDhikrs.evening || []).join('\n')}</textarea>
+        </div>
+        <div style="margin-bottom:10px;">
+            <label>النوم:</label>
+            <textarea id="dhikrSleep" style="min-height:80px;">${(allDhikrs.sleep || []).join('\n')}</textarea>
+        </div>
+        <div style="margin-bottom:10px;">
+            <label>متنوع:</label>
+            <textarea id="dhikrDiverse" style="min-height:80px;">${(allDhikrs.diverse || []).join('\n')}</textarea>
+        </div>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveDhikr()">حفظ</button>
+            <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
 }
 
-async function changePassword() {
-    const old = document.getElementById('oldPassword').value;
-    const newP = document.getElementById('newPassword').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    if (newP !== confirm) { showToast('Les mots de passe ne correspondent pas', 'error'); return; }
-    if (!currentUser) return;
-    try {
-        // Réauthentifier avec l'ancien mot de passe
-        const cred = firebase.auth.EmailAuthProvider.credential(currentUser.email, old);
-        await currentUser.reauthenticateWithCredential(cred);
-        await currentUser.updatePassword(newP);
-        showToast('Mot de passe changé !', 'success');
-        playSound('ting');
-    } catch(e) {
-        showToast('Erreur: ' + e.message, 'error');
-    }
+function saveDhikr() {
+    allDhikrs.morning = document.getElementById('dhikrMorning').value.split('\n').filter(s => s.trim());
+    allDhikrs.evening = document.getElementById('dhikrEvening').value.split('\n').filter(s => s.trim());
+    allDhikrs.sleep = document.getElementById('dhikrSleep').value.split('\n').filter(s => s.trim());
+    allDhikrs.diverse = document.getElementById('dhikrDiverse').value.split('\n').filter(s => s.trim());
+    closeModal();
+    showToast('✅ تم حفظ الأذكار', 'success');
+    playSound('pop');
+}
+
+// ================================================================
+// NOTES & MOYENNE
+// ================================================================
+function addSemester() {
+    const name = prompt('Nom du semestre (ex: S3):');
+    if (!name) return;
+    const sem = { id: 's' + Date.now(), name, subjects: [] };
+    allSemesters.push(sem);
+    saveSemester(sem);
+    renderMarks();
+    playSound('pop');
+}
+
+function renderMarks() {
+    const container = document.getElementById('marksContainer');
+    if (allSemesters.length === 0) { container.innerHTML = '<div class="empty-state"><span class="big-icon">📊</span>Aucun semestre</div>'; return; }
+    container.innerHTML = allSemesters.map(s => `
+        <div class="semester-card">
+            <div class="flex-between"><strong>${s.name}</strong><button class="btn btn-danger btn-sm" onclick="deleteSemester('${s.id}')">🗑️</button></div>
+            ${(s.subjects || []).map((sub, idx) => `
+                <div class="subject-row">
+                    <input type="text" value="${sub.name || ''}" placeholder="Matière" style="width:40%;" onchange="updateSubject('${s.id}', ${idx}, 'name', this.value)">
+                    <input type="number" value="${sub.mark || ''}" placeholder="Note" style="width:25%;" step="0.01" onchange="updateSubject('${s.id}', ${idx}, 'mark', parseFloat(this.value) || 0)">
+                    <input type="number" value="${sub.coef || 1}" placeholder="Coef" style="width:20%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'coef', parseFloat(this.value) || 1)">
+                    <button class="btn btn-danger btn-sm" onclick="removeSubject('${s.id}', ${idx})">✕</button>
+                </div>
+            `).join('')}
+            <button class="btn btn-primary btn-sm mt-12" onclick="addSubject('${s.id}')">+ Matière</button>
+            <div class="mt-12"><strong>Moyenne: ${calculateSemesterAverage(s)}</strong></div>
+        </div>
+    `).join('');
+    // Moyenne générale
+    let total = 0, totalCoef = 0;
+    allSemesters.forEach(s => {
+        (s.subjects || []).forEach(sub => {
+            if (sub.mark && sub.coef) {
+                total += sub.mark * sub.coef;
+                totalCoef += sub.coef;
+            }
+        });
+    });
+    document.getElementById('marksGeneralAverage').textContent = totalCoef > 0 ? (total / totalCoef).toFixed(2) : '0.00';
+}
+
+function calculateSemesterAverage(sem) {
+    let total = 0, totalCoef = 0;
+    (sem.subjects || []).forEach(sub => {
+        if (sub.mark && sub.coef) {
+            total += sub.mark * sub.coef;
+            totalCoef += sub.coef;
+        }
+    });
+    return totalCoef > 0 ? (total / totalCoef).toFixed(2) : '0.00';
+}
+
+async function updateSubject(semId, idx, field, value) {
+    const sem = allSemesters.find(s => s.id === semId);
+    if (!sem) return;
+    if (!sem.subjects) sem.subjects = [];
+    if (!sem.subjects[idx]) sem.subjects[idx] = {};
+    sem.subjects[idx][field] = value;
+    await saveSemester(sem);
+    renderMarks();
+}
+
+async function addSubject(semId) {
+    const sem = allSemesters.find(s => s.id === semId);
+    if (!sem) return;
+    if (!sem.subjects) sem.subjects = [];
+    sem.subjects.push({ name: 'Nouvelle matière', mark: 0, coef: 1 });
+    await saveSemester(sem);
+    renderMarks();
+    playSound('pop');
+}
+
+async function removeSubject(semId, idx) {
+    const sem = allSemesters.find(s => s.id === semId);
+    if (!sem) return;
+    sem.subjects.splice(idx, 1);
+    await saveSemester(sem);
+    renderMarks();
+    playSound('woosh');
+}
+
+async function deleteSemester(id) {
+    if (!confirm('Supprimer ce semestre ?')) return;
+    allSemesters = allSemesters.filter(s => s.id !== id);
+    if (currentUser) await db.collection('users').doc(currentUser.uid).collection('semesters').doc(id).delete();
+    renderMarks();
+    playSound('woosh');
 }
 
 // ================================================================
 // ADMIN
 // ================================================================
+let allUsers = [];
+
 function updateAdminPanel() {
-    // Vérifier si l'utilisateur est admin
     if (currentUser && currentUser.email === 'hamzamp2026@gmail.com') {
         document.getElementById('adminNav').style.display = 'flex';
-        // Charger les utilisateurs
         loadAdminUsers();
-        // Statistiques
         document.getElementById('adminUsers').textContent = allUsers.length;
         document.getElementById('adminTasks').textContent = allTasks.length;
         document.getElementById('adminHabits').textContent = allHabits.length;
-        const avgBudget = allBudget.length > 0 ? allBudget.reduce((s, b) => s + (b.estime || 0), 0) / allBudget.length : 0;
-        document.getElementById('adminAvgBudget').textContent = Math.round(avgBudget) + ' DH';
     }
 }
-
-let allUsers = [];
 
 async function loadAdminUsers() {
     if (!currentUser || currentUser.email !== 'hamzamp2026@gmail.com') return;
@@ -3118,11 +2760,8 @@ async function loadAdminUsers() {
         const snap = await db.collection('users').get();
         allUsers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         const select = document.getElementById('adminUserSelect');
-        select.innerHTML = '<option value="">-- Sélectionner --</option>' + 
-            allUsers.map(u => `<option value="${u.id}">${u.email}</option>`).join('');
-    } catch(e) {
-        console.error('Erreur chargement utilisateurs:', e);
-    }
+        select.innerHTML = '<option value="">-- Sélectionner --</option>' + allUsers.map(u => `<option value="${u.id}">${u.email}</option>`).join('');
+    } catch(e) { console.error(e); }
 }
 
 async function loadUserData(userId) {
@@ -3132,93 +2771,28 @@ async function loadUserData(userId) {
         const habits = await db.collection('users').doc(userId).collection('habits').get();
         const budget = await db.collection('users').doc(userId).collection('budget').get();
         const products = await db.collection('users').doc(userId).collection('products').get();
-        
-        const html = `
+        document.getElementById('adminUserData').innerHTML = `
             <div><strong>Tâches:</strong> ${tasks.size}</div>
             <div><strong>Habitudes:</strong> ${habits.size}</div>
-            <div><strong>Budget:</strong> ${budget.size} éléments</div>
+            <div><strong>Budget:</strong> ${budget.size}</div>
             <div><strong>Produits:</strong> ${products.size}</div>
-            <div class="mt-12">
-                <button class="btn btn-primary btn-sm" onclick="viewUserTasks('${userId}')">Voir les tâches</button>
-                <button class="btn btn-primary btn-sm" onclick="viewUserBudget('${userId}')">Voir le budget</button>
-            </div>
         `;
-        document.getElementById('adminUserData').innerHTML = html;
-    } catch(e) {
-        document.getElementById('adminUserData').innerHTML = 'Erreur chargement';
-    }
-}
-
-function viewUserTasks(userId) {
-    showToast('📋 Affichage des tâches de l\'utilisateur...');
-    // En réalité, on ouvrirait un modal avec les données
-}
-
-function viewUserBudget(userId) {
-    showToast('💰 Affichage du budget de l\'utilisateur...');
+    } catch(e) { document.getElementById('adminUserData').innerHTML = 'Erreur chargement'; }
 }
 
 // ================================================================
-// PARAMÈTRES
+// TOAST, SONS, MODAL
 // ================================================================
-function changeLanguage(lang) {
-    currentLanguage = lang;
-    showToast('🌐 Langue changée en ' + lang);
-    // Ici on traduirait l'UI - simplifié
-    playSound('pop');
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+    toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(40px)'; setTimeout(() => toast.remove(), 400); }, 4000);
 }
 
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    showToast('🌓 Thème: ' + theme);
-    playSound('pop');
-}
-
-function changeCurrency(currency) {
-    showToast('💰 Devise: ' + currency);
-    playSound('pop');
-}
-
-function exportData() {
-    const data = {
-        tasks: allTasks,
-        habits: allHabits,
-        budget: allBudget,
-        products: allProducts,
-        wishes: allWishes,
-        notes: allNotes
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'export_data.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('📤 Données exportées !', 'success');
-    playSound('pop');
-}
-
-function exportJSON() {
-    exportData();
-}
-
-function deleteAccount() {
-    if (!confirm('⚠️ Supprimer définitivement votre compte ?')) return;
-    if (!currentUser) return;
-    // Supprimer les données Firestore puis le compte
-    // Cette opération est irréversible
-    currentUser.delete().then(() => {
-        showToast('Compte supprimé', 'error');
-        location.reload();
-    }).catch(e => {
-        showToast('Erreur: ' + e.message, 'error');
-    });
-}
-
-// ================================================================
-// SONS
-// ================================================================
 function playSound(type) {
     try {
         const sounds = {
@@ -3229,112 +2803,17 @@ function playSound(type) {
             ding: new Audio('data:audio/wav;base64,UklGRnwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoAAACFhoSFhIOCgYGCg4SFhoaHh4eHh4eHhoWFhIOCgoGBgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==')
         };
         const sound = sounds[type];
-        if (sound && document.getElementById('notifSound').checked) {
-            sound.volume = 0.3;
-            sound.play().catch(() => {});
-        }
+        if (sound) { sound.volume = 0.3; sound.play().catch(() => {}); }
     } catch(e) {}
 }
 
-// ================================================================
-// TOAST (NOTIFICATIONS)
-// ================================================================
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
-    toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span><span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(40px)';
-        setTimeout(() => toast.remove(), 400);
-    }, 4000);
-    // Notification push
-    if (document.getElementById('notifPush').checked && Notification.permission === 'granted') {
-        new Notification('College Student Life', { body: message });
-    }
-}
-
-// Demander la permission pour les notifications
-if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-    Notification.requestPermission();
-}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
 
 // ================================================================
-// MODAL
-// ================================================================
-function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('show');
-}
-
-// ================================================================
-// RECHERCHE
-// ================================================================
-function globalSearch(query) {
-    const results = [];
-    allTasks.forEach(t => { if (t.title && t.title.includes(query)) results.push({ type: 'Tâche', name: t.title }); });
-    allHabits.forEach(h => { if (h.name && h.name.includes(query)) results.push({ type: 'Habitude', name: h.name }); });
-    allProducts.forEach(p => { if (p.name && p.name.includes(query)) results.push({ type: 'Produit', name: p.name }); });
-    allWishes.forEach(w => { if (w.name && w.name.includes(query)) results.push({ type: 'Souhait', name: w.name }); });
-    return results;
-}
-
-// ================================================================
-// RACCOURCIS CLAVIER
-// ================================================================
-document.addEventListener('keydown', (e) => {
-    // Ctrl+Shift+S pour les paramètres
-    if (e.ctrlKey && e.shiftKey && e.key === 'S') {
-        navigateTo('settings');
-        e.preventDefault();
-    }
-    // Ctrl+Shift+D pour le dashboard
-    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-        navigateTo('dashboard');
-        e.preventDefault();
-    }
-});
-
-// ================================================================
-// DRAG & DROP POUR LA NAVIGATION
-// ================================================================
-let dragItem = null;
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.draggable = true;
-    item.addEventListener('dragstart', () => { dragItem = item; });
-    item.addEventListener('dragover', (e) => { e.preventDefault(); });
-    item.addEventListener('drop', () => {
-        if (dragItem && dragItem !== item) {
-            const parent = item.parentNode;
-            const rect = item.getBoundingClientRect();
-            if (rect.left < window.innerWidth / 2) {
-                parent.insertBefore(dragItem, item);
-            } else {
-                parent.insertBefore(dragItem, item.nextSibling);
-            }
-        }
-    });
-});
-
-// ================================================================
-// INITIALISATION FINALE
+// INIT
 // ================================================================
 console.log('🚀 College Student Life chargé !');
 console.log('👤 Utilisateur:', currentUser ? currentUser.email : 'Non connecté');
-console.log('📊 Sections disponibles:', document.querySelectorAll('.section-page').length);
-
-// Pour le débogage
-window.debug = {
-    tasks: () => allTasks,
-    habits: () => allHabits,
-    budget: () => allBudget,
-    products: () => allProducts,
-    wishes: () => allWishes,
-    notes: () => allNotes,
-    forceUpdate: () => { updateAllUI(); }
-};
 </script>
 </body>
 </html>
