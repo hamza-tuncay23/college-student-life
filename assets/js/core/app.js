@@ -1,125 +1,221 @@
-// ======================================
-// College Student Life
-// Core Application
-// ======================================
+import { initializeFirebase } from "./firebase.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+import { checkAuth } from "./guard.js";
 
-    console.log("Starting College Student Life...");
+import { loadSidebar } from "../ui/sidebar.js";
 
-    firebase.auth().onAuthStateChanged(user => {
+import { loadNavbar } from "../ui/navbar.js";
 
-        if (!user) {
-            return;
+import { initializeTheme } from "../ui/theme.js";
+
+import { initializeLanguage } from "../ui/language.js";
+
+import { initializeToast } from "../ui/toast.js";
+
+import { initializeLoader } from "../ui/loader.js";
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    async()=>{
+
+        try{
+
+            initializeLoader();
+
+            initializeTheme();
+
+            initializeLanguage();
+
+            initializeToast();
+
+            initializeFirebase();
+
+            await checkAuth();
+
+            loadSidebar();
+
+            loadNavbar();
+
+            initializeGlobalUI();
+
         }
 
-        initializeApplication(user);
+        catch(error){
 
-    });
+            console.error(error);
 
-});
+        }
 
-
-
-function initializeApplication(user) {
-
-    console.log("User:", user.email);
-
-
-
-    // ==========================
-    // UI
-    // ==========================
-
-    if (typeof initSidebar === "function") {
-        initSidebar();
     }
 
-    if (typeof initNavbar === "function") {
-        initNavbar();
-    }
+);
 
+function initializeGlobalUI(){
 
+    updateBreadcrumb();
 
-    // ==========================
-    // Settings
-    // ==========================
+    initializeSearch();
 
-    if (typeof initSettings === "function") {
-        initSettings();
-    }
+    initializeNotifications();
 
+    initializeProfileMenu();
 
+}
 
-    // ==========================
-    // Theme
-    // ==========================
+function updateBreadcrumb(){
 
-    if (typeof initTheme === "function") {
-        initTheme();
-    }
+    const pages={
 
+        "index.html":"Dashboard",
 
+        "schedule.html":"Schedule",
 
-    // ==========================
-    // Language
-    // ==========================
+        "tasks.html":"Tasks",
 
-    if (typeof initLanguage === "function") {
-        initLanguage();
-    }
+        "habits.html":"Habits",
 
+        "budget.html":"Budget",
 
+        "wishlist.html":"Wishlist",
 
-    // ==========================
-    // Current Page
-    // ==========================
+        "calendar.html":"Calendar",
 
-    const page = window.location.pathname
+        "drive.html":"Drive",
+
+        "nutrition.html":"Nutrition",
+
+        "sport.html":"Sport",
+
+        "pomodoro.html":"Pomodoro",
+
+        "religion.html":"Religion",
+
+        "notes.html":"Notes",
+
+        "settings.html":"Settings"
+
+    };
+
+    const file=
+
+        window.location.pathname
+
         .split("/")
+
         .pop()
-        .replace(".html", "") || "index";
 
-    document.body.dataset.page = page;
+        ||"index.html";
 
+    const breadcrumb=
 
+        document.getElementById(
 
-    // ==========================
-    // Page Initializer
-    // ==========================
+            "breadcrumbPage"
 
-    const pageInitializer = "init" +
-        page.charAt(0).toUpperCase() +
-        page.slice(1);
+        );
 
-    if (typeof window[pageInitializer] === "function") {
+    if(breadcrumb){
 
-        window[pageInitializer]();
+        breadcrumb.textContent=
 
-        console.log(pageInitializer + "() loaded");
+            pages[file]||
+
+            "College Student Life";
 
     }
 
+}
 
+function initializeSearch(){
 
-    // ==========================
-    // Global Event
-    // ==========================
+    const input=
 
-    window.dispatchEvent(new CustomEvent("appReady", {
+        document.getElementById(
 
-        detail: {
+            "globalSearch"
 
-            page,
+        );
 
-            user
+    if(!input) return;
+
+    input.addEventListener(
+
+        "input",
+
+        ()=>{
+
+            const value=
+
+                input.value
+
+                .trim()
+
+                .toLowerCase();
+
+            console.log(
+
+                "Search :",
+
+                value
+
+            );
 
         }
 
-    }));
+    );
 
+}
 
+function initializeNotifications(){
 
-    console.log("Application Ready");
+    const button=
+
+        document.getElementById(
+
+            "notificationButton"
+
+        );
+
+    if(!button) return;
+
+    button.onclick=()=>{
+
+        alert(
+
+            "Notifications Center\nComing Soon"
+
+        );
+
+    };
+
+}
+
+function initializeProfileMenu(){
+
+    const profile=
+
+        document.querySelector(
+
+            ".profile-button"
+
+        );
+
+    if(!profile) return;
+
+    profile.onclick=()=>{
+
+        alert(
+
+`Profile
+
+Settings
+
+Logout
+
+(Coming Soon)`);
+
+    };
 
 }
