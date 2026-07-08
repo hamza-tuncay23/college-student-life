@@ -408,9 +408,11 @@ function getTodayLessons(){
 
     ];
 
+    const currentDay=days[today];
+    
     return schedule.filter(
 
-        lesson=>lesson.cell.startsWith(days[today])
+        lesson=>lesson.cell.startsWith(currentDay)
 
     ).length;
 
