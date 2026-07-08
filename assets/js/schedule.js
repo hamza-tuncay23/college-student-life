@@ -167,18 +167,41 @@ function initializeModal(){
 
     };
 
+    document.getElementById("deleteLesson").onclick=()=>{
+
+        if(editingLesson==null) return;
+    
+        const index=schedule.indexOf(editingLesson);
+    
+        if(index>-1){
+    
+            schedule.splice(index,1);
+    
+        }
+    
+        editingLesson=null;
+    
+        modal.classList.remove("show");
+    
+        renderSchedule();
+    
+    };
+    
     document.getElementById("cancelLesson").onclick=()=>{
-
+    
+        editingLesson=null;
+    
         modal.classList.remove("show");
-
+    
     };
-
+    
     document.getElementById("closeLessonModal").onclick=()=>{
-
+    
+        editingLesson=null;
+    
         modal.classList.remove("show");
-
+    
     };
-
 }
 
 // ======================================================
