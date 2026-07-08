@@ -25,15 +25,34 @@ async function addDocument(collectionName, data) {
 
     const uid = getCurrentUserId();
 
-    const docRef = await db
-        .collection(collectionName)
-        .add({
-            uid,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            ...data
-        });
+    const docRef = await db.collection(collectionName).add({
+        uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        ...data
+    });
 
     return docRef.id;
+
+}
+
+
+
+// ---------------------------
+// Create / Replace document
+// ---------------------------
+
+async function setDocument(collectionName, documentId, data) {
+
+    const uid = getCurrentUserId();
+
+    await db
+        .collection(collectionName)
+        .doc(documentId)
+        .set({
+            uid,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            ...data
+        });
 
 }
 
@@ -146,7 +165,7 @@ async function deleteDocument(collectionName, documentId) {
 
 
 // ---------------------------
-// Realtime listener
+// Listen collection
 // ---------------------------
 
 function listenCollection(collectionName, callback) {
@@ -171,6 +190,42 @@ function listenCollection(collectionName, callback) {
             });
 
             callback(documents);
+
+        });
+
+}
+
+
+
+// ---------------------------
+// Listen document
+// ---------------------------
+
+function listenDocument(collectionName, documentId, callback) {
+
+    const uid = getCurrentUserId();
+
+    return db
+        .collection(collectionName)
+        .doc(documentId)
+        .onSnapshot(doc => {
+
+            if (!doc.exists) {
+                callback(null);
+                return;
+            }
+
+            const data = doc.data();
+
+            if (data.uid !== uid) {
+                callback(null);
+                return;
+            }
+
+            callback({
+                id: doc.id,
+                ...data
+            });
 
         });
 
