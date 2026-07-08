@@ -399,12 +399,48 @@ MODAL
 
     display:flex;
 
-    justify-content:flex-end;
+    justify-content:space-between;
+
+    align-items:center;
 
     gap:15px;
 
     padding:20px;
 
     border-top:1px solid var(--border);
+
+}
+
+.modal-footer div{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.danger-button{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.danger-button:hover{
+
+    background:#dc2626;
 
 }
