@@ -1,24 +1,39 @@
 // ======================================
 // College Student Life
-// Core Application Initializer
+// Core Application
 // ======================================
 
-
-// DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
 
-    console.log("College Student Life started");
+    console.log("Starting College Student Life...");
+
+    firebase.auth().onAuthStateChanged(user => {
+
+        if (!user) {
+            return;
+        }
+
+        initializeApplication(user);
+
+    });
+
+});
 
 
-    // ==============================
-    // Initialize UI Components
-    // ==============================
 
+function initializeApplication(user) {
+
+    console.log("User:", user.email);
+
+
+
+    // ==========================
+    // UI
+    // ==========================
 
     if (typeof initSidebar === "function") {
         initSidebar();
     }
-
 
     if (typeof initNavbar === "function") {
         initNavbar();
@@ -26,9 +41,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ==============================
-    // Initialize Settings
-    // ==============================
+    // ==========================
+    // Settings
+    // ==========================
 
     if (typeof initSettings === "function") {
         initSettings();
@@ -36,9 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ==============================
-    // Initialize Theme
-    // ==============================
+    // ==========================
+    // Theme
+    // ==========================
 
     if (typeof initTheme === "function") {
         initTheme();
@@ -46,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ==============================
-    // Initialize Language
-    // ==============================
+    // ==========================
+    // Language
+    // ==========================
 
     if (typeof initLanguage === "function") {
         initLanguage();
@@ -56,30 +71,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    // ==============================
-    // Page Detection
-    // ==============================
+    // ==========================
+    // Current Page
+    // ==========================
 
-    const currentPage = window.location.pathname
+    const page = window.location.pathname
         .split("/")
         .pop()
-        .replace(".html", "");
+        .replace(".html", "") || "index";
 
+    document.body.dataset.page = page;
 
-    console.log(
-        "Current page:",
-        currentPage || "index"
-    );
+    console.log("Page:", page);
 
 
 
-    // ==============================
-    // Global Application Ready
-    // ==============================
+    // ==========================
+    // Global Event
+    // ==========================
 
-    window.dispatchEvent(
-        new Event("appReady")
-    );
+    window.dispatchEvent(new CustomEvent("appReady", {
+
+        detail: {
+
+            page,
+
+            user
+
+        }
+
+    }));
 
 
-});
+
+    console.log("Application Ready");
+
+}
