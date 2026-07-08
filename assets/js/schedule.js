@@ -20,9 +20,11 @@ const schedule = [];
 
 // ======================================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
     initializeSchedule();
+
+    initializeModal();
 
 });
 
@@ -33,6 +35,58 @@ function initializeSchedule(){
     createEmptyCells();
 
     renderSchedule();
+
+}
+
+// ======================================================
+
+function initializeModal(){
+
+    const subject =
+        document.getElementById("lessonSubject");
+
+    subject.onchange = ()=>{
+
+        const selected = SUBJECTS.find(
+
+            s=>s.name===subject.value
+
+        );
+
+        if(!selected) return;
+
+        document.getElementById("lessonTeacher").value =
+            selected.teacher;
+
+        document.getElementById("lessonRoom").value =
+            selected.room;
+
+        document.getElementById("lessonColor").value =
+            selected.color;
+
+    };
+
+    document
+        .getElementById("cancelLesson")
+        .onclick = ()=>{
+
+        document
+            .getElementById("lessonModal")
+            .classList
+            .remove("show");
+
+    };
+
+    document
+        .getElementById("closeLessonModal")
+        .onclick = ()=>{
+
+        document
+            .getElementById("lessonModal")
+            .classList
+            .remove("show");
+
+    };
 
 }
 
@@ -60,42 +114,73 @@ function createEmptyCells(){
 
 // ======================================================
 
+let currentCell = null;
+
+const SUBJECTS = [
+
+    {
+        name:"Python",
+        teacher:"Mr. Ahmed",
+        room:"Lab 2",
+        color:"#3772ff"
+    },
+
+    {
+        name:"Mathematics",
+        teacher:"Mr. Karim",
+        room:"B203",
+        color:"#ef4444"
+    },
+
+    {
+        name:"Physics",
+        teacher:"Mrs. Salma",
+        room:"A102",
+        color:"#22c55e"
+    },
+
+    {
+        name:"Chemistry",
+        teacher:"Mrs. Nora",
+        room:"C105",
+        color:"#eab308"
+    },
+
+    {
+        name:"English",
+        teacher:"Mr. John",
+        room:"E201",
+        color:"#8b5cf6"
+    }
+
+];
+
 function addLesson(cell){
 
-    const subject = prompt("Subject");
+    currentCell = cell;
 
-    if(!subject) return;
+    document
+        .getElementById("lessonModal")
+        .classList
+        .add("show");
 
-    const teacher = prompt("Teacher");
+    const select =
+        document.getElementById("lessonSubject");
 
-    const room = prompt("Room");
+    select.innerHTML =
+        '<option value="">Choose...</option>';
 
-    const type = prompt("Type (Course / TD / TP / Exam)");
+    SUBJECTS.forEach(subject=>{
 
-    const color =
-        COLORS[
-            Math.floor(
-                Math.random()*COLORS.length
-            )
-        ];
+        select.innerHTML +=
 
-    schedule.push({
+        `<option value="${subject.name}">
 
-        cell:cell.id,
+            ${subject.name}
 
-        subject,
-
-        teacher,
-
-        room,
-
-        type,
-
-        color
+        </option>`;
 
     });
-
-    renderSchedule();
 
 }
 
