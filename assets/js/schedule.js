@@ -30,70 +30,105 @@ const SUBJECTS=[
 name:"Algorithms",
 teacher:"Mr. Karim",
 room:"A101",
-color:"#2563eb"
+color:"#3b82f6"
 },
 
 {
-name:"Data Structures",
-teacher:"Mr. Karim",
-room:"A102",
-color:"#16a34a"
-},
-
-{
-name:"Programming",
-teacher:"Mr. Ahmed",
-room:"Lab 1",
-color:"#9333ea"
-},
-
-{
-name:"Databases",
+name:"Linear Algebra",
 teacher:"Mrs. Salma",
-room:"Lab 2",
-color:"#ea580c"
+room:"A102",
+color:"#ef4444"
 },
 
 {
-name:"Networks",
-teacher:"Mr. Hassan",
-room:"B201",
-color:"#dc2626"
-},
-
-{
-name:"Operating Systems",
-teacher:"Mr. Youssef",
-room:"B202",
-color:"#0891b2"
-},
-
-{
-name:"Mathematics",
-teacher:"Mrs. Amal",
-room:"C101",
-color:"#0f766e"
+name:"Analysis",
+teacher:"Mr. Ahmed",
+room:"A103",
+color:"#22c55e"
 },
 
 {
 name:"Physics",
-teacher:"Mr. Jalal",
-room:"C102",
-color:"#65a30d"
+teacher:"Mr. Hassan",
+room:"B201",
+color:"#f97316"
 },
 
 {
 name:"Chemistry",
 teacher:"Mrs. Nora",
-room:"C103",
-color:"#ca8a04"
+room:"B202",
+color:"#eab308"
+},
+
+{
+name:"Programming",
+teacher:"Mr. John",
+room:"Lab 1",
+color:"#06b6d4"
+},
+
+{
+name:"Python",
+teacher:"Mr. Ahmed",
+room:"Lab 2",
+color:"#8b5cf6"
+},
+
+{
+name:"Java",
+teacher:"Mr. Karim",
+room:"Lab 3",
+color:"#ec4899"
+},
+
+{
+name:"Databases",
+teacher:"Mrs. Amal",
+room:"Lab 4",
+color:"#14b8a6"
+},
+
+{
+name:"Networks",
+teacher:"Mr. Youssef",
+room:"C201",
+color:"#6366f1"
+},
+
+{
+name:"Operating Systems",
+teacher:"Mr. Samir",
+room:"C202",
+color:"#84cc16"
 },
 
 {
 name:"English",
 teacher:"Mrs. Sarah",
-room:"E201",
-color:"#ec4899"
+room:"D101",
+color:"#f43f5e"
+},
+
+{
+name:"French",
+teacher:"Mrs. Nadia",
+room:"D102",
+color:"#0ea5e9"
+},
+
+{
+name:"Arabic",
+teacher:"Mr. Ali",
+room:"D103",
+color:"#10b981"
+},
+
+{
+name:"Sport",
+teacher:"Mr. Omar",
+room:"Gym",
+color:"#f59e0b"
 }
 
 ];
