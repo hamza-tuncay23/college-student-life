@@ -452,3 +452,64 @@ MODAL
     background:#dc2626;
 
 }
+/* ==========================================================
+SUBJECTS
+========================================================== */
+
+.subjects-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.subjects-table th{
+
+    text-align:left;
+
+    padding:15px;
+
+    background:var(--surface-2);
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.subjects-table td{
+
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.subject-color{
+
+    width:28px;
+
+    height:28px;
+
+    border-radius:50%;
+
+    display:inline-block;
+
+    border:2px solid rgba(0,0,0,.1);
+
+}
+
+.subject-action{
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.2s;
+
+}
+
+.subject-action:hover{
+
+    transform:scale(1.15);
+
+}
