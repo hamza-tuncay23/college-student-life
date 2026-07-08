@@ -1,104 +1,34 @@
-/* ==========================================
-   NAVBAR
-========================================== */
+/* ==========================================================
+NAVBAR
+========================================================== */
 
 .navbar{
 
-    height:var(--navbar-height);
+    height:76px;
 
-    background:var(--surface);
+    background:#ffffff;
 
-    border-bottom:1px solid var(--border);
+    border-bottom:1px solid #e5e7eb;
 
     display:flex;
 
-    align-items:center;
-
     justify-content:space-between;
 
-    padding:0 24px;
+    align-items:center;
+
+    padding:0 28px;
 
     position:sticky;
 
     top:0;
 
-    z-index:900;
+    z-index:500;
 
 }
 
-/* LEFT */
+.navbar-left,
 
-.navbar-left{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:16px;
-
-}
-
-/* MENU BUTTON */
-
-.navbar-toggle{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:var(--radius-sm);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:var(--transition);
-
-}
-
-.navbar-toggle:hover{
-
-    background:var(--surface-hover);
-
-}
-
-/* SEARCH */
-
-.navbar-search{
-
-    width:340px;
-
-    max-width:100%;
-
-    position:relative;
-
-}
-
-.navbar-search i{
-
-    position:absolute;
-
-    left:14px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:var(--text-muted);
-
-}
-
-.navbar-search input{
-
-    padding-left:42px;
-
-}
-
-/* RIGHT */
+.navbar-center,
 
 .navbar-right{
 
@@ -106,90 +36,220 @@
 
     align-items:center;
 
-    gap:12px;
-
 }
 
-/* ICON BUTTON */
+.navbar-center{
 
-.navbar-icon{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    align-items:center;
+    flex:1;
 
     justify-content:center;
 
-    cursor:pointer;
-
-    transition:var(--transition);
+    padding:0 30px;
 
 }
 
-.navbar-icon:hover{
+.breadcrumb{
 
-    background:var(--surface-hover);
-
-}
-
-/* USER */
-
-.navbar-user{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-}
-
-.navbar-avatar{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
+    font-size:22px;
 
     font-weight:700;
 
 }
 
-.navbar-user-info{
+.search-box{
 
-    display:flex;
+    width:100%;
 
-    flex-direction:column;
+    max-width:550px;
 
-}
-
-.navbar-user-info strong{
-
-    font-size:14px;
+    position:relative;
 
 }
 
-.navbar-user-info small{
+.search-box i{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#888;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    height:46px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#f4f6fb;
+
+    padding-left:48px;
+
+    font-size:15px;
+
+}
+
+.icon-button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#f4f6fb;
+
+    cursor:pointer;
+
+    margin-left:10px;
+
+    transition:.25s;
+
+    position:relative;
+
+}
+
+.icon-button:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.notification-dot{
+
+    position:absolute;
+
+    width:10px;
+
+    height:10px;
+
+    background:#ef4444;
+
+    border-radius:50%;
+
+    top:10px;
+
+    right:10px;
+
+}
+
+.clock-box{
+
+    text-align:right;
+
+    margin-right:18px;
+
+}
+
+.clock{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.date{
 
     font-size:12px;
 
-    color:var(--text-muted);
+    color:#777;
+
+}
+
+.profile-button{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-left:16px;
+
+    padding:8px 14px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.profile-button:hover{
+
+    background:#f4f6fb;
+
+}
+
+.profile-button img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.profile-button span{
+
+    font-weight:600;
+
+}
+
+@media(max-width:1100px){
+
+    .navbar-center{
+
+        display:none;
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .clock-box{
+
+        display:none;
+
+    }
+
+    .profile-button span{
+
+        display:none;
+
+    }
+
+    .breadcrumb{
+
+        font-size:18px;
+
+    }
+
+    .navbar{
+
+        padding:0 15px;
+
+    }
 
 }
