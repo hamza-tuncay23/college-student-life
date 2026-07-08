@@ -1,90 +1,134 @@
-import {
-    renderScheduleGrid,
-    renderSessions,
-    renderUpcomingClass,
-    renderSubjects,
-    initializeGridEvents
-} from "./schedule.ui.js";
+// ======================================
+// College Student Life
+// Schedule Page
+// ======================================
 
-import {
-    listenSchedule,
-    getSubjects,
-    getUpcomingClass
-} from "./schedule.firestore.js";
+const SCHEDULE_COLLECTION = "schedule";
 
-import {
-    initializeScheduleModal
-} from "./schedule.modal.js";
+let scheduleItems = [];
 
-document.addEventListener("DOMContentLoaded", initSchedule);
+let unsubscribeSchedule = null;
+
+
 
 function initSchedule() {
 
-    // Génère la grille vide
-    renderScheduleGrid();
-    initializeGridEvents();
+    console.log("Schedule module loaded.");
 
-    // Initialise la fenêtre Ajouter / Modifier
-    initializeScheduleModal();
-
-    // Charge les données Firestore
     loadSchedule();
 
-    // Bouton +
-    bindEvents();
-
 }
+
+
+
+// ===============================
+// Load Schedule
+// ===============================
 
 function loadSchedule() {
 
-    listenSchedule((sessions) => {
+    if (unsubscribeSchedule) {
 
-        renderSessions(sessions);
-
-        renderUpcomingClass(
-            getUpcomingClass(sessions)
-        );
-
-        renderSubjects(
-            getSubjects(sessions)
-        );
-
-    });
-
-}
-
-function bindEvents() {
-
-    // Bouton Ajouter
-    const addButton = document.getElementById("addSessionBtn");
-
-    if (addButton) {
-
-        addButton.addEventListener("click", () => {
-
-            document.dispatchEvent(
-                new CustomEvent("schedule:add")
-            );
-
-        });
+        unsubscribeSchedule();
 
     }
 
-    // Recherche
-    const search = document.getElementById("scheduleSearch");
+    unsubscribeSchedule = listenCollection(
 
-    if (search) {
+        SCHEDULE_COLLECTION,
 
-        search.addEventListener("input", e => {
+        items => {
 
-            document.dispatchEvent(
-                new CustomEvent("schedule:search", {
-                    detail: e.target.value
-                })
-            );
+            scheduleItems = items;
 
-        });
+            renderSchedule();
+
+        }
+
+    );
+
+}
+
+
+
+// ===============================
+// Render
+// ===============================
+
+function renderSchedule() {
+
+    console.log("Schedule:", scheduleItems);
+
+}
+
+
+
+// ===============================
+// Create
+// ===============================
+
+async function createScheduleItem(data) {
+
+    await addDocument(
+
+        SCHEDULE_COLLECTION,
+
+        data
+
+    );
+
+}
+
+
+
+// ===============================
+// Update
+// ===============================
+
+async function updateScheduleItem(id, data) {
+
+    await updateDocument(
+
+        SCHEDULE_COLLECTION,
+
+        id,
+
+        data
+
+    );
+
+}
+
+
+
+// ===============================
+// Delete
+// ===============================
+
+async function deleteScheduleItem(id) {
+
+    await deleteDocument(
+
+        SCHEDULE_COLLECTION,
+
+        id
+
+    );
+
+}
+
+
+
+// ===============================
+// Cleanup
+// ===============================
+
+window.addEventListener("beforeunload", () => {
+
+    if (unsubscribeSchedule) {
+
+        unsubscribeSchedule();
 
     }
 
-}
+});
