@@ -1,14 +1,12 @@
-<!-- ======================================================
-FILE : schedule.html
-====================================================== -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Schedule | College Student Life</title>
 
@@ -52,63 +50,75 @@ FILE : schedule.html
 
         <div class="page-content">
 
+            <!-- ========================================= -->
+
             <div class="page-header">
 
                 <div class="page-title">
-            
+
                     <h1>📚 Schedule</h1>
-            
+
                     <p>Manage your weekly timetable</p>
-            
+
                 </div>
-            
+
                 <div class="page-actions">
 
-                    <button class="secondary-button" id="subjectsBtn">
-                
+                    <button
+                            class="secondary-button"
+                            id="subjectsBtn">
+
                         <i class="fa-solid fa-book"></i>
-                
+
                         Subjects
-                
+
                     </button>
-                
-                    <button class="secondary-button" id="teachersBtn">
-                
+
+                    <button
+                            class="secondary-button"
+                            id="teachersBtn">
+
                         <i class="fa-solid fa-user"></i>
-                
+
                         Teachers
-                
+
                     </button>
-                
-                    <button class="secondary-button" id="roomsBtn">
-                
+
+                    <button
+                            class="secondary-button"
+                            id="roomsBtn">
+
                         <i class="fa-solid fa-door-open"></i>
-                
+
                         Rooms
-                
+
                     </button>
-                
-                    <button class="secondary-button" id="timeSlotsBtn">
-                
+
+                    <button
+                            class="secondary-button"
+                            id="timeSlotsBtn">
+
                         <i class="fa-solid fa-clock"></i>
-                
+
                         Time Slots
-                
+
                     </button>
-                
-                    <button class="secondary-button" id="settingsBtn">
-                
+
+                    <button
+                            class="secondary-button"
+                            id="settingsBtn">
+
                         <i class="fa-solid fa-gear"></i>
-                
+
                         Settings
-                
+
                     </button>
-                
+
                 </div>
-            
+
             </div>
 
-            <!-- TOP -->
+            <!-- ========================================= -->
 
             <div class="schedule-top">
 
@@ -118,9 +128,9 @@ FILE : schedule.html
 
                     <select id="semesterSelect">
 
-                        <option value="1">Semester 1</option>
+                        <option>Semester 1</option>
 
-                        <option value="2">Semester 2</option>
+                        <option>Semester 2</option>
 
                     </select>
 
@@ -130,13 +140,13 @@ FILE : schedule.html
 
                     <label>Week</label>
 
-                    <select id="weekType">
+                    <select id="weekSelect">
 
-                        <option>Normal</option>
+                        <option>Normal Week</option>
 
-                        <option>Exam</option>
+                        <option>Exam Week</option>
 
-                        <option>Ramadan</option>
+                        <option>Ramadan Week</option>
 
                     </select>
 
@@ -156,79 +166,66 @@ FILE : schedule.html
 
             </div>
 
-            <!-- TABLE -->
+            <!-- ========================================= -->
 
             <div class="schedule-wrapper">
-            
-                <div class="schedule-toolbar">
-            
-                    <div class="schedule-toolbar-left">
-            
-                        <button id="previousWeek" class="secondary-button">
-            
-                            <i class="fa-solid fa-chevron-left"></i>
-            
-                        </button>
-            
-                        <h2 id="weekTitle">
-            
-                            Week A
-            
-                        </h2>
-            
-                        <button id="nextWeek" class="secondary-button">
-            
-                            <i class="fa-solid fa-chevron-right"></i>
-            
-                        </button>
-            
-                    </div>
-            
-                    <div class="schedule-toolbar-right">
-            
-                        <button id="todayButton" class="secondary-button">
-            
-                            Today
-            
-                        </button>
-            
-                        <button id="printSchedule" class="secondary-button">
-            
-                            <i class="fa-solid fa-print"></i>
-            
-                        </button>
-            
-                        <button id="exportSchedule" class="secondary-button">
-            
-                            <i class="fa-solid fa-file-pdf"></i>
-            
-                        </button>
-            
-                        <button id="fullscreenSchedule" class="primary-button">
-            
-                            <i class="fa-solid fa-expand"></i>
-            
-                        </button>
-            
-                    </div>
-            
-                </div>
 
                 <div class="schedule-toolbar">
-            
-                    <button class="primary-button" id="addLessonBtn">
-            
-                        <i class="fa-solid fa-plus"></i>
-            
-                        Add Lesson
-            
-                    </button>
-            
-                    <input
-                            id="scheduleSearch"
-                            type="text"
-                            placeholder="Search lesson...">
-            
+
+                    <div class="schedule-toolbar-left">
+
+                        <button
+                                id="previousWeek"
+                                class="secondary-button">
+
+                            <i class="fa-solid fa-chevron-left"></i>
+
+                        </button>
+
+                        <h2 id="weekTitle">
+
+                            Weekly Schedule
+
+                        </h2>
+
+                        <button
+                                id="nextWeek"
+                                class="secondary-button">
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="schedule-toolbar-right">
+
+                        <button
+                                id="todayButton"
+                                class="secondary-button">
+
+                            Today
+
+                        </button>
+
+                        <button
+                                id="printSchedule"
+                                class="secondary-button">
+
+                            <i class="fa-solid fa-print"></i>
+
+                        </button>
+
+                        <button
+                                id="exportSchedule"
+                                class="secondary-button">
+
+                            <i class="fa-solid fa-file-pdf"></i>
+
+                        </button>
+
+                    </div>
+
                 </div>
 
                 <table class="schedule-table">
@@ -237,7 +234,11 @@ FILE : schedule.html
 
                     <tr>
 
-                        <th style="width:140px;">Day / Time</th>
+                        <th style="width:150px">
+
+                            Day / Time
+
+                        </th>
 
                         <th>08:00 - 10:00</th>
 
@@ -258,8 +259,11 @@ FILE : schedule.html
                         <th>Monday</th>
 
                         <td id="Monday-1"></td>
+
                         <td id="Monday-2"></td>
+
                         <td id="Monday-3"></td>
+
                         <td id="Monday-4"></td>
 
                     </tr>
@@ -269,8 +273,11 @@ FILE : schedule.html
                         <th>Tuesday</th>
 
                         <td id="Tuesday-1"></td>
+
                         <td id="Tuesday-2"></td>
+
                         <td id="Tuesday-3"></td>
+
                         <td id="Tuesday-4"></td>
 
                     </tr>
@@ -280,8 +287,11 @@ FILE : schedule.html
                         <th>Wednesday</th>
 
                         <td id="Wednesday-1"></td>
+
                         <td id="Wednesday-2"></td>
+
                         <td id="Wednesday-3"></td>
+
                         <td id="Wednesday-4"></td>
 
                     </tr>
@@ -291,8 +301,11 @@ FILE : schedule.html
                         <th>Thursday</th>
 
                         <td id="Thursday-1"></td>
+
                         <td id="Thursday-2"></td>
+
                         <td id="Thursday-3"></td>
+
                         <td id="Thursday-4"></td>
 
                     </tr>
@@ -302,8 +315,11 @@ FILE : schedule.html
                         <th>Friday</th>
 
                         <td id="Friday-1"></td>
+
                         <td id="Friday-2"></td>
+
                         <td id="Friday-3"></td>
+
                         <td id="Friday-4"></td>
 
                     </tr>
@@ -313,8 +329,11 @@ FILE : schedule.html
                         <th>Saturday</th>
 
                         <td id="Saturday-1"></td>
+
                         <td id="Saturday-2"></td>
+
                         <td id="Saturday-3"></td>
+
                         <td id="Saturday-4"></td>
 
                     </tr>
@@ -324,8 +343,11 @@ FILE : schedule.html
                         <th>Sunday</th>
 
                         <td id="Sunday-1"></td>
+
                         <td id="Sunday-2"></td>
+
                         <td id="Sunday-3"></td>
+
                         <td id="Sunday-4"></td>
 
                     </tr>
@@ -342,17 +364,23 @@ FILE : schedule.html
 
 </div>
 
-<!-- ==========================================================
-ADD / EDIT LESSON MODAL
-========================================================== -->
+<!-- =========================================
+LESSON MODAL
+========================================= -->
 
-<div id="lessonModal" class="modal">
+<div
+        id="lessonModal"
+        class="modal">
 
     <div class="modal-content">
 
         <div class="modal-header">
 
-            <h2>Add Lesson</h2>
+            <h2>
+
+                Lesson
+
+            </h2>
 
             <button id="closeLessonModal">
 
@@ -364,67 +392,76 @@ ADD / EDIT LESSON MODAL
 
         <div class="modal-body">
 
+            <!-- suite dans la partie 2 -->
             <div class="form-row">
-        
+
                 <div class="form-group">
-        
-                    <label>Subject *</label>
-        
+
+                    <label>Subject</label>
+
                     <select id="lessonSubject">
-        
+
                         <option value="">Choose...</option>
-        
+
                     </select>
-        
+
                 </div>
-        
+
                 <div class="form-group">
-        
+
                     <label>Teacher</label>
-        
-                    <input type="text" id="lessonTeacher">
-        
+
+                    <input
+                            type="text"
+                            id="lessonTeacher">
+
                 </div>
-        
+
             </div>
-        
+
             <div class="form-row">
-        
+
                 <div class="form-group">
-        
+
                     <label>Room</label>
-        
-                    <input type="text" id="lessonRoom">
-        
+
+                    <input
+                            type="text"
+                            id="lessonRoom">
+
                 </div>
-        
+
                 <div class="form-group">
-        
-                    <label>Type</label>
-        
+
+                    <label>Lesson Type</label>
+
                     <select id="lessonType">
-        
+
                         <option>Course</option>
+
                         <option>TD</option>
+
                         <option>TP</option>
+
                         <option>Exam</option>
-        
+
                     </select>
-        
+
                 </div>
-        
+
             </div>
-        
+
             <div class="form-group">
-        
+
                 <label>Color</label>
-        
-                <input type="color"
-                       id="lessonColor"
-                       value="#2563eb">
-        
+
+                <input
+                        type="color"
+                        id="lessonColor"
+                        value="#3772ff">
+
             </div>
-        
+
         </div>
 
         <div class="modal-footer">
@@ -432,55 +469,58 @@ ADD / EDIT LESSON MODAL
             <button
                     id="deleteLesson"
                     class="danger-button">
-        
+
                 <i class="fa-solid fa-trash"></i>
-        
+
                 Delete
-        
+
             </button>
-        
+
             <div>
-        
+
                 <button
                         id="cancelLesson"
                         class="secondary-button">
-        
+
                     Cancel
-        
+
                 </button>
-        
+
                 <button
                         id="saveLesson"
                         class="primary-button">
-        
+
                     <i class="fa-solid fa-floppy-disk"></i>
-        
+
                     Save
-        
+
                 </button>
-        
+
             </div>
-        
+
         </div>
 
     </div>
 
 </div>
 
-<script type="module" src="assets/js/app.js"></script>
-<script type="module" src="assets/js/schedule.js"></script>
-
-<!-- ==========================================================
+<!-- =========================================
 SUBJECTS MODAL
-========================================================== -->
+========================================= -->
 
-<div id="subjectsModal" class="modal">
+<div
+        id="subjectsModal"
+        class="modal">
 
-    <div class="modal-content" style="width:900px;max-width:96%;">
+    <div class="modal-content subjects-window">
 
         <div class="modal-header">
 
-            <h2>Subjects</h2>
+            <h2>
+
+                Subjects
+
+            </h2>
 
             <button id="closeSubjectsModal">
 
@@ -492,22 +532,21 @@ SUBJECTS MODAL
 
         <div class="modal-body">
 
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:15px;flex-wrap:wrap;">
+            <div class="subjects-toolbar">
 
                 <input
                         id="subjectSearch"
                         type="text"
-                        placeholder="Search subject..."
-                        style="flex:1;min-width:250px;">
+                        placeholder="Search subject...">
 
                 <button
                         id="newSubjectBtn"
                         class="primary-button">
-                
-                    <i class="fa-solid fa-circle-plus"></i>
-                
+
+                    <i class="fa-solid fa-plus"></i>
+
                     New Subject
-                
+
                 </button>
 
             </div>
@@ -543,6 +582,13 @@ SUBJECTS MODAL
     </div>
 
 </div>
+
+<script type="module"
+        src="assets/js/core/app.js"></script>
+
+<script type="module"
+        src="assets/js/modules/schedule/schedule.js"></script>
+
 </body>
 
 </html>
