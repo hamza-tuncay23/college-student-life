@@ -260,7 +260,15 @@ HEADER
 
     align-items:center;
 
-    gap:15px;
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+.page-actions button{
+
+    height:44px;
 
 }
 
