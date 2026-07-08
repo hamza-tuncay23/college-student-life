@@ -3,156 +3,175 @@
 // Firestore Manager
 // ======================================
 
+function getCurrentUserId() {
 
+    const user = firebase.auth().currentUser;
+
+    if (!user) {
+        throw new Error("User not authenticated.");
+    }
+
+    return user.uid;
+
+}
+
+
+
+// ---------------------------
 // Add document
+// ---------------------------
+
 async function addDocument(collectionName, data) {
 
-    try {
+    const uid = getCurrentUserId();
 
-        const docRef = await db.collection(collectionName).add(data);
+    const docRef = await db
+        .collection(collectionName)
+        .add({
+            uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            ...data
+        });
 
-        return docRef.id;
-
-    } catch (error) {
-
-        console.error("Add document error:", error);
-
-        throw error;
-
-    }
+    return docRef.id;
 
 }
 
 
 
-// Get document
+// ---------------------------
+// Get one document
+// ---------------------------
+
 async function getDocument(collectionName, documentId) {
 
-    try {
+    const uid = getCurrentUserId();
 
-        const doc = await db
-            .collection(collectionName)
-            .doc(documentId)
-            .get();
+    const doc = await db
+        .collection(collectionName)
+        .doc(documentId)
+        .get();
 
-        if (!doc.exists) {
-            return null;
-        }
+    if (!doc.exists) return null;
 
-        return {
-            id: doc.id,
-            ...doc.data()
-        };
+    const data = doc.data();
 
-    } catch (error) {
+    if (data.uid !== uid) return null;
 
-        console.error("Get document error:", error);
-
-        throw error;
-
-    }
+    return {
+        id: doc.id,
+        ...data
+    };
 
 }
 
 
 
+// ---------------------------
 // Get collection
+// ---------------------------
+
 async function getCollection(collectionName) {
 
-    try {
+    const uid = getCurrentUserId();
 
-        const snapshot = await db.collection(collectionName).get();
+    const snapshot = await db
+        .collection(collectionName)
+        .where("uid", "==", uid)
+        .orderBy("createdAt", "desc")
+        .get();
 
-        const data = [];
+    const documents = [];
 
-        snapshot.forEach(doc => {
+    snapshot.forEach(doc => {
 
-            data.push({
-                id: doc.id,
-                ...doc.data()
-            });
-
+        documents.push({
+            id: doc.id,
+            ...doc.data()
         });
-
-        return data;
-
-    } catch (error) {
-
-        console.error("Collection error:", error);
-
-        throw error;
-
-    }
-
-}
-
-
-
-// Update document
-async function updateDocument(collectionName, documentId, data) {
-
-    try {
-
-        await db
-            .collection(collectionName)
-            .doc(documentId)
-            .update(data);
-
-    } catch (error) {
-
-        console.error("Update error:", error);
-
-        throw error;
-
-    }
-
-}
-
-
-
-// Delete document
-async function deleteDocument(collectionName, documentId) {
-
-    try {
-
-        await db
-            .collection(collectionName)
-            .doc(documentId)
-            .delete();
-
-    } catch (error) {
-
-        console.error("Delete error:", error);
-
-        throw error;
-
-    }
-
-}
-
-
-
-// Realtime listener
-function listenCollection(collectionName, callback) {
-
-    return db.collection(collectionName).onSnapshot(snapshot => {
-
-        const data = [];
-
-        snapshot.forEach(doc => {
-
-            data.push({
-
-                id: doc.id,
-
-                ...doc.data()
-
-            });
-
-        });
-
-        callback(data);
 
     });
+
+    return documents;
+
+}
+
+
+
+// ---------------------------
+// Update document
+// ---------------------------
+
+async function updateDocument(collectionName, documentId, data) {
+
+    const uid = getCurrentUserId();
+
+    const ref = db.collection(collectionName).doc(documentId);
+
+    const doc = await ref.get();
+
+    if (!doc.exists) return;
+
+    if (doc.data().uid !== uid) return;
+
+    await ref.update({
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        ...data
+    });
+
+}
+
+
+
+// ---------------------------
+// Delete document
+// ---------------------------
+
+async function deleteDocument(collectionName, documentId) {
+
+    const uid = getCurrentUserId();
+
+    const ref = db.collection(collectionName).doc(documentId);
+
+    const doc = await ref.get();
+
+    if (!doc.exists) return;
+
+    if (doc.data().uid !== uid) return;
+
+    await ref.delete();
+
+}
+
+
+
+// ---------------------------
+// Realtime listener
+// ---------------------------
+
+function listenCollection(collectionName, callback) {
+
+    const uid = getCurrentUserId();
+
+    return db
+        .collection(collectionName)
+        .where("uid", "==", uid)
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
+
+            const documents = [];
+
+            snapshot.forEach(doc => {
+
+                documents.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+
+            });
+
+            callback(documents);
+
+        });
 
 }
