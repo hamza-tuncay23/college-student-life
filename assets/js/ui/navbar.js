@@ -1,170 +1,255 @@
-export function loadNavbar(){
+/* ==========================================================
+NAVBAR
+========================================================== */
 
-    const navbar=document.getElementById("navbar");
+.navbar{
 
-    if(!navbar) return;
+    height:76px;
 
-    navbar.innerHTML=`
+    background:#ffffff;
 
-<header class="navbar">
+    border-bottom:1px solid #e5e7eb;
 
-<div class="navbar-left">
+    display:flex;
 
-<button
-id="mobileMenuButton"
-class="icon-button">
+    justify-content:space-between;
 
-<i class="fa-solid fa-bars"></i>
+    align-items:center;
 
-</button>
+    padding:0 28px;
 
-<div class="breadcrumb">
+    position:sticky;
 
-<span id="breadcrumbPage">
+    top:0;
 
-Dashboard
-
-</span>
-
-</div>
-
-</div>
-
-<div class="navbar-center">
-
-<div class="search-box">
-
-<i class="fa-solid fa-magnifying-glass"></i>
-
-<input
-type="text"
-id="globalSearch"
-placeholder="Search anything...">
-
-</div>
-
-</div>
-
-<div class="navbar-right">
-
-<div class="clock-box">
-
-<div
-id="liveClock"
-class="clock">
-
-00:00:00
-
-</div>
-
-<div
-id="liveDate"
-class="date">
-
-Loading...
-
-</div>
-
-</div>
-
-<button
-id="notificationButton"
-class="icon-button">
-
-<i class="fa-solid fa-bell"></i>
-
-<span class="notification-dot"></span>
-
-</button>
-
-<button
-id="languageButton"
-class="icon-button">
-
-🌍
-
-</button>
-
-<button
-id="themeButton"
-class="icon-button">
-
-<i class="fa-solid fa-moon"></i>
-
-</button>
-
-<div class="profile-button">
-
-<img
-src="assets/images/default-avatar.png"
-alt="avatar">
-
-<span>
-
-Student
-
-</span>
-
-<i class="fa-solid fa-chevron-down"></i>
-
-</div>
-
-</div>
-
-</header>
-
-`;
-
-    initializeNavbar();
+    z-index:500;
 
 }
 
-function initializeNavbar(){
+.navbar-left,
 
-    const mobile=document.getElementById("mobileMenuButton");
+.navbar-center,
 
-    mobile.onclick=()=>{
+.navbar-right{
 
-        document
+    display:flex;
 
-            .querySelector(".sidebar")
-
-            ?.classList.toggle("show");
-
-    };
-
-    updateClock();
-
-    setInterval(updateClock,1000);
+    align-items:center;
 
 }
 
-function updateClock(){
+.navbar-center{
 
-    const now=new Date();
+    flex:1;
 
-    const time=now.toLocaleTimeString();
+    justify-content:center;
 
-    const date=now.toLocaleDateString(
+    padding:0 30px;
 
-        undefined,
+}
 
-        {
+.breadcrumb{
 
-            weekday:"long",
+    font-size:22px;
 
-            day:"2-digit",
+    font-weight:700;
 
-            month:"long",
+}
 
-            year:"numeric"
+.search-box{
 
-        }
+    width:100%;
 
-    );
+    max-width:550px;
 
-    document.getElementById("liveClock").textContent=time;
+    position:relative;
 
-    document.getElementById("liveDate").textContent=date;
+}
+
+.search-box i{
+
+    position:absolute;
+
+    left:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#888;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    height:46px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#f4f6fb;
+
+    padding-left:48px;
+
+    font-size:15px;
+
+}
+
+.icon-button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#f4f6fb;
+
+    cursor:pointer;
+
+    margin-left:10px;
+
+    transition:.25s;
+
+    position:relative;
+
+}
+
+.icon-button:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.notification-dot{
+
+    position:absolute;
+
+    width:10px;
+
+    height:10px;
+
+    background:#ef4444;
+
+    border-radius:50%;
+
+    top:10px;
+
+    right:10px;
+
+}
+
+.clock-box{
+
+    text-align:right;
+
+    margin-right:18px;
+
+}
+
+.clock{
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.date{
+
+    font-size:12px;
+
+    color:#777;
+
+}
+
+.profile-button{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-left:16px;
+
+    padding:8px 14px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.profile-button:hover{
+
+    background:#f4f6fb;
+
+}
+
+.profile-button img{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.profile-button span{
+
+    font-weight:600;
+
+}
+
+@media(max-width:1100px){
+
+    .navbar-center{
+
+        display:none;
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .clock-box{
+
+        display:none;
+
+    }
+
+    .profile-button span{
+
+        display:none;
+
+    }
+
+    .breadcrumb{
+
+        font-size:18px;
+
+    }
+
+    .navbar{
+
+        padding:0 15px;
+
+    }
 
 }
