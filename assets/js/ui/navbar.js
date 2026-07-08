@@ -1,255 +1,170 @@
-/* ==========================================================
-NAVBAR
-========================================================== */
+export function loadNavbar(){
 
-.navbar{
+    const navbar=document.getElementById("navbar");
 
-    height:76px;
+    if(!navbar) return;
 
-    background:#ffffff;
+    navbar.innerHTML=`
 
-    border-bottom:1px solid #e5e7eb;
+<header class="navbar">
 
-    display:flex;
+<div class="navbar-left">
 
-    justify-content:space-between;
+<button
+id="mobileMenuButton"
+class="icon-button">
 
-    align-items:center;
+<i class="fa-solid fa-bars"></i>
 
-    padding:0 28px;
+</button>
 
-    position:sticky;
+<div class="breadcrumb">
 
-    top:0;
+<span id="breadcrumbPage">
 
-    z-index:500;
+Dashboard
 
-}
+</span>
 
-.navbar-left,
+</div>
 
-.navbar-center,
+</div>
 
-.navbar-right{
+<div class="navbar-center">
 
-    display:flex;
+<div class="search-box">
 
-    align-items:center;
+<i class="fa-solid fa-magnifying-glass"></i>
 
-}
+<input
+type="text"
+id="globalSearch"
+placeholder="Search anything...">
 
-.navbar-center{
+</div>
 
-    flex:1;
+</div>
 
-    justify-content:center;
+<div class="navbar-right">
 
-    padding:0 30px;
+<div class="clock-box">
 
-}
+<div
+id="liveClock"
+class="clock">
 
-.breadcrumb{
+00:00:00
 
-    font-size:22px;
+</div>
 
-    font-weight:700;
+<div
+id="liveDate"
+class="date">
 
-}
+Loading...
 
-.search-box{
+</div>
 
-    width:100%;
+</div>
 
-    max-width:550px;
+<button
+id="notificationButton"
+class="icon-button">
 
-    position:relative;
+<i class="fa-solid fa-bell"></i>
 
-}
+<span class="notification-dot"></span>
 
-.search-box i{
+</button>
 
-    position:absolute;
+<button
+id="languageButton"
+class="icon-button">
 
-    left:16px;
+🌍
 
-    top:50%;
+</button>
 
-    transform:translateY(-50%);
+<button
+id="themeButton"
+class="icon-button">
 
-    color:#888;
+<i class="fa-solid fa-moon"></i>
 
-}
+</button>
 
-.search-box input{
+<div class="profile-button">
 
-    width:100%;
+<img
+src="assets/images/default-avatar.png"
+alt="avatar">
 
-    height:46px;
+<span>
 
-    border:none;
+Student
 
-    outline:none;
+</span>
 
-    border-radius:14px;
+<i class="fa-solid fa-chevron-down"></i>
 
-    background:#f4f6fb;
+</div>
 
-    padding-left:48px;
+</div>
 
-    font-size:15px;
+</header>
 
-}
+`;
 
-.icon-button{
-
-    width:46px;
-
-    height:46px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:#f4f6fb;
-
-    cursor:pointer;
-
-    margin-left:10px;
-
-    transition:.25s;
-
-    position:relative;
+    initializeNavbar();
 
 }
 
-.icon-button:hover{
+function initializeNavbar(){
 
-    background:#2563eb;
+    const mobile=document.getElementById("mobileMenuButton");
 
-    color:white;
+    mobile.onclick=()=>{
 
-}
+        document
 
-.notification-dot{
+            .querySelector(".sidebar")
 
-    position:absolute;
+            ?.classList.toggle("show");
 
-    width:10px;
+    };
 
-    height:10px;
+    updateClock();
 
-    background:#ef4444;
-
-    border-radius:50%;
-
-    top:10px;
-
-    right:10px;
+    setInterval(updateClock,1000);
 
 }
 
-.clock-box{
+function updateClock(){
 
-    text-align:right;
+    const now=new Date();
 
-    margin-right:18px;
+    const time=now.toLocaleTimeString();
 
-}
+    const date=now.toLocaleDateString(
 
-.clock{
+        undefined,
 
-    font-size:18px;
+        {
 
-    font-weight:700;
+            weekday:"long",
 
-}
+            day:"2-digit",
 
-.date{
+            month:"long",
 
-    font-size:12px;
+            year:"numeric"
 
-    color:#777;
+        }
 
-}
+    );
 
-.profile-button{
+    document.getElementById("liveClock").textContent=time;
 
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-left:16px;
-
-    padding:8px 14px;
-
-    border-radius:14px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-.profile-button:hover{
-
-    background:#f4f6fb;
-
-}
-
-.profile-button img{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-}
-
-.profile-button span{
-
-    font-weight:600;
-
-}
-
-@media(max-width:1100px){
-
-    .navbar-center{
-
-        display:none;
-
-    }
-
-}
-
-@media(max-width:700px){
-
-    .clock-box{
-
-        display:none;
-
-    }
-
-    .profile-button span{
-
-        display:none;
-
-    }
-
-    .breadcrumb{
-
-        font-size:18px;
-
-    }
-
-    .navbar{
-
-        padding:0 15px;
-
-    }
+    document.getElementById("liveDate").textContent=date;
 
 }
