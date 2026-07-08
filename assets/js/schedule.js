@@ -470,7 +470,21 @@ function initializeSubjects(){
         renderSubjects();
 
     };
+    document.getElementById("newSubjectBtn").onclick=()=>{
 
+        editingSubject=null;
+    
+        document.getElementById("lessonSubject").innerHTML="";
+    
+        document.getElementById("lessonTeacher").value="";
+    
+        document.getElementById("lessonRoom").value="";
+    
+        document.getElementById("lessonColor").value="#2563eb";
+    
+        document.getElementById("lessonModal").classList.add("show");
+    
+    };
     document.getElementById("closeSubjectsModal").onclick=()=>{
 
         document
