@@ -380,6 +380,44 @@ function addLesson(cell){
 
 // ======================================================
 
+function getLessonCount(){
+
+    return schedule.length;
+
+}
+
+function getTodayLessons(){
+
+    const today=new Date().getDay();
+
+    const days=[
+
+        "Monday",
+
+        "Tuesday",
+
+        "Wednesday",
+
+        "Thursday",
+
+        "Friday",
+
+        "Saturday",
+        
+        "Sunday"
+
+    ];
+
+    return schedule.filter(
+
+        lesson=>lesson.cell.startsWith(days[today])
+
+    ).length;
+
+}
+
+// ======================================================
+
 function renderSchedule(){
 
     document
