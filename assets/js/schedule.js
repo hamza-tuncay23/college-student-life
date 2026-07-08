@@ -18,6 +18,49 @@ const COLORS = [
 
 const schedule = [];
 
+let currentCell = null;
+
+let editingLesson = null;
+
+const SUBJECTS = [
+
+    {
+        name:"Python",
+        teacher:"Mr. Ahmed",
+        room:"Lab 2",
+        color:"#3772ff"
+    },
+
+    {
+        name:"Mathematics",
+        teacher:"Mr. Karim",
+        room:"B203",
+        color:"#ef4444"
+    },
+
+    {
+        name:"Physics",
+        teacher:"Mrs. Salma",
+        room:"A102",
+        color:"#22c55e"
+    },
+
+    {
+        name:"Chemistry",
+        teacher:"Mrs. Nora",
+        room:"C105",
+        color:"#eab308"
+    },
+
+    {
+        name:"English",
+        teacher:"Mr. John",
+        room:"E201",
+        color:"#8b5cf6"
+    }
+
+];
+
 // ======================================================
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -42,49 +85,97 @@ function initializeSchedule(){
 
 function initializeModal(){
 
-    const subject =
-        document.getElementById("lessonSubject");
+    const modal=document.getElementById("lessonModal");
 
-    subject.onchange = ()=>{
+    const subject=document.getElementById("lessonSubject");
 
-        const selected = SUBJECTS.find(
+    const teacher=document.getElementById("lessonTeacher");
+
+    const room=document.getElementById("lessonRoom");
+
+    const type=document.getElementById("lessonType");
+
+    const color=document.getElementById("lessonColor");
+
+    subject.onchange=()=>{
+
+        const lesson=SUBJECTS.find(
 
             s=>s.name===subject.value
 
         );
 
-        if(!selected) return;
+        if(!lesson) return;
 
-        document.getElementById("lessonTeacher").value =
-            selected.teacher;
+        teacher.value=lesson.teacher;
 
-        document.getElementById("lessonRoom").value =
-            selected.room;
+        room.value=lesson.room;
 
-        document.getElementById("lessonColor").value =
-            selected.color;
+        color.value=lesson.color;
 
     };
 
-    document
-        .getElementById("cancelLesson")
-        .onclick = ()=>{
+    document.getElementById("saveLesson").onclick=()=>{
 
-        document
-            .getElementById("lessonModal")
-            .classList
-            .remove("show");
+        if(subject.value===""){
+
+            alert("Choose a subject.");
+
+            return;
+
+        }
+
+        if(editingLesson==null){
+
+            schedule.push({
+
+                cell:currentCell.id,
+
+                subject:subject.value,
+
+                teacher:teacher.value,
+
+                room:room.value,
+
+                type:type.value,
+
+                color:color.value
+
+            });
+
+        }
+
+        else{
+
+            editingLesson.subject=subject.value;
+
+            editingLesson.teacher=teacher.value;
+
+            editingLesson.room=room.value;
+
+            editingLesson.type=type.value;
+
+            editingLesson.color=color.value;
+
+        }
+
+        editingLesson=null;
+
+        modal.classList.remove("show");
+
+        renderSchedule();
 
     };
 
-    document
-        .getElementById("closeLessonModal")
-        .onclick = ()=>{
+    document.getElementById("cancelLesson").onclick=()=>{
 
-        document
-            .getElementById("lessonModal")
-            .classList
-            .remove("show");
+        modal.classList.remove("show");
+
+    };
+
+    document.getElementById("closeLessonModal").onclick=()=>{
+
+        modal.classList.remove("show");
 
     };
 
@@ -265,56 +356,20 @@ function renderSchedule(){
 
 function editLesson(lesson){
 
-    const action = prompt(
+    editingLesson=lesson;
 
-`1 = Edit
+    currentCell=document.getElementById(lesson.cell);
 
-2 = Delete`
+    document.getElementById("lessonModal").classList.add("show");
 
-    );
+    document.getElementById("lessonSubject").value=lesson.subject;
 
-    if(action==="2"){
+    document.getElementById("lessonTeacher").value=lesson.teacher;
 
-        const index =
-            schedule.indexOf(lesson);
+    document.getElementById("lessonRoom").value=lesson.room;
 
-        if(index>-1){
+    document.getElementById("lessonType").value=lesson.type;
 
-            schedule.splice(index,1);
-
-        }
-
-        renderSchedule();
-
-        return;
-
-    }
-
-    const subject =
-        prompt("Subject",lesson.subject);
-
-    if(!subject) return;
-
-    lesson.subject=subject;
-
-    lesson.teacher=
-        prompt(
-            "Teacher",
-            lesson.teacher
-        );
-
-    lesson.room=
-        prompt(
-            "Room",
-            lesson.room
-        );
-
-    lesson.type=
-        prompt(
-            "Type",
-            lesson.type
-        );
-
-    renderSchedule();
+    document.getElementById("lessonColor").value=lesson.color;
 
 }
