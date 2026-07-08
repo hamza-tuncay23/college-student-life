@@ -22,6 +22,8 @@ let currentCell = null;
 
 let editingLesson = null;
 
+let editingSubject = null;
+
 const SUBJECTS=[
 
 {
@@ -159,8 +161,30 @@ function initializeModal(){
 
         }
 
+        if(editingSubject!=null){
+        
+            SUBJECTS[editingSubject].name=subject.value;
+        
+            SUBJECTS[editingSubject].teacher=teacher.value;
+        
+            SUBJECTS[editingSubject].room=room.value;
+        
+            SUBJECTS[editingSubject].color=color.value;
+        
+            editingSubject=null;
+        
+            modal.classList.remove("show");
+        
+            renderSubjects();
+        
+            renderSchedule();
+        
+            return;
+        
+        }
+        
         if(editingLesson==null){
-
+        
             schedule.push({
 
                 cell:currentCell.id,
@@ -506,6 +530,38 @@ onclick="editSubject(${index})">
 
 window.editSubject=function(index){
 
-    alert("Subject editor will be added in next step.");
+    const subject=SUBJECTS[index];
+
+    if(!subject) return;
+
+    document.getElementById("lessonSubject").innerHTML="";
+
+    SUBJECTS.forEach(s=>{
+
+        document.getElementById("lessonSubject").innerHTML+=`
+
+        <option value="${s.name}">
+
+            ${s.name}
+
+        </option>
+
+        `;
+
+    });
+
+    document.getElementById("lessonSubject").value=subject.name;
+
+    document.getElementById("lessonTeacher").value=subject.teacher;
+
+    document.getElementById("lessonRoom").value=subject.room;
+
+    document.getElementById("lessonColor").value=subject.color;
+
+    document.getElementById("lessonType").value="Course";
+
+    editingSubject=index;
+
+    document.getElementById("lessonModal").classList.add("show");
 
 }
