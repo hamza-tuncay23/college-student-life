@@ -1,83 +1,170 @@
-export function loadNavbar() {
+export function loadNavbar(){
 
-    const navbar = document.getElementById("navbar");
+    const navbar=document.getElementById("navbar");
 
-    if (!navbar) return;
+    if(!navbar) return;
 
-    navbar.className = "navbar";
+    navbar.innerHTML=`
 
-    navbar.innerHTML = `
+<header class="navbar">
 
-        <div class="navbar-left">
+<div class="navbar-left">
 
-            <button
-                class="navbar-toggle"
-                id="sidebarToggle"
-            >
-                <i class="fa-solid fa-bars"></i>
-            </button>
+<button
+id="mobileMenuButton"
+class="icon-button">
 
-            <div class="navbar-search">
+<i class="fa-solid fa-bars"></i>
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+</button>
 
-                <input
-                    type="text"
-                    placeholder="Search..."
-                >
+<div class="breadcrumb">
 
-            </div>
+<span id="breadcrumbPage">
 
-        </div>
+Dashboard
 
-        <div class="navbar-right">
+</span>
 
-            <button class="navbar-icon">
+</div>
 
-                <i class="fa-solid fa-language"></i>
+</div>
 
-            </button>
+<div class="navbar-center">
 
-            <button class="navbar-icon">
+<div class="search-box">
 
-                <i class="fa-solid fa-moon"></i>
+<i class="fa-solid fa-magnifying-glass"></i>
 
-            </button>
+<input
+type="text"
+id="globalSearch"
+placeholder="Search anything...">
 
-            <button class="navbar-icon">
+</div>
 
-                <i class="fa-solid fa-bell"></i>
+</div>
 
-            </button>
+<div class="navbar-right">
 
-            <div class="navbar-user">
+<div class="clock-box">
 
-                <div class="navbar-avatar">
+<div
+id="liveClock"
+class="clock">
 
-                    C
+00:00:00
 
-                </div>
+</div>
 
-                <div class="navbar-user-info">
+<div
+id="liveDate"
+class="date">
 
-                    <strong>College Student</strong>
+Loading...
 
-                    <small>student@email.com</small>
+</div>
 
-                </div>
+</div>
 
-            </div>
+<button
+id="notificationButton"
+class="icon-button">
 
-        </div>
+<i class="fa-solid fa-bell"></i>
 
-    `;
+<span class="notification-dot"></span>
 
-    const toggle = document.getElementById("sidebarToggle");
+</button>
 
-    toggle.addEventListener("click", () => {
+<button
+id="languageButton"
+class="icon-button">
 
-        document.querySelector(".sidebar")?.classList.toggle("collapsed");
+🌍
 
-    });
+</button>
+
+<button
+id="themeButton"
+class="icon-button">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+<div class="profile-button">
+
+<img
+src="assets/images/default-avatar.png"
+alt="avatar">
+
+<span>
+
+Student
+
+</span>
+
+<i class="fa-solid fa-chevron-down"></i>
+
+</div>
+
+</div>
+
+</header>
+
+`;
+
+    initializeNavbar();
+
+}
+
+function initializeNavbar(){
+
+    const mobile=document.getElementById("mobileMenuButton");
+
+    mobile.onclick=()=>{
+
+        document
+
+            .querySelector(".sidebar")
+
+            ?.classList.toggle("show");
+
+    };
+
+    updateClock();
+
+    setInterval(updateClock,1000);
+
+}
+
+function updateClock(){
+
+    const now=new Date();
+
+    const time=now.toLocaleTimeString();
+
+    const date=now.toLocaleDateString(
+
+        undefined,
+
+        {
+
+            weekday:"long",
+
+            day:"2-digit",
+
+            month:"long",
+
+            year:"numeric"
+
+        }
+
+    );
+
+    document.getElementById("liveClock").textContent=time;
+
+    document.getElementById("liveDate").textContent=date;
 
 }
