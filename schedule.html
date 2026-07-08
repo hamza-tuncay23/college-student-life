@@ -1,3 +1,7 @@
+<!-- ======================================================
+FILE : schedule.html
+====================================================== -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,18 +12,31 @@
 
     <title>Schedule | College Student Life</title>
 
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
     <!-- CSS -->
+
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/sidebar.css">
     <link rel="stylesheet" href="assets/css/navbar.css">
-    <link rel="stylesheet" href="assets/css/buttons.css">
     <link rel="stylesheet" href="assets/css/cards.css">
-    <link rel="stylesheet" href="assets/css/forms.css">
-    <link rel="stylesheet" href="assets/css/modal.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/buttons.css">
     <link rel="stylesheet" href="assets/css/schedule.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
 
 </head>
 
@@ -27,166 +44,205 @@
 
 <div class="app">
 
-    <!-- Sidebar -->
     <aside id="sidebar"></aside>
 
     <main class="main-content">
 
-        <!-- Navbar -->
         <header id="navbar"></header>
 
-        <!-- =============================== -->
-        <!-- TOP BAR -->
-        <!-- =============================== -->
+        <div class="page-content">
 
-        <section class="schedule-top">
+            <div class="page-header">
 
-            <div class="top-left">
+                <div class="page-title">
 
-                <div class="card option-card">
+                    <h1>📚 Schedule</h1>
 
-                    <h4>Semester</h4>
-
-                    <div class="segmented">
-
-                        <button class="active">S1</button>
-                        <button>S2</button>
-
-                    </div>
+                    <p>Manage your weekly timetable</p>
 
                 </div>
 
-                <div class="card option-card">
+                <div class="page-actions">
 
-                    <h4>Week Type</h4>
+                    <button
+                            id="addLessonBtn"
+                            class="primary-button">
 
-                    <div class="segmented">
+                        <i class="fa-solid fa-plus"></i>
 
-                        <button class="active">Normal</button>
-                        <button>Exam</button>
-                        <button>Ramadan</button>
+                        Add Lesson
 
-                    </div>
-
-                </div>
-
-                <div class="card option-card">
-
-                    <h4>Time Slots</h4>
-
-                    <span>4 Slots</span>
+                    </button>
 
                 </div>
 
             </div>
 
-            <div class="top-right">
+            <!-- TOP -->
 
-                <input
-                        id="scheduleSearch"
-                        type="text"
-                        placeholder="Search session..."
-                >
+            <div class="schedule-top">
 
-                <button id="addSessionBtn" class="primary-btn">
+                <div class="schedule-card">
 
-                    + Add Session
+                    <label>Semester</label>
 
-                </button>
+                    <select id="semesterSelect">
+
+                        <option value="1">Semester 1</option>
+
+                        <option value="2">Semester 2</option>
+
+                    </select>
+
+                </div>
+
+                <div class="schedule-card">
+
+                    <label>Week</label>
+
+                    <select id="weekType">
+
+                        <option>Normal</option>
+
+                        <option>Exam</option>
+
+                        <option>Ramadan</option>
+
+                    </select>
+
+                </div>
+
+                <div class="schedule-card">
+
+                    <label>View</label>
+
+                    <select>
+
+                        <option>Weekly</option>
+
+                    </select>
+
+                </div>
 
             </div>
 
-        </section>
+            <!-- TABLE -->
 
-        <!-- =============================== -->
-        <!-- CONTENT -->
-        <!-- =============================== -->
+            <div class="schedule-wrapper">
 
-        <section class="schedule-layout">
+                <table class="schedule-table">
 
-            <!-- GRID -->
+                    <thead>
 
-            <section class="schedule-grid">
+                    <tr>
 
-                <div id="scheduleContainer">
+                        <th>Day</th>
 
-                    <!-- JS -->
+                        <th>08:00 - 10:00</th>
 
-                </div>
+                        <th>10:00 - 12:00</th>
 
-            </section>
+                        <th>14:00 - 16:00</th>
 
-            <!-- RIGHT PANEL -->
+                        <th>16:00 - 18:00</th>
 
-            <aside class="schedule-sidebar">
+                    </tr>
 
-                <div class="card">
+                    </thead>
 
-                    <h3>Upcoming Class</h3>
+                    <tbody>
 
-                    <div id="nextClass"></div>
+                    <tr>
 
-                </div>
+                        <th>Monday</th>
 
-                <div class="card">
+                        <td id="Monday-1"></td>
+                        <td id="Monday-2"></td>
+                        <td id="Monday-3"></td>
+                        <td id="Monday-4"></td>
 
-                    <div class="card-header">
+                    </tr>
 
-                        <h3>Subjects</h3>
+                    <tr>
 
-                        <button>
+                        <th>Tuesday</th>
 
-                            Manage
+                        <td id="Tuesday-1"></td>
+                        <td id="Tuesday-2"></td>
+                        <td id="Tuesday-3"></td>
+                        <td id="Tuesday-4"></td>
 
-                        </button>
+                    </tr>
 
-                    </div>
+                    <tr>
 
-                    <div id="subjectsList"></div>
+                        <th>Wednesday</th>
 
-                </div>
+                        <td id="Wednesday-1"></td>
+                        <td id="Wednesday-2"></td>
+                        <td id="Wednesday-3"></td>
+                        <td id="Wednesday-4"></td>
 
-                <div class="card">
+                    </tr>
 
-                    <h3>Quick Actions</h3>
+                    <tr>
 
-                    <div class="quick-actions">
+                        <th>Thursday</th>
 
-                        <button>Import</button>
+                        <td id="Thursday-1"></td>
+                        <td id="Thursday-2"></td>
+                        <td id="Thursday-3"></td>
+                        <td id="Thursday-4"></td>
 
-                        <button>Export</button>
+                    </tr>
 
-                        <button>Backup</button>
+                    <tr>
 
-                        <button>Settings</button>
+                        <th>Friday</th>
 
-                    </div>
+                        <td id="Friday-1"></td>
+                        <td id="Friday-2"></td>
+                        <td id="Friday-3"></td>
+                        <td id="Friday-4"></td>
 
-                </div>
+                    </tr>
 
-            </aside>
+                    <tr>
 
-        </section>
+                        <th>Saturday</th>
+
+                        <td id="Saturday-1"></td>
+                        <td id="Saturday-2"></td>
+                        <td id="Saturday-3"></td>
+                        <td id="Saturday-4"></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Sunday</th>
+
+                        <td id="Sunday-1"></td>
+                        <td id="Sunday-2"></td>
+                        <td id="Sunday-3"></td>
+                        <td id="Sunday-4"></td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </main>
 
 </div>
 
-<!-- Modal -->
-
-<div id="scheduleModal"></div>
-
-<!-- Firebase -->
-
-<script type="module" src="assets/js/core/firebase.js"></script>
-
-<script type="module" src="assets/js/core/auth.js"></script>
-
-<script type="module" src="assets/js/core/guard.js"></script>
-
-<!-- Schedule -->
-
-<script type="module" src="assets/js/pages/schedule/schedule.js"></script>
+<script type="module" src="assets/js/app.js"></script>
+<script type="module" src="assets/js/schedule.js"></script>
 
 </body>
 
