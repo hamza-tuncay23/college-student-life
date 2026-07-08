@@ -22,45 +22,79 @@ let currentCell = null;
 
 let editingLesson = null;
 
-const SUBJECTS = [
+const SUBJECTS=[
 
-    {
-        name:"Python",
-        teacher:"Mr. Ahmed",
-        room:"Lab 2",
-        color:"#3772ff"
-    },
+{
+name:"Algorithms",
+teacher:"Mr. Karim",
+room:"A101",
+color:"#2563eb"
+},
 
-    {
-        name:"Mathematics",
-        teacher:"Mr. Karim",
-        room:"B203",
-        color:"#ef4444"
-    },
+{
+name:"Data Structures",
+teacher:"Mr. Karim",
+room:"A102",
+color:"#16a34a"
+},
 
-    {
-        name:"Physics",
-        teacher:"Mrs. Salma",
-        room:"A102",
-        color:"#22c55e"
-    },
+{
+name:"Programming",
+teacher:"Mr. Ahmed",
+room:"Lab 1",
+color:"#9333ea"
+},
 
-    {
-        name:"Chemistry",
-        teacher:"Mrs. Nora",
-        room:"C105",
-        color:"#eab308"
-    },
+{
+name:"Databases",
+teacher:"Mrs. Salma",
+room:"Lab 2",
+color:"#ea580c"
+},
 
-    {
-        name:"English",
-        teacher:"Mr. John",
-        room:"E201",
-        color:"#8b5cf6"
-    }
+{
+name:"Networks",
+teacher:"Mr. Hassan",
+room:"B201",
+color:"#dc2626"
+},
+
+{
+name:"Operating Systems",
+teacher:"Mr. Youssef",
+room:"B202",
+color:"#0891b2"
+},
+
+{
+name:"Mathematics",
+teacher:"Mrs. Amal",
+room:"C101",
+color:"#0f766e"
+},
+
+{
+name:"Physics",
+teacher:"Mr. Jalal",
+room:"C102",
+color:"#65a30d"
+},
+
+{
+name:"Chemistry",
+teacher:"Mrs. Nora",
+room:"C103",
+color:"#ca8a04"
+},
+
+{
+name:"English",
+teacher:"Mrs. Sarah",
+room:"E201",
+color:"#ec4899"
+}
 
 ];
-
 // ======================================================
 
 document.addEventListener("DOMContentLoaded",()=>{
