@@ -294,7 +294,7 @@ function createEmptyCells(){
 
             cell.addEventListener("click",()=>{
 
-                if(cell.innerHTML===""){
+                if(cell.innerHTML.trim()===""){
 
                     addLesson(cell);
 
