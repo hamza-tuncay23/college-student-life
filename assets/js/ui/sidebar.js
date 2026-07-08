@@ -1,87 +1,235 @@
 const MENU = [
-    { title: "Dashboard", icon: "fa-solid fa-house", page: "index.html" },
-    { title: "Schedule", icon: "fa-solid fa-calendar-days", page: "schedule.html" },
-    { title: "Tasks", icon: "fa-solid fa-list-check", page: "tasks.html" },
-    { title: "Habits", icon: "fa-solid fa-fire", page: "habits.html" },
-    { title: "Budget", icon: "fa-solid fa-wallet", page: "budget.html" },
-    { title: "Wishlist", icon: "fa-solid fa-heart", page: "wishlist.html" },
-    { title: "Calendar", icon: "fa-solid fa-calendar", page: "calendar.html" },
-    { title: "Drive", icon: "fa-solid fa-cloud", page: "drive.html" },
-    { title: "Nutrition", icon: "fa-solid fa-apple-whole", page: "nutrition.html" },
-    { title: "Sport", icon: "fa-solid fa-dumbbell", page: "sport.html" },
-    { title: "Pomodoro", icon: "fa-solid fa-clock", page: "pomodoro.html" },
-    { title: "Religion", icon: "fa-solid fa-mosque", page: "religion.html" },
-    { title: "Notes", icon: "fa-solid fa-note-sticky", page: "notes.html" },
-    { title: "Settings", icon: "fa-solid fa-gear", page: "settings.html" }
+
+    {
+        title: "Dashboard",
+        icon: "fa-solid fa-house",
+        page: "index.html"
+    },
+
+    {
+        title: "Schedule",
+        icon: "fa-solid fa-calendar-days",
+        page: "schedule.html"
+    },
+
+    {
+        title: "Tasks",
+        icon: "fa-solid fa-list-check",
+        page: "tasks.html"
+    },
+
+    {
+        title: "Habits",
+        icon: "fa-solid fa-repeat",
+        page: "habits.html"
+    },
+
+    {
+        title: "Budget",
+        icon: "fa-solid fa-wallet",
+        page: "budget.html"
+    },
+
+    {
+        title: "Wishlist",
+        icon: "fa-solid fa-heart",
+        page: "wishlist.html"
+    },
+
+    {
+        title: "Calendar",
+        icon: "fa-solid fa-calendar",
+        page: "calendar.html"
+    },
+
+    {
+        title: "Drive",
+        icon: "fa-solid fa-folder-open",
+        page: "drive.html"
+    },
+
+    {
+        title: "Nutrition",
+        icon: "fa-solid fa-utensils",
+        page: "nutrition.html"
+    },
+
+    {
+        title: "Sport",
+        icon: "fa-solid fa-dumbbell",
+        page: "sport.html"
+    },
+
+    {
+        title: "Pomodoro",
+        icon: "fa-solid fa-clock",
+        page: "pomodoro.html"
+    },
+
+    {
+        title: "Religion",
+        icon: "fa-solid fa-mosque",
+        page: "religion.html"
+    },
+
+    {
+        title: "Notes",
+        icon: "fa-solid fa-note-sticky",
+        page: "notes.html"
+    },
+
+    {
+        title: "Settings",
+        icon: "fa-solid fa-gear",
+        page: "settings.html"
+    }
+
 ];
 
-export function loadSidebar() {
+export function loadSidebar(){
 
-    const sidebar = document.getElementById("sidebar");
+    const sidebar=document.getElementById("sidebar");
 
-    if (!sidebar) return;
+    if(!sidebar) return;
 
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
+    const current=window.location.pathname.split("/").pop();
 
-    sidebar.className = "sidebar";
+    sidebar.innerHTML=`
 
-    sidebar.innerHTML = `
+<aside class="sidebar">
 
-        <div class="sidebar-logo">
+<div class="sidebar-header">
 
-            <h2>College Student Life</h2>
+<div class="sidebar-logo">
 
-        </div>
+<div class="logo-icon">
 
-        <nav class="sidebar-menu">
+<i class="fa-solid fa-graduation-cap"></i>
 
-            <ul>
+</div>
 
-                ${MENU.map(item => `
+<div>
 
-                    <li>
+<h2>College</h2>
 
-                        <a
-                            href="${item.page}"
-                            class="sidebar-item ${currentPage === item.page ? "active" : ""}"
-                        >
+<p>Student Life</p>
 
-                            <i class="${item.icon}"></i>
+</div>
 
-                            <span>${item.title}</span>
+</div>
 
-                        </a>
+<button
+id="collapseSidebar"
+class="collapse-button">
 
-                    </li>
+<i class="fa-solid fa-bars"></i>
 
-                `).join("")}
+</button>
 
-            </ul>
+</div>
 
-        </nav>
+<div class="sidebar-profile">
 
-        <div class="sidebar-footer">
+<img
+src="assets/images/default-avatar.png"
+alt="avatar"
+id="sidebarAvatar">
 
-            <div class="sidebar-user">
+<h3 id="sidebarUsername">
 
-                <div class="sidebar-avatar">
+Loading...
 
-                    CSL
+</h3>
 
-                </div>
+<p id="sidebarEmail">
 
-                <div class="sidebar-user-info">
+Loading...
 
-                    <strong>College Student Life</strong>
+</p>
 
-                    <small>Version 1.0</small>
+</div>
 
-                </div>
+<nav class="sidebar-navigation">
 
-            </div>
+${MENU.map(item=>`
 
-        </div>
+<a
+href="${item.page}"
+class="sidebar-link ${current===item.page?"active":""}">
 
-    `;
+<i class="${item.icon}"></i>
+
+<span>
+
+${item.title}
+
+</span>
+
+</a>
+
+`).join("")}
+
+</nav>
+
+<div class="sidebar-footer">
+
+<button
+class="logout-button"
+id="logoutButton">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>
+
+Logout
+
+</span>
+
+</button>
+
+</div>
+
+</aside>
+
+`;
+
+    initializeSidebar();
+
+}
+
+function initializeSidebar(){
+
+    const collapse=document.getElementById("collapseSidebar");
+
+    collapse.onclick=()=>{
+
+        document.body.classList.toggle("sidebar-collapsed");
+
+        localStorage.setItem(
+
+            "sidebar",
+
+            document.body.classList.contains("sidebar-collapsed")
+        );
+
+    };
+
+    if(localStorage.getItem("sidebar")==="true"){
+
+        document.body.classList.add("sidebar-collapsed");
+
+    }
+
+    const logout=document.getElementById("logoutButton");
+
+    logout.onclick=()=>{
+
+        if(confirm("Logout ?")){
+
+            window.location.href="login.html";
+
+        }
+
+    };
 
 }
