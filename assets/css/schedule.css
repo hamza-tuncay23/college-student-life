@@ -1,16 +1,44 @@
 /* ==========================================================
-   SCHEDULE
+SCHEDULE
+College Student Life
+PART 1 / 2
 ========================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.page-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
 
 .schedule-top{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(3,1fr);
 
     gap:20px;
 
-    margin-bottom:30px;
+    margin-bottom:25px;
 
 }
 
@@ -18,11 +46,11 @@
 
     background:var(--surface);
 
-    border:1px solid var(--border);
+    border-radius:18px;
 
-    border-radius:16px;
+    padding:18px;
 
-    padding:20px;
+    box-shadow:var(--shadow);
 
     display:flex;
 
@@ -34,7 +62,7 @@
 
 .schedule-card label{
 
-    font-size:.9rem;
+    font-size:13px;
 
     font-weight:600;
 
@@ -52,640 +80,43 @@
 
     border:1px solid var(--border);
 
-    background:var(--surface-2);
-
-    color:var(--text);
-
-    outline:none;
+    background:var(--background);
 
     font-family:inherit;
 
-}
+    font-size:14px;
 
-/* ==========================================================
-TABLE
-========================================================== */
+    outline:none;
+
+}
 
 .schedule-wrapper{
 
     background:var(--surface);
 
-    border-radius:20px;
-
-    border:1px solid var(--border);
+    border-radius:22px;
 
     overflow:auto;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
+    box-shadow:var(--shadow);
 
 }
 
-.schedule-table{
-
-    width:100%;
-
-    min-width:1100px;
-
-    border-collapse:collapse;
-
-}
-
-.schedule-table thead{
-
-    background:var(--surface-2);
-
-}
-
-.schedule-table th{
-
-    padding:18px;
-
-    text-align:center;
-
-    border-right:1px solid var(--border);
-
-    border-bottom:1px solid var(--border);
-
-    background:var(--surface-2);
-
-    font-weight:700;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:5;
-
-}
-
-.schedule-table td{
-
-    width:240px;
-
-    height:150px;
-
-    padding:10px;
-
-    vertical-align:top;
-
-    border-right:1px solid var(--border);
-
-    border-bottom:1px solid var(--border);
-
-    background:var(--surface);
-
-    transition:.2s;
-
-    cursor:pointer;
-
-    position:relative;
-
-}
-.schedule-table td:hover{
-
-    background:var(--surface-2);
-
-}
-
-.schedule-table tbody th{
-
-    position:sticky;
-
-    left:0;
-
-    z-index:4;
-
-    background:var(--surface-2);
-
-    min-width:140px;
-
-}
-
-.schedule-table tr:last-child td{
-
-    border-bottom:none;
-
-}
-
-.schedule-table th:last-child,
-
-.schedule-table td:last-child{
-
-    border-right:none;
-
-}
-
-/* ==========================================================
-LESSON CARD
-========================================================== */
-
-.lesson-card{
-
-    width:100%;
-
-    height:100%;
-
-    border-radius:14px;
-
-    color:#fff;
-
-    padding:12px;
+.schedule-toolbar{
 
     display:flex;
-
-    flex-direction:column;
 
     justify-content:space-between;
 
-    transition:.25s;
-
-}
-
-.lesson-card:hover{
-
-    transform:scale(1.02);
-
-}
-
-.lesson-subject{
-
-    font-size:1rem;
-
-    font-weight:700;
-
-}
-
-.lesson-teacher,
-
-.lesson-room,
-
-.lesson-type{
-
-    font-size:.82rem;
-
-    opacity:.95;
-
-}
-
-.lesson-type{
-
-    margin-top:8px;
-
-    font-weight:600;
-
-}
-
-/* ==========================================================
-EMPTY CELL
-========================================================== */
-
-.schedule-table td:empty::before{
-
-    content:"+";
-
-    display:flex;
-
-    justify-content:center;
-
     align-items:center;
 
-    width:100%;
+    padding:20px 24px;
 
-    height:100%;
+    border-bottom:1px solid var(--border);
 
-    font-size:34px;
-
-    color:var(--border);
-
-    transition:.25s;
-
-}
-
-.schedule-table td:empty:hover::before{
-
-    color:var(--primary);
-
-    transform:scale(1.2);
-
-}
-
-/* ==========================================================
-HEADER
-========================================================== */
-
-.page-actions{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
+    gap:20px;
 
     flex-wrap:wrap;
-
-}
-
-.page-actions button{
-
-    height:44px;
-
-}
-
-.primary-button{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-}
-/* ==========================================================
-MODAL
-========================================================== */
-
-.modal{
-
-    position:fixed;
-
-    inset:0;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:rgba(0,0,0,.45);
-
-    z-index:9999;
-
-}
-
-.modal.show{
-
-    display:flex;
-
-}
-
-.modal-content{
-
-    width:520px;
-
-    max-width:95%;
-
-    background:var(--surface);
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
-
-}
-
-.modal-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:20px;
-
-    border-bottom:1px solid var(--border);
-
-}
-
-.modal-header button{
-
-    background:none;
-
-    border:none;
-
-    cursor:pointer;
-
-    font-size:20px;
-
-}
-
-.modal-body{
-
-    padding:20px;
-
-    display:grid;
-
-    gap:18px;
-
-}
-
-.form-group{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:8px;
-
-}
-
-.form-group label{
-
-    font-weight:600;
-
-}
-
-.form-group input,
-
-.form-group select{
-
-    padding:12px;
-
-    border-radius:12px;
-
-    border:1px solid var(--border);
-
-    background:var(--surface-2);
-
-    font-family:inherit;
-
-}
-
-.form-group input[type=color]{
-
-    height:50px;
-
-    padding:4px;
-
-    cursor:pointer;
-
-}
-
-.modal-footer{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:20px;
-
-    border-top:1px solid var(--border);
-
-}
-
-.modal-footer div{
-
-    display:flex;
-
-    gap:15px;
-
-}
-
-.danger-button{
-
-    background:#ef4444;
-
-    color:white;
-
-    border:none;
-
-    padding:12px 22px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-    transition:.25s;
-
-}
-
-.danger-button:hover{
-
-    background:#dc2626;
-
-}
-/* ==========================================================
-SUBJECTS
-========================================================== */
-
-.subjects-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-}
-
-.subjects-table th{
-
-    text-align:left;
-
-    padding:15px;
-
-    background:var(--surface-2);
-
-    border-bottom:1px solid var(--border);
-
-}
-
-.subjects-table td{
-
-    padding:15px;
-
-    border-bottom:1px solid var(--border);
-
-}
-
-.subject-color{
-
-    width:28px;
-
-    height:28px;
-
-    border-radius:50%;
-
-    display:inline-block;
-
-    border:2px solid rgba(0,0,0,.1);
-
-}
-
-.subject-action{
-
-    cursor:pointer;
-
-    font-size:18px;
-
-    transition:.2s;
-
-}
-
-.subject-action:hover{
-
-    transform:scale(1.15);
-
-}
-/* ==========================================================
-FORM
-========================================================== */
-
-.form-row{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:20px;
-
-}
-
-@media(max-width:700px){
-
-    .form-row{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-/* ==========================================================
-TOOLBAR
-========================================================== */
-
-.schedule-toolbar{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:20px;
-
-    padding:20px;
-
-    border-bottom:1px solid var(--border);
-
-}
-
-.schedule-toolbar input{
-
-    width:300px;
-
-    max-width:100%;
-
-    padding:12px 15px;
-
-    border:1px solid var(--border);
-
-    border-radius:12px;
-
-    background:var(--surface-2);
-
-    outline:none;
-
-    font-family:inherit;
-
-}
-
-@media(max-width:700px){
-
-    .schedule-toolbar{
-
-        flex-direction:column;
-
-        align-items:stretch;
-
-    }
-
-    .schedule-toolbar input{
-
-        width:100%;
-
-    }
-
-}
-.lesson-card{
-
-    width:100%;
-
-    height:100%;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    border-radius:14px;
-
-    padding:12px;
-
-    color:white;
-
-    overflow:hidden;
-
-    transition:.2s;
-
-}
-
-.lesson-card:hover{
-
-    transform:scale(1.03);
-
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-
-}
-
-.lesson-subject{
-
-    font-size:16px;
-
-    font-weight:700;
-
-    line-height:1.2;
-
-}
-
-.lesson-teacher,
-
-.lesson-room,
-
-.lesson-type{
-
-    font-size:12px;
-
-    margin-top:4px;
-
-    opacity:.95;
-
-}
-/* ==========================================================
-SCHEDULE TOOLBAR
-========================================================== */
-
-.schedule-toolbar{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:20px;
-
-    padding:18px 24px;
-
-    border-bottom:1px solid var(--border);
-
-    background:var(--surface);
 
 }
 
@@ -703,19 +134,517 @@ SCHEDULE TOOLBAR
 
 .schedule-toolbar h2{
 
-    margin:0;
-
     font-size:20px;
+
+    margin:0;
 
 }
 
-@media(max-width:900px){
+.schedule-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:1050px;
+
+}
+
+.schedule-table thead th{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:20;
+
+    background:var(--surface);
+
+    padding:18px;
+
+    text-align:center;
+
+    border-bottom:1px solid var(--border);
+
+    border-right:1px solid var(--border);
+
+    font-size:14px;
+
+    font-weight:700;
+
+}
+
+.schedule-table tbody th{
+
+    position:sticky;
+
+    left:0;
+
+    z-index:15;
+
+    background:var(--surface);
+
+    width:150px;
+
+    min-width:150px;
+
+    border-right:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    font-size:14px;
+
+}
+
+.schedule-table td{
+
+    width:250px;
+
+    min-width:250px;
+
+    height:155px;
+
+    border-right:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    padding:8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    vertical-align:top;
+
+    position:relative;
+
+}
+
+.schedule-table td:hover{
+
+    background:#f8faff;
+
+}
+
+.empty-cell{
+
+    width:100%;
+
+    height:100%;
+
+    border:2px dashed #d7dce7;
+
+    border-radius:14px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    color:#9ca3af;
+
+    transition:.25s;
+
+}
+
+.empty-cell:hover{
+
+    border-color:#3772ff;
+
+    color:#3772ff;
+
+    background:#eef4ff;
+
+}
+
+.lesson-card{
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:14px;
+
+    color:white;
+
+    padding:12px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    box-sizing:border-box;
+
+    transition:.25s;
+
+    overflow:hidden;
+
+}
+
+.lesson-card:hover{
+
+    transform:scale(1.03);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+}
+
+.lesson-subject{
+
+    font-size:16px;
+
+    font-weight:700;
+
+    line-height:1.25;
+
+}
+
+.lesson-teacher,
+
+.lesson-room,
+
+.lesson-type{
+
+    font-size:12px;
+
+    opacity:.96;
+
+    margin-top:4px;
+
+}
+/* ==========================================================
+SCHEDULE
+PART 2 / 2
+========================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+    padding:25px;
+
+}
+
+.modal.show{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    width:650px;
+
+    max-width:100%;
+
+    background:var(--surface);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    animation:modalAppear .25s ease;
+
+}
+
+.subjects-window{
+
+    width:950px;
+
+}
+
+@keyframes modalAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 25px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.modal-header h2{
+
+    margin:0;
+
+    font-size:22px;
+
+}
+
+.modal-header button{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:24px;
+
+}
+
+.modal-body{
+
+    padding:25px;
+
+}
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-bottom:20px;
+
+}
+
+.form-group label{
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+
+.form-group select{
+
+    padding:12px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:var(--background);
+
+    outline:none;
+
+    font-family:inherit;
+
+}
+
+.form-group input[type=color]{
+
+    height:52px;
+
+    padding:5px;
+
+}
+
+.modal-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 25px;
+
+    border-top:1px solid var(--border);
+
+}
+
+.modal-footer>div{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.danger-button{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px 20px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.danger-button:hover{
+
+    background:#dc2626;
+
+}
+
+.subjects-toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:20px;
+
+}
+
+.subjects-toolbar input{
+
+    flex:1;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+}
+
+.subjects-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.subjects-table th{
+
+    text-align:left;
+
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+    background:#f7f8fb;
+
+}
+
+.subjects-table td{
+
+    padding:15px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.subject-color{
+
+    width:26px;
+
+    height:26px;
+
+    border-radius:50%;
+
+    display:inline-block;
+
+}
+
+.subject-action{
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    font-size:18px;
+
+}
+
+.subject-action:hover{
+
+    transform:scale(1.15);
+
+}
+
+@media(max-width:1000px){
+
+    .schedule-top{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:800px){
+
+    .page-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .page-actions{
+
+        width:100%;
+
+    }
 
     .schedule-toolbar{
 
         flex-direction:column;
 
-        align-items:stretch;
+        align-items:flex-start;
 
     }
 
@@ -723,9 +652,55 @@ SCHEDULE TOOLBAR
 
     .schedule-toolbar-right{
 
-        justify-content:center;
-
         flex-wrap:wrap;
+
+    }
+
+    .form-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .subjects-toolbar{
+
+        flex-direction:column;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .modal{
+
+        padding:10px;
+
+    }
+
+    .modal-content{
+
+        width:100%;
+
+    }
+
+    .modal-footer{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .modal-footer>div{
+
+        width:100%;
+
+    }
+
+    .modal-footer button{
+
+        flex:1;
 
     }
 
