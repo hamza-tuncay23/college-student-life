@@ -1,187 +1,141 @@
-// ======================================================
-// College Student Life
-// Language Manager
-// ======================================================
+const LANGUAGES=[
 
-import en from "../../languages/en.js";
-import fr from "../../languages/fr.js";
-import ar from "../../languages/ar.js";
-import tr from "../../languages/tr.js";
-import ja from "../../languages/ja.js";
+    {
+        code:"en",
+        flag:"🇬🇧",
+        name:"English"
+    },
 
-// ======================================================
+    {
+        code:"fr",
+        flag:"🇫🇷",
+        name:"Français"
+    },
 
-const languages = {
+    {
+        code:"ar",
+        flag:"🇲🇦",
+        name:"العربية"
+    },
 
-    en,
-    fr,
-    ar,
-    tr,
-    ja
+    {
+        code:"tr",
+        flag:"🇹🇷",
+        name:"Türkçe"
+    },
 
-};
+    {
+        code:"ja",
+        flag:"🇯🇵",
+        name:"日本語"
+    }
 
-// ======================================================
-
-let currentLanguage = "en";
-
-// ======================================================
+];
 
 export function initializeLanguage(){
 
-    const savedLanguage =
-        localStorage.getItem("language");
+    const button=document.getElementById("languageButton");
 
-    if(savedLanguage && languages[savedLanguage]){
+    if(!button) return;
 
-        currentLanguage = savedLanguage;
+    button.onclick=openLanguageMenu;
+
+}
+
+function openLanguageMenu(){
+
+    const old=document.getElementById("languageMenu");
+
+    if(old){
+
+        old.remove();
+
+        return;
 
     }
 
-    applyDirection();
+    const menu=document.createElement("div");
 
-    translatePage();
+    menu.id="languageMenu";
 
-    initializeLanguageButtons();
+    menu.className="language-menu";
 
-}
+    LANGUAGES.forEach(language=>{
 
-// ======================================================
+        const item=document.createElement("button");
 
-export function setLanguage(language){
+        item.className="language-item";
 
-    if(!languages[language]) return;
+        item.innerHTML=`
 
-    currentLanguage = language;
+<span>${language.flag}</span>
 
-    localStorage.setItem(
+<span>${language.name}</span>
 
-        "language",
+`;
 
-        language
+        item.onclick=()=>{
 
-    );
+            localStorage.setItem(
 
-    applyDirection();
+                "language",
 
-    translatePage();
-
-}
-
-// ======================================================
-
-export function getLanguage(){
-
-    return currentLanguage;
-
-}
-
-// ======================================================
-
-export function t(path){
-
-    const keys = path.split(".");
-
-    let value = languages[currentLanguage];
-
-    for(const key of keys){
-
-        value = value?.[key];
-
-    }
-
-    return value ?? path;
-
-}
-
-// ======================================================
-
-function translatePage(){
-
-    // ==========================================
-    // TEXT
-    // ==========================================
-
-    document
-        .querySelectorAll("[data-i18n]")
-        .forEach(element=>{
-
-            const key = element.dataset.i18n;
-
-            element.textContent = t(key);
-
-        });
-
-    // ==========================================
-    // PLACEHOLDER
-    // ==========================================
-
-    document
-        .querySelectorAll("[data-i18n-placeholder]")
-        .forEach(element=>{
-
-            const key =
-                element.dataset.i18nPlaceholder;
-
-            element.placeholder = t(key);
-
-        });
-
-    // ==========================================
-    // TITLE
-    // ==========================================
-
-    document
-        .querySelectorAll("[data-i18n-title]")
-        .forEach(element=>{
-
-            const key =
-                element.dataset.i18nTitle;
-
-            element.title = t(key);
-
-        });
-
-}
-
-// ======================================================
-
-function applyDirection(){
-
-    if(currentLanguage==="ar"){
-
-        document.documentElement.dir="rtl";
-
-        document.documentElement.lang="ar";
-
-    }
-
-    else{
-
-        document.documentElement.dir="ltr";
-
-        document.documentElement.lang=currentLanguage;
-
-    }
-
-}
-function initializeLanguageButtons(){
-
-    const buttons =
-        document.querySelectorAll(".language-button");
-
-    buttons.forEach(button=>{
-
-        button.addEventListener("click",()=>{
-
-            setLanguage(
-
-                button.dataset.language
+                language.code
 
             );
 
-        });
+            location.reload();
+
+        };
+
+        menu.appendChild(item);
 
     });
+
+    document.body.appendChild(menu);
+
+    const rect=document
+
+        .getElementById("languageButton")
+
+        .getBoundingClientRect();
+
+    menu.style.top=
+
+        rect.bottom+10+"px";
+
+    menu.style.right=
+
+        "25px";
+
+    setTimeout(()=>{
+
+        document.addEventListener(
+
+            "click",
+
+            closeLanguageMenu,
+
+            {
+
+                once:true
+
+            }
+
+        );
+
+    },100);
+
+}
+
+function closeLanguageMenu(){
+
+    const menu=document.getElementById("languageMenu");
+
+    if(menu){
+
+        menu.remove();
+
+    }
 
 }
