@@ -137,6 +137,8 @@ function initializeSchedule(){
 
     renderSchedule();
 
+    initializeToolbar();
+
 }
 
 // ======================================================
@@ -639,5 +641,72 @@ window.editSubject=function(index){
     editingSubject=index;
 
     document.getElementById("lessonModal").classList.add("show");
+
+}
+// ======================================================
+// TOOLBAR
+// ======================================================
+
+function initializeToolbar(){
+
+    document
+        .getElementById("previousWeek")
+        .onclick=()=>{
+
+        console.log("Previous week");
+
+    };
+
+    document
+        .getElementById("nextWeek")
+        .onclick=()=>{
+
+        console.log("Next week");
+
+    };
+
+    document
+        .getElementById("todayButton")
+        .onclick=()=>{
+
+        console.log("Today");
+
+    };
+
+    document
+        .getElementById("printSchedule")
+        .onclick=()=>{
+
+        window.print();
+
+    };
+
+    document
+        .getElementById("exportSchedule")
+        .onclick=()=>{
+
+        alert("PDF export coming soon.");
+
+    };
+
+    document
+        .getElementById("fullscreenSchedule")
+        .onclick=()=>{
+
+        const wrapper=document.querySelector(".schedule-wrapper");
+
+        if(!document.fullscreenElement){
+
+            wrapper.requestFullscreen();
+
+        }
+
+        else{
+
+            document.exitFullscreen();
+
+        }
+
+    };
 
 }
