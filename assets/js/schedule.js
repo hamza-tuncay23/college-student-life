@@ -430,3 +430,82 @@ function editLesson(lesson){
     document.getElementById("lessonColor").value=lesson.color;
 
 }
+// ======================================================
+// SUBJECTS
+// ======================================================
+
+function initializeSubjects(){
+
+    document.getElementById("subjectsBtn").onclick=()=>{
+
+        document
+            .getElementById("subjectsModal")
+            .classList
+            .add("show");
+
+        renderSubjects();
+
+    };
+
+    document.getElementById("closeSubjectsModal").onclick=()=>{
+
+        document
+            .getElementById("subjectsModal")
+            .classList
+            .remove("show");
+
+    };
+
+}
+
+function renderSubjects(){
+
+    const tbody=document.getElementById("subjectsTableBody");
+
+    tbody.innerHTML="";
+
+    SUBJECTS.forEach((subject,index)=>{
+
+        tbody.innerHTML+=`
+
+<tr>
+
+<td>
+
+<span
+class="subject-color"
+style="background:${subject.color};">
+
+</span>
+
+</td>
+
+<td>${subject.name}</td>
+
+<td>${subject.teacher}</td>
+
+<td>${subject.room}</td>
+
+<td>
+
+<i
+class="fa-solid fa-pen subject-action"
+onclick="editSubject(${index})">
+
+</i>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+}
+
+window.editSubject=function(index){
+
+    alert("Subject editor will be added in next step.");
+
+}
