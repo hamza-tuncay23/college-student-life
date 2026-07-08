@@ -395,6 +395,79 @@ ADD / EDIT LESSON MODAL
 <script type="module" src="assets/js/app.js"></script>
 <script type="module" src="assets/js/schedule.js"></script>
 
+<!-- ==========================================================
+SUBJECTS MODAL
+========================================================== -->
+
+<div id="subjectsModal" class="modal">
+
+    <div class="modal-content" style="width:900px;max-width:96%;">
+
+        <div class="modal-header">
+
+            <h2>Subjects</h2>
+
+            <button id="closeSubjectsModal">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:15px;flex-wrap:wrap;">
+
+                <input
+                        id="subjectSearch"
+                        type="text"
+                        placeholder="Search subject..."
+                        style="flex:1;min-width:250px;">
+
+                <button
+                        id="newSubjectBtn"
+                        class="primary-button">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    New Subject
+
+                </button>
+
+            </div>
+
+            <table class="subjects-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>Color</th>
+
+                    <th>Subject</th>
+
+                    <th>Teacher</th>
+
+                    <th>Room</th>
+
+                    <th></th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="subjectsTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 
 </html>
