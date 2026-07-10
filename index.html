@@ -120,6 +120,8 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 40px rgba(108,92,231,0.15);
+            min-width: 200px;
+            text-align: center;
         }
         .top-bar-left .clock::before {
             content: '';
@@ -154,44 +156,74 @@
         }
         .top-bar-left .clock .shooting-star {
             position: absolute;
-            width: 60px;
+            width: 80px;
             height: 2px;
-            background: linear-gradient(to right, transparent, #ffd700, transparent);
-            animation: shoot 2s ease-in-out infinite;
+            background: linear-gradient(to right, transparent, rgba(255,215,0,0.8), rgba(255,200,100,0.4), transparent);
+            animation: shootStar 3s ease-in-out infinite;
             opacity: 0;
+            filter: blur(1px);
         }
-        .top-bar-left .clock .shooting-star:nth-child(8) { top: 20%; left: 10%; animation-delay: 0.5s; }
-        .top-bar-left .clock .shooting-star:nth-child(9) { top: 60%; left: 50%; animation-delay: 1.5s; }
-        @keyframes shoot {
-            0% { transform: translateX(-100px) rotate(-30deg); opacity: 0; }
+        .top-bar-left .clock .shooting-star:nth-child(8) { top: 20%; left: 10%; animation-delay: 0.5s; width: 100px; }
+        .top-bar-left .clock .shooting-star:nth-child(9) { top: 60%; left: 50%; animation-delay: 1.8s; width: 70px; }
+        .top-bar-left .clock .shooting-star:nth-child(10) { top: 40%; left: 70%; animation-delay: 3s; width: 90px; }
+        @keyframes shootStar {
+            0% { transform: translateX(-100px) rotate(-25deg); opacity: 0; }
             10% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateX(300px) rotate(-30deg); opacity: 0; }
-        }
-        .top-bar-left .clock:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 60px rgba(255,215,0,0.25);
+            70% { opacity: 1; }
+            100% { transform: translateX(250px) rotate(-25deg); opacity: 0; }
         }
         .top-bar-left .clock .time-text {
             position: relative;
             z-index: 1;
-            color: #e8e0f0;
-            text-shadow: 0 0 20px rgba(255,215,0,0.1);
+            background: linear-gradient(135deg, #e8e0f0, #ffd700, #e8e0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,215,0,0.15);
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .top-bar-center {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6c5ce7, #fd79a8, #fdcb6e, #6c5ce7);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-shadow: none;
+            position: relative;
+        }
+        .top-bar-center::after {
+            content: '✦';
+            position: absolute;
+            right: -25px;
+            top: -5px;
+            font-size: 16px;
+            -webkit-text-fill-color: initial;
+            color: #ffd700;
+            animation: floatStar 2s ease-in-out infinite;
+        }
+        .top-bar-center::before {
+            content: '✦';
+            position: absolute;
+            left: -25px;
+            top: -5px;
+            font-size: 16px;
+            -webkit-text-fill-color: initial;
+            color: #ffd700;
+            animation: floatStar 2s ease-in-out infinite 0.5s;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .top-bar-right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
         .top-bar-right .avatar {
             width: 38px;
@@ -218,6 +250,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        .top-bar-right .theme-toggle-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 6px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .top-bar-right .theme-toggle-btn:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
         }
         .top-bar-right .settings-btn {
             background: none;
@@ -319,7 +365,7 @@
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
         @media (max-width: 900px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 600px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .top-bar-center { font-size: 14px; } }
+        @media (max-width: 600px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } .top-bar-center { font-size: 16px; } }
 
         .stat-card {
             padding: 16px 20px;
@@ -627,14 +673,24 @@
             align-items: center;
             justify-content: center;
             min-height: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .schedule-grid .slot-header:hover { background: var(--accent); color: #fff; }
         .schedule-grid .slot-cell {
             min-height: 70px;
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
             padding: 4px;
             position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+        .schedule-grid .slot-cell:hover { background: var(--accent-light); opacity: 0.7; }
         .schedule-grid .slot-cell .add-btn {
             position: absolute;
             bottom: 2px;
@@ -661,7 +717,12 @@
             margin-bottom: 2px;
             color: #fff;
             font-weight: 500;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .schedule-grid .course-block:hover { transform: scale(1.02); }
         .schedule-grid .day-label {
             padding: 8px;
             font-weight: 600;
@@ -673,34 +734,128 @@
             border-radius: var(--radius-sm);
         }
 
-        /* Book styles */
+        .schedule-sidebar {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 20px;
+        }
+        .schedule-sidebar .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .schedule-sidebar .sidebar .card { padding: 16px; }
+
+        .schedule-time-edit {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        .schedule-time-edit input {
+            width: 60px;
+            padding: 4px 8px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Book styles - True book */
         .book-container {
             position: relative;
-            perspective: 1500px;
-            min-height: 500px;
+            perspective: 2000px;
+            min-height: 550px;
+            padding: 20px 0;
         }
-        .book-pages {
+        .book-inner {
             position: relative;
             width: 100%;
             height: 500px;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .book-page {
+        .book-inner.flipped {
+            transform: rotateY(-180deg);
+        }
+        .book-page-real {
             position: absolute;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
             background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 30px;
+            border-radius: 4px 12px 12px 4px;
+            padding: 30px 40px;
             border: 1px solid var(--border-color);
-            overflow-y: auto;
             box-shadow: var(--shadow);
+            overflow-y: auto;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-primary) 100%);
         }
-        .book-page.front { transform: rotateY(0deg); }
-        .book-page.back { transform: rotateY(180deg); }
-        .book-flipped .book-pages { transform: rotateY(180deg); }
+        .book-page-real.front {
+            transform: rotateY(0deg);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: -2px 0 20px rgba(0,0,0,0.1), var(--shadow);
+        }
+        .book-page-real.back {
+            transform: rotateY(180deg);
+            border-radius: 12px 4px 4px 12px;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.1), var(--shadow);
+        }
+        .book-page-real .page-number {
+            position: absolute;
+            bottom: 15px;
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+        .book-page-real .page-number.left { left: 20px; }
+        .book-page-real .page-number.right { right: 20px; }
+        .book-page-real .book-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+        }
+        .book-page-real .book-content {
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            min-height: 300px;
+            outline: none;
+        }
+        .book-page-real .book-content:focus {
+            outline: 2px solid var(--accent-light);
+            outline-offset: 4px;
+        }
+        .book-toolbar {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .book-toolbar button {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+        }
+        .book-toolbar button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .book-toolbar input[type="color"] {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+        }
         .book-nav {
             display: flex;
             justify-content: center;
@@ -708,7 +863,7 @@
             margin-top: 16px;
         }
         .book-nav button {
-            padding: 8px 24px;
+            padding: 10px 30px;
             border: none;
             border-radius: var(--radius-sm);
             background: var(--accent);
@@ -716,11 +871,17 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 14px;
         }
         .book-nav button:hover { transform: scale(1.05); box-shadow: var(--shadow-hover); }
         .book-nav button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+        .book-nav .page-info {
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
 
-        /* Prayer calendar */
         .prayer-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -756,7 +917,51 @@
             .schedule-grid .slot-header { font-size: 10px; min-height: 30px; }
             .schedule-grid .slot-cell { min-height: 50px; }
             .fullscreen-clock .time { font-size: 60px; letter-spacing: 8px; }
+            .schedule-sidebar { grid-template-columns: 1fr; }
+            .book-inner { height: 400px; }
+            .book-page-real { padding: 20px; }
         }
+
+        .prayer-check-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .prayer-check-container:hover { background: var(--bg-primary); }
+        .prayer-check-container .prayer-status {
+            font-size: 14px;
+            width: 24px;
+            text-align: center;
+        }
+        .prayer-check-container .prayer-status.done { color: var(--success); }
+        .prayer-check-container .prayer-status.jamaa { color: #fdcb6e; }
+
+        .avatar-upload-container {
+            position: relative;
+            cursor: pointer;
+        }
+        .avatar-upload-container .avatar-upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .avatar-upload-container:hover .avatar-upload-overlay { opacity: 1; }
     </style>
 </head>
 <body>
@@ -789,11 +994,13 @@
             <span class="star">✦</span>
             <span class="shooting-star"></span>
             <span class="shooting-star"></span>
+            <span class="shooting-star"></span>
             <span class="time-text">📅 00-00-0000 00:00</span>
         </div>
     </div>
     <div class="top-bar-center">🎓 College Student Life</div>
     <div class="top-bar-right">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Changer le thème">🌓</button>
         <button class="settings-btn" onclick="navigateTo('settings')" title="Paramètres">⚙️</button>
         <div class="avatar" id="avatarDisplay" onclick="navigateTo('account')" title="Mon compte">
             <span id="avatarLetter">H</span>
@@ -868,6 +1075,7 @@
         <div class="flex-center gap-8">
             <button class="btn btn-primary" onclick="openProductModal()">+ Produit</button>
             <button class="btn btn-primary" onclick="openShoppingDayModal()">+ Jour Shopping</button>
+            <button class="btn btn-primary" onclick="importCSV()">📤 Importer CSV</button>
         </div>
     </div>
     <div class="grid-3 mb-12">
@@ -960,7 +1168,7 @@
         </div>
         <div class="mt-12">
             <label>Session: <select id="pomodoroSessionSelect" style="width:200px;display:inline;" onchange="document.getElementById('pomodoroSessionInput').value=this.value"><option value="">Choisir une tâche...</option></select></label>
-            <input type="text" id="pomodoroSessionInput" placeholder="Ou ajouter une tâche" style="width:200px;display:inline;margin-top:8px;">
+            <input type="text" id="pomodoroSessionInput" placeholder="Ou ajouter une tâche" style="width:200px;display:inline;margin-top:8px;" onchange="addTaskFromPomodoro(this.value)">
         </div>
         <div class="mt-12 text-muted">✅ Pomodoros: <span id="pomodoroCount">0</span></div>
         <div id="pomodoroHistory" class="mt-12 text-left"></div>
@@ -980,29 +1188,65 @@
     <div class="flex-between mb-12"><h2>📋 Schedule</h2>
         <div class="flex-center gap-8">
             <button class="btn btn-primary btn-sm" onclick="openSubjectModal()">📚 Matières</button>
-            <button class="btn btn-primary btn-sm" onclick="openCourseModal()">+ Cours</button>
-            <button class="btn btn-danger btn-sm" onclick="openExamModal()">+ DS/Exam</button>
+            <button class="btn btn-primary btn-sm" onclick="openTeacherModal()">👨‍🏫 Profs</button>
+            <button class="btn btn-primary btn-sm" onclick="openClassroomModal()">🏫 Classes</button>
+            <button class="btn btn-outline btn-sm" onclick="editScheduleTimes()">⏰ Modifier horaires</button>
         </div>
     </div>
-    <div class="card" id="scheduleContainer"></div>
+    <div class="schedule-sidebar">
+        <div>
+            <div class="card" id="scheduleContainer"></div>
+        </div>
+        <div class="sidebar">
+            <div class="card"><div class="card-title">📋 Upcoming</div><div id="scheduleUpcoming"></div></div>
+            <div class="card"><div class="card-title">👨‍🏫 Profs</div><div id="scheduleTeachers"></div></div>
+            <div class="card"><div class="card-title">🏫 Classes</div><div id="scheduleClassrooms"></div></div>
+        </div>
+    </div>
 </section>
 
 <!-- NOTES -->
 <section class="section-page" id="section-notes">
-    <div class="flex-between mb-12"><h2>📝 Notes</h2>
+    <h2 class="mb-12">📝 Notes</h2>
+    <div class="flex-between mb-12">
         <div class="flex-center gap-8">
             <input type="text" id="noteSearch" placeholder="🔍 Rechercher..." style="width:200px;" oninput="renderNotes()">
-            <button class="btn btn-primary" onclick="openNoteModal()">+ Nouvelle note</button>
+            <button class="btn btn-primary" onclick="addNewNotePage()">+ Nouvelle note</button>
+        </div>
+        <div class="flex-center gap-8">
+            <button class="btn btn-outline btn-sm" onclick="toggleDrawingMode()">✏️ Dessin</button>
+            <button class="btn btn-outline btn-sm" onclick="clearNotePage()">🗑️ Effacer page</button>
         </div>
     </div>
     <div class="book-container">
-        <div class="book-pages" id="bookPages">
-            <div class="book-page front" id="bookPageFront"></div>
-            <div class="book-page back" id="bookPageBack"></div>
+        <div class="book-inner" id="bookInner">
+            <div class="book-page-real front" id="bookPageFront">
+                <div class="page-number left">Page <span id="pageNumLeft">1</span></div>
+                <div class="book-title" id="bookTitleLeft" contenteditable="false">Titre</div>
+                <div class="book-content" id="bookContentLeft" contenteditable="true"></div>
+            </div>
+            <div class="book-page-real back" id="bookPageBack">
+                <div class="page-number right">Page <span id="pageNumRight">2</span></div>
+                <div class="book-title" id="bookTitleRight" contenteditable="false">Titre</div>
+                <div class="book-content" id="bookContentRight" contenteditable="true"></div>
+            </div>
+        </div>
+        <div class="book-toolbar" id="bookToolbar">
+            <button onclick="formatBook('bold')"><b>B</b></button>
+            <button onclick="formatBook('italic')"><i>I</i></button>
+            <button onclick="formatBook('underline')"><u>U</u></button>
+            <button onclick="formatBook('strikeThrough')"><s>S</s></button>
+            <button onclick="formatBook('insertOrderedList')">1.</button>
+            <button onclick="formatBook('insertUnorderedList')">•</button>
+            <input type="color" id="bookColor" value="#6c5ce7" onchange="formatBook('foreColor', this.value)">
+            <select id="bookFontSize" onchange="formatBook('fontSize', this.value)" style="width:60px;">
+                <option value="1">Petit</option><option value="3" selected>Normal</option><option value="5">Grand</option>
+            </select>
+            <button onclick="toggleDrawingMode()" id="drawToggleBtn">✏️</button>
         </div>
         <div class="book-nav">
             <button id="bookPrev" onclick="bookPrev()">◀ Précédent</button>
-            <span id="bookPageInfo">Page 1 / 1</span>
+            <span class="page-info" id="bookPageInfo">Page 1 / 1</span>
             <button id="bookNext" onclick="bookNext()">Suivant ▶</button>
         </div>
     </div>
@@ -1012,19 +1256,35 @@
 <section class="section-page" id="section-religion" dir="rtl">
     <h2 class="mb-12">🕌 الدين</h2>
     <div class="grid-2">
-        <div class="card">
-            <div class="card-title">📿 صلوات اليوم</div>
+        <div class="card"><div class="card-title">📿 صلوات اليوم</div>
             <div class="flex-center" style="justify-content:space-around;flex-wrap:wrap;" id="prayerLabels">
-                <label style="display:flex;align-items:center;gap:4px;">☀️ الفجر <input type="checkbox" class="prayer-check" data-prayer="fajr" onchange="updatePrayers()"></label>
-                <label style="display:flex;align-items:center;gap:4px;" id="dhuhrLabel">☀️ الظهر <input type="checkbox" class="prayer-check" data-prayer="dhuhr" onchange="updatePrayers()"></label>
-                <label style="display:flex;align-items:center;gap:4px;">☀️ العصر <input type="checkbox" class="prayer-check" data-prayer="asr" onchange="updatePrayers()"></label>
-                <label style="display:flex;align-items:center;gap:4px;">🌙 المغرب <input type="checkbox" class="prayer-check" data-prayer="maghrib" onchange="updatePrayers()"></label>
-                <label style="display:flex;align-items:center;gap:4px;">🌙 العشاء <input type="checkbox" class="prayer-check" data-prayer="isha" onchange="updatePrayers()"></label>
+                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;">
+                    <span class="prayer-status" id="prayer-fajr-status">◯</span>
+                    ☀️ الفجر 
+                    <input type="checkbox" class="prayer-check" data-prayer="fajr" onchange="updatePrayers()" style="display:none;">
+                </label>
+                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" id="dhuhrLabel">
+                    <span class="prayer-status" id="prayer-dhuhr-status">◯</span>
+                    ☀️ الظهر 
+                    <input type="checkbox" class="prayer-check" data-prayer="dhuhr" onchange="updatePrayers()" style="display:none;">
+                </label>
+                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;">
+                    <span class="prayer-status" id="prayer-asr-status">◯</span>
+                    ☀️ العصر 
+                    <input type="checkbox" class="prayer-check" data-prayer="asr" onchange="updatePrayers()" style="display:none;">
+                </label>
+                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;">
+                    <span class="prayer-status" id="prayer-maghrib-status">◯</span>
+                    🌙 المغرب 
+                    <input type="checkbox" class="prayer-check" data-prayer="maghrib" onchange="updatePrayers()" style="display:none;">
+                </label>
+                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;">
+                    <span class="prayer-status" id="prayer-isha-status">◯</span>
+                    🌙 العشاء 
+                    <input type="checkbox" class="prayer-check" data-prayer="isha" onchange="updatePrayers()" style="display:none;">
+                </label>
             </div>
             <div class="mt-12 text-center" id="prayerStats">✅ 0/5 صلوات اليوم</div>
-            <div class="mt-12 flex-center" style="justify-content:center;gap:12px;">
-                <label><input type="checkbox" id="prayerJamaa" onchange="updatePrayers()"> صلاة جماعة</label>
-            </div>
         </div>
         <div class="card"><div class="card-title">📅 تقويم الصلوات</div><div id="prayerCalendar"></div></div>
     </div>
@@ -1038,11 +1298,13 @@
                 <select id="quranSelect" style="width:auto;"></select>
                 <button class="btn btn-primary btn-sm" onclick="openQuran()">📖 اقرأ</button>
             </div>
+            <div id="quranDisplay" class="mt-12" style="max-height:200px;overflow-y:auto;font-size:14px;line-height:2;"></div>
         </div>
         <div class="card"><div class="card-title">📿 الأذكار</div>
             <div class="flex-center gap-8" style="flex-wrap:wrap;">
                 <select id="dhikrCategory" style="width:auto;" onchange="showDhikr()"></select>
                 <button class="btn btn-primary btn-sm" onclick="editDhikr()">✏️ تعديل</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteDhikrCategory()">🗑️ حذف</button>
             </div>
             <div id="dhikrDisplay" class="mt-12"></div>
         </div>
@@ -1074,14 +1336,14 @@
     </div>
 </section>
 
-<!-- SETTINGS (hidden section) -->
+<!-- SETTINGS -->
 <section class="section-page" id="section-settings">
     <h2 class="mb-12">⚙️ Paramètres</h2>
     <div class="card">
         <div class="grid-2">
-            <div><label>🌐 Langue</label><select id="settingsLanguage" onchange="changeLanguage(this.value)"><option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option><option value="tr">Türkçe</option><option value="ja">日本語</option></select></div>
-            <div><label>🌓 Thème</label><div class="flex-center gap-8"><button class="btn btn-outline btn-sm" onclick="setTheme('light')">☀️ Clair</button><button class="btn btn-outline btn-sm" onclick="setTheme('dark')">🌙 Sombre</button></div></div>
-            <div><label>💰 Devise</label><select id="settingsCurrency" onchange="changeCurrency(this.value)"><option value="DH">DH (Dirham)</option><option value="₺">₺ (Lire)</option><option value="¥">¥ (Yen)</option><option value="€">€ (Euro)</option><option value="$">$ (Dollar)</option><option value="£">£ (Livre)</option></select></div>
+            <div><label>🌐 Langue par défaut</label><select id="settingsLanguage" onchange="changeLanguage(this.value)"><option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option><option value="tr">Türkçe</option><option value="ja">日本語</option></select></div>
+            <div><label>🌓 Thème par défaut</label><div class="flex-center gap-8"><button class="btn btn-outline btn-sm" onclick="setDefaultTheme('light')">☀️ Clair</button><button class="btn btn-outline btn-sm" onclick="setDefaultTheme('dark')">🌙 Sombre</button></div></div>
+            <div><label>💰 Devise par défaut</label><select id="settingsCurrency" onchange="changeCurrency(this.value)"><option value="DH">DH (Dirham)</option><option value="₺">₺ (Lire)</option><option value="¥">¥ (Yen)</option><option value="€">€ (Euro)</option><option value="$">$ (Dollar)</option><option value="£">£ (Livre)</option></select></div>
             <div><label>🔔 Notifications</label><div><label><input type="checkbox" id="notifPush" checked> Push</label></div><div><label><input type="checkbox" id="notifSound" checked> Sons</label></div></div>
         </div>
         <div class="mt-12 flex-center gap-8">
@@ -1092,14 +1354,17 @@
     </div>
 </section>
 
-<!-- ACCOUNT (hidden section) -->
+<!-- ACCOUNT -->
 <section class="section-page" id="section-account">
     <h2 class="mb-12">👤 Mon Compte</h2>
     <div class="card">
         <div class="flex-center gap-16">
-            <div class="avatar" style="width:80px;height:80px;font-size:32px;cursor:pointer;" onclick="document.getElementById('avatarUpload').click()">
-                <span id="accountAvatarLetter">H</span>
-                <img id="accountAvatarImage" style="display:none;width:100%;height:100%;object-fit:cover;">
+            <div class="avatar-upload-container" onclick="document.getElementById('avatarUpload').click()">
+                <div class="avatar" style="width:80px;height:80px;font-size:32px;cursor:pointer;">
+                    <span id="accountAvatarLetter">H</span>
+                    <img id="accountAvatarImage" style="display:none;width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="avatar-upload-overlay">📷 Changer</div>
                 <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)">
             </div>
             <div><h3 id="accountName">Hamza Margal</h3><p class="text-muted" id="accountEmail">hamzamp2026@gmail.com</p></div>
@@ -1148,7 +1413,7 @@
 
 <script>
 // ================================================================
-// FIREBASE CONFIG
+// FIREBASE CONFIG - METTEZ VOS CLÉS ICI
 // ================================================================
 const firebaseConfig = {
     apiKey: "AIzaSyAF33_gGGfro5NXFAktJKlqfd0bMbfwo98",
@@ -1182,6 +1447,8 @@ let allSportSessions = [];
 let allCourses = [];
 let allExams = [];
 let allSubjects = [];
+let allTeachers = [];
+let allClassrooms = [];
 let allMeals = { breakfast: [], lunch: [], dinner: [] };
 let waterAmount = 0;
 let waterGoal = 3;
@@ -1189,6 +1456,7 @@ let allPrayers = {};
 let allDhikrs = { morning: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أصبحنا'], evening: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أمسينا'], sleep: ['اللهم باسمك أموت وأحيا', 'سبحان الله (33x)', 'الحمد لله (33x)', 'الله أكبر (34x)'], diverse: ['لا إله إلا الله', 'سبحان الله', 'الحمد لله', 'الله أكبر', 'أستغفر الله'] };
 let allSemesters = [];
 let allHolidays = [];
+let scheduleTimes = ['08:00', '10:00', '14:00', '16:00'];
 let budgetRemaining = 0;
 let pomodoroRunning = false;
 let pomodoroInterval = null;
@@ -1202,154 +1470,41 @@ let currentBudgetTab = 'shopping';
 let bookCurrentPage = 0;
 let bookNotes = [];
 let scheduleColors = ['#6c5ce7', '#00b894', '#fdcb6e', '#e17055', '#74b9ff', '#fd79a8', '#00cec9', '#a29bfe', '#55efc4', '#f8a5c2'];
-
-// ================================================================
-// HOLIDAYS
-// ================================================================
-const defaultHolidays = [
-    { date: '01-01', name: 'Nouvel An' },
-    { date: '01-05', name: 'Jour de l\'indépendance (MA)' },
-    { date: '01-11', name: 'Manifeste de l\'indépendance (MA)' },
-    { date: '03-08', name: 'Journée de la femme' },
-    { date: '04-23', name: 'Fête de l\'enfant (TR)' },
-    { date: '05-01', name: 'Fête du travail' },
-    { date: '05-23', name: 'Fête nationale (MA)' },
-    { date: '06-01', name: 'Fête des mères (MA)' },
-    { date: '07-14', name: 'Fête nationale (FR)' },
-    { date: '07-30', name: 'Fête du Trône (MA)' },
-    { date: '08-14', name: 'Fête de la Jeunesse (MA)' },
-    { date: '08-20', name: 'Révolution du Roi et du Peuple (MA)' },
-    { date: '08-21', name: 'Fête de la Jeunesse (MA)' },
-    { date: '10-29', name: 'Fête de la République (TR)' },
-    { date: '11-06', name: 'Marche Verte (MA)' },
-    { date: '11-18', name: 'Fête de l\'Indépendance (MA)' },
-    { date: '12-25', name: 'Noël' }
-];
+let isDrawingMode = false;
+let currentTheme = 'light';
+let userDefaultTheme = 'light';
 
 // ================================================================
 // QURAN DATA
 // ================================================================
 const quranSurahs = [
-    { id: 1, name: 'الفاتحة' },
-    { id: 2, name: 'البقرة' },
-    { id: 3, name: 'آل عمران' },
-    { id: 4, name: 'النساء' },
-    { id: 5, name: 'المائدة' },
-    { id: 6, name: 'الأنعام' },
-    { id: 7, name: 'الأعراف' },
-    { id: 8, name: 'الأنفال' },
-    { id: 9, name: 'التوبة' },
-    { id: 10, name: 'يونس' },
-    { id: 11, name: 'هود' },
-    { id: 12, name: 'يوسف' },
-    { id: 13, name: 'الرعد' },
-    { id: 14, name: 'إبراهيم' },
-    { id: 15, name: 'الحجر' },
-    { id: 16, name: 'النحل' },
-    { id: 17, name: 'الإسراء' },
-    { id: 18, name: 'الكهف' },
-    { id: 19, name: 'مريم' },
-    { id: 20, name: 'طه' },
-    { id: 21, name: 'الأنبياء' },
-    { id: 22, name: 'الحج' },
-    { id: 23, name: 'المؤمنون' },
-    { id: 24, name: 'النور' },
-    { id: 25, name: 'الفرقان' },
-    { id: 26, name: 'الشعراء' },
-    { id: 27, name: 'النمل' },
-    { id: 28, name: 'القصص' },
-    { id: 29, name: 'العنكبوت' },
-    { id: 30, name: 'الروم' },
-    { id: 31, name: 'لقمان' },
-    { id: 32, name: 'السجدة' },
-    { id: 33, name: 'الأحزاب' },
-    { id: 34, name: 'سبأ' },
-    { id: 35, name: 'فاطر' },
-    { id: 36, name: 'يس' },
-    { id: 37, name: 'الصافات' },
-    { id: 38, name: 'ص' },
-    { id: 39, name: 'الزمر' },
-    { id: 40, name: 'غافر' },
-    { id: 41, name: 'فصلت' },
-    { id: 42, name: 'الشورى' },
-    { id: 43, name: 'الزخرف' },
-    { id: 44, name: 'الدخان' },
-    { id: 45, name: 'الجاثية' },
-    { id: 46, name: 'الأحقاف' },
-    { id: 47, name: 'محمد' },
-    { id: 48, name: 'الفتح' },
-    { id: 49, name: 'الحجرات' },
-    { id: 50, name: 'ق' },
-    { id: 51, name: 'الذاريات' },
-    { id: 52, name: 'الطور' },
-    { id: 53, name: 'النجم' },
-    { id: 54, name: 'القمر' },
-    { id: 55, name: 'الرحمن' },
-    { id: 56, name: 'الواقعة' },
-    { id: 57, name: 'الحديد' },
-    { id: 58, name: 'المجادلة' },
-    { id: 59, name: 'الحشر' },
-    { id: 60, name: 'الممتحنة' },
-    { id: 61, name: 'الصف' },
-    { id: 62, name: 'الجمعة' },
-    { id: 63, name: 'المنافقون' },
-    { id: 64, name: 'التغابن' },
-    { id: 65, name: 'الطلاق' },
-    { id: 66, name: 'التحريم' },
-    { id: 67, name: 'الملك' },
-    { id: 68, name: 'القلم' },
-    { id: 69, name: 'الحاقة' },
-    { id: 70, name: 'المعارج' },
-    { id: 71, name: 'نوح' },
-    { id: 72, name: 'الجن' },
-    { id: 73, name: 'المزمل' },
-    { id: 74, name: 'المدثر' },
-    { id: 75, name: 'القيامة' },
-    { id: 76, name: 'الإنسان' },
-    { id: 77, name: 'المرسلات' },
-    { id: 78, name: 'النبأ' },
-    { id: 79, name: 'النازعات' },
-    { id: 80, name: 'عبس' },
-    { id: 81, name: 'التكوير' },
-    { id: 82, name: 'الإنفطار' },
-    { id: 83, name: 'المطففين' },
-    { id: 84, name: 'الإنشقاق' },
-    { id: 85, name: 'البروج' },
-    { id: 86, name: 'الطارق' },
-    { id: 87, name: 'الأعلى' },
-    { id: 88, name: 'الغاشية' },
-    { id: 89, name: 'الفجر' },
-    { id: 90, name: 'البلد' },
-    { id: 91, name: 'الشمس' },
-    { id: 92, name: 'الليل' },
-    { id: 93, name: 'الضحى' },
-    { id: 94, name: 'الشرح' },
-    { id: 95, name: 'التين' },
-    { id: 96, name: 'العلق' },
-    { id: 97, name: 'القدر' },
-    { id: 98, name: 'البينة' },
-    { id: 99, name: 'الزلزلة' },
-    { id: 100, name: 'العاديات' },
-    { id: 101, name: 'القارعة' },
-    { id: 102, name: 'التكاثر' },
-    { id: 103, name: 'العصر' },
-    { id: 104, name: 'الهمزة' },
-    { id: 105, name: 'الفيل' },
-    { id: 106, name: 'قريش' },
-    { id: 107, name: 'الماعون' },
-    { id: 108, name: 'الكوثر' },
-    { id: 109, name: 'الكافرون' },
-    { id: 110, name: 'النصر' },
-    { id: 111, name: 'المسد' },
-    { id: 112, name: 'الإخلاص' },
-    { id: 113, name: 'الفلق' },
-    { id: 114, name: 'الناس' }
+    { id: 1, name: 'الفاتحة', text: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ' },
+    { id: 2, name: 'البقرة', text: 'الم\nذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ\nالَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ' },
+    { id: 3, name: 'آل عمران', text: 'الم\nاللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ\nنَزَّلَ عَلَيْكَ الْكِتَابَ بِالْحَقِّ مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ' },
+    { id: 4, name: 'النساء', text: 'يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً' },
+    { id: 5, name: 'المائدة', text: 'يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ۚ أُحِلَّتْ لَكُم بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ' },
+    { id: 6, name: 'الأنعام', text: 'الْحَمْدُ لِلَّهِ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ وَجَعَلَ الظُّلُمَاتِ وَالنُّورَ ۖ ثُمَّ الَّذِينَ كَفَرُوا بِرَبِّهِمْ يَعْدِلُونَ' },
+    { id: 7, name: 'الأعراف', text: 'المص\nكِتَابٌ أُنزِلَ إِلَيْكَ فَلَا يَكُن فِي صَدْرِكَ حَرَجٌ مِّنْهُ لِتُنذِرَ بِهِ وَذِكْرَىٰ لِلْمُؤْمِنِينَ' },
+    { id: 8, name: 'الأنفال', text: 'يَسْأَلُونَكَ عَنِ الْأَنفَالِ ۖ قُلِ الْأَنفَالُ لِلَّهِ وَالرَّسُولِ ۖ فَاتَّقُوا اللَّهَ وَأَصْلِحُوا ذَاتَ بَيْنِكُمْ' },
+    { id: 9, name: 'التوبة', text: 'بَرَاءَةٌ مِّنَ اللَّهِ وَرَسُولِهِ إِلَى الَّذِينَ عَاهَدتُّم مِّنَ الْمُشْرِكِينَ' },
+    { id: 10, name: 'يونس', text: 'الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْحَكِيمِ' }
 ];
 
 // ================================================================
 // INITIALISATION
 // ================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Charger le thème depuis localStorage
+    const savedTheme = localStorage.getItem('userTheme');
+    if (savedTheme) {
+        currentTheme = savedTheme;
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+        const defaultTheme = localStorage.getItem('defaultTheme') || 'light';
+        currentTheme = defaultTheme;
+        document.documentElement.setAttribute('data-theme', defaultTheme);
+    }
+    
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUser = user;
@@ -1362,7 +1517,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user.email === 'hamzamp2026@gmail.com') {
                 document.getElementById('adminNav').style.display = 'flex';
             }
-            // Load avatar
             loadAvatar();
         } else {
             showLoginScreen();
@@ -1380,7 +1534,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createStars();
     initQuranSelect();
     initDhikrSelect();
-    // Reset real values at month start
     checkMonthReset();
     updatePrayerLabels();
 });
@@ -1403,7 +1556,6 @@ function checkMonthReset() {
     const now = new Date();
     const today = now.getDate();
     if (today === 1) {
-        // Reset all product real values to 0
         allProducts.forEach(p => {
             p.reel = 0;
             p.checked = 0;
@@ -1411,6 +1563,24 @@ function checkMonthReset() {
         });
         showToast('🔄 Les valeurs réelles ont été réinitialisées pour le nouveau mois', 'info');
     }
+}
+
+function toggleTheme() {
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    currentTheme = newTheme;
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('userTheme', newTheme);
+    showToast(`🌓 Thème: ${newTheme === 'light' ? 'Clair' : 'Sombre'}`, 'info');
+}
+
+function setDefaultTheme(theme) {
+    userDefaultTheme = theme;
+    localStorage.setItem('defaultTheme', theme);
+    if (!localStorage.getItem('userTheme')) {
+        currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+    }
+    showToast(`🌓 Thème par défaut: ${theme === 'light' ? 'Clair' : 'Sombre'}`, 'success');
 }
 
 // ================================================================
@@ -1537,6 +1707,10 @@ async function loadAllData() {
             ];
             allSubjects.forEach(s => db.collection('users').doc(uid).collection('subjects').doc(s.id).set(s));
         }
+        const teachersSnap = await db.collection('users').doc(uid).collection('teachers').get();
+        allTeachers = teachersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const classroomsSnap = await db.collection('users').doc(uid).collection('classrooms').get();
+        allClassrooms = classroomsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         const mealsSnap = await db.collection('users').doc(uid).collection('meals').get();
         const mealsData = mealsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         allMeals = { breakfast: [], lunch: [], dinner: [] };
@@ -1572,6 +1746,10 @@ async function loadAllData() {
         if (budgetRemainingSnap.exists) {
             budgetRemaining = budgetRemainingSnap.data().remaining || 0;
         }
+        const scheduleTimesSnap = await db.collection('users').doc(uid).collection('scheduleSettings').doc('times').get();
+        if (scheduleTimesSnap.exists) {
+            scheduleTimes = scheduleTimesSnap.data().times || ['08:00', '10:00', '14:00', '16:00'];
+        }
         updateAllUI();
     } catch(e) { console.error(e); showToast('Erreur chargement', 'error'); }
 }
@@ -1591,6 +1769,8 @@ async function saveSportSession(s) { if(!currentUser)return; const uid=currentUs
 async function saveCourse(c) { if(!currentUser)return; const uid=currentUser.uid; if(c.id) await db.collection('users').doc(uid).collection('courses').doc(c.id).update(c); else {const ref=await db.collection('users').doc(uid).collection('courses').add(c); c.id=ref.id;} }
 async function saveExam(e) { if(!currentUser)return; const uid=currentUser.uid; if(e.id) await db.collection('users').doc(uid).collection('exams').doc(e.id).update(e); else {const ref=await db.collection('users').doc(uid).collection('exams').add(e); e.id=ref.id;} }
 async function saveSubject(s) { if(!currentUser)return; const uid=currentUser.uid; if(s.id) await db.collection('users').doc(uid).collection('subjects').doc(s.id).update(s); else {const ref=await db.collection('users').doc(uid).collection('subjects').add(s); s.id=ref.id;} }
+async function saveTeacher(t) { if(!currentUser)return; const uid=currentUser.uid; if(t.id) await db.collection('users').doc(uid).collection('teachers').doc(t.id).update(t); else {const ref=await db.collection('users').doc(uid).collection('teachers').add(t); t.id=ref.id;} }
+async function saveClassroom(c) { if(!currentUser)return; const uid=currentUser.uid; if(c.id) await db.collection('users').doc(uid).collection('classrooms').doc(c.id).update(c); else {const ref=await db.collection('users').doc(uid).collection('classrooms').add(c); c.id=ref.id;} }
 async function saveMeal(m) { if(!currentUser)return; const uid=currentUser.uid; if(m.id) await db.collection('users').doc(uid).collection('meals').doc(m.id).update(m); else {const ref=await db.collection('users').doc(uid).collection('meals').add(m); m.id=ref.id;} }
 async function saveStats(w, g) { if(!currentUser)return; const uid=currentUser.uid; await db.collection('users').doc(uid).collection('stats').doc('daily').set({water:w, waterGoal:g, updatedAt:new Date()}); }
 async function savePrayers(p) { if(!currentUser)return; const uid=currentUser.uid; await db.collection('users').doc(uid).collection('prayers').doc('calendar').set(p); }
@@ -1599,6 +1779,7 @@ async function saveSemester(s) { if(!currentUser)return; const uid=currentUser.u
 async function saveHoliday(h) { if(!currentUser)return; const uid=currentUser.uid; if(h.id) await db.collection('users').doc(uid).collection('holidays').doc(h.id).update(h); else {const ref=await db.collection('users').doc(uid).collection('holidays').add(h); h.id=ref.id;} }
 async function deleteHoliday(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('holidays').doc(id).delete(); }
 async function saveBudgetRemaining(r) { if(!currentUser)return; const uid=currentUser.uid; budgetRemaining = r; await db.collection('users').doc(uid).collection('budgetSettings').doc('settings').set({remaining:r}); }
+async function saveScheduleTimes(times) { if(!currentUser)return; const uid=currentUser.uid; scheduleTimes = times; await db.collection('users').doc(uid).collection('scheduleSettings').doc('times').set({times:times}); }
 
 // ================================================================
 // UI UPDATE
@@ -1607,6 +1788,7 @@ function updateAllUI() {
     updateDashboard(); renderTasks(); renderHabits(); renderBudget(); renderProducts(); renderShoppingDays();
     renderWishlist(); renderCalendar(); renderSport(); renderNutrition(); renderSchedule(); renderNotes();
     renderPrayerCalendar(); renderMarks(); updateAdminPanel(); updatePomodoroSelect(); updateBudgetTotals();
+    updateAccountStats();
 }
 
 function updateClock() {
@@ -1622,19 +1804,7 @@ function updateClock() {
     document.getElementById('fullscreenDate').textContent = `${d}-${m}-${y}`;
     updatePrayerLabels();
 }
-function updatePrayerLabels() {
-    const now = new Date();
-    const isFriday = now.getDay() === 5; // 5 = vendredi (dimanche=0, lundi=1, ... vendredi=5)
-    const dhuhrLabel = document.getElementById('dhuhrLabel');
-    if (dhuhrLabel) {
-        // Le premier enfant de dhuhrLabel est le texte
-        const textNode = dhuhrLabel.childNodes[0];
-        if (textNode) {
-            // Garder l'emoji et l'espace, changer le texte
-            textNode.textContent = isFriday ? '☀️ الجمعة ' : '☀️ الظهر ';
-        }
-    }
-}
+
 function toggleFullScreenClock() {
     document.getElementById('fullscreenClock').classList.toggle('show');
     updateClock();
@@ -1657,10 +1827,7 @@ function navigateTo(section) {
     if (section === 'marks') renderMarks();
     if (section === 'budget') switchBudgetTab(currentBudgetTab);
     if (section === 'notes') renderNotes();
-    if (section === 'religion') {
-        updatePrayerLabels();
-        updatePrayers();
-    }
+    if (section === 'religion') { updatePrayerLabels(); updatePrayers(); }
 }
 
 // ================================================================
@@ -1700,6 +1867,7 @@ function updateDashboard() {
     else pedaContainer.innerHTML = allPedagogical.map(p => `
         <div>✅ ${p.name}: <span>${p.progress || 0}%</span></div>
         <div class="progress-bar"><div class="fill" style="width:${p.progress || 0}%;"></div></div>
+        ${p.progress >= 100 ? '<span class="badge badge-success">✅ Terminé</span>' : ''}
     `).join('');
     const now = new Date();
     const upcoming = [];
@@ -1732,6 +1900,14 @@ function updateDashboard() {
             if (cDate > now && cDate - now < 5 * 60 * 60 * 1000) {
                 const subject = allSubjects.find(s => s.id === c.subjectId);
                 upcoming.push({ time: cDate, text: `📚 ${subject ? subject.name : c.name}`, type: 'course' });
+            }
+        }
+    });
+    allExams.forEach(e => {
+        if (e.date) {
+            const eDate = new Date(e.date + 'T' + (e.time || '09:00'));
+            if (eDate > now && eDate - now < 5 * 60 * 60 * 1000) {
+                upcoming.push({ time: eDate, text: `📝 ${e.name}`, type: 'exam' });
             }
         }
     });
@@ -1815,7 +1991,7 @@ async function saveTaskFromModal(id) {
     await saveTask(task);
     if (!id) allTasks.push(task);
     else { const idx = allTasks.findIndex(t => t.id === id); if (idx >= 0) allTasks[idx] = task; }
-    closeModal(); renderTasks(); updateDashboard(); showToast('Tâche enregistrée !', 'success'); playSound('pop');
+    closeModal(); renderTasks(); updateDashboard(); updatePomodoroSelect(); showToast('Tâche enregistrée !', 'success'); playSound('pop');
 }
 
 function renderTasks() {
@@ -1873,7 +2049,7 @@ async function deleteTask(id) {
     if (!currentUser) return;
     await db.collection('users').doc(currentUser.uid).collection('tasks').doc(id).delete();
     allTasks = allTasks.filter(t => t.id !== id);
-    renderTasks(); updateDashboard(); playSound('woosh');
+    renderTasks(); updateDashboard(); updatePomodoroSelect(); playSound('woosh');
 }
 
 async function toggleTaskStatus(id) {
@@ -1883,6 +2059,21 @@ async function toggleTaskStatus(id) {
     await saveTask(task);
     renderTasks(); updateDashboard(); playSound('ting');
     showToast(task.status === 'Terminé' ? '✅ Tâche complétée !' : '↩️ Tâche réouverte', 'success');
+}
+
+function addTaskFromPomodoro(value) {
+    if (value && value.trim()) {
+        const existing = allTasks.find(t => t.title === value.trim());
+        if (!existing) {
+            const task = { title: value.trim(), desc: '', domain: 'Personnel', subject: '', dueDate: '', time: '', priority: 'Moyenne', status: 'À faire', duration: 0, subtasks: [] };
+            saveTask(task);
+            allTasks.push(task);
+            updatePomodoroSelect();
+            renderTasks();
+            showToast('Tâche ajoutée !', 'success');
+            playSound('pop');
+        }
+    }
 }
 
 // ================================================================
@@ -1992,13 +2183,11 @@ async function toggleHabitDay(id, el, dateStr) {
     const habit = allHabits.find(h => h.id === id);
     if (!habit) return;
     if (!habit.history) habit.history = [];
-    // Si dateStr est fourni, on toggle ce jour spécifique
     if (dateStr) {
         const idx = habit.history.indexOf(dateStr);
         if (idx >= 0) habit.history.splice(idx, 1);
         else habit.history.push(dateStr);
     } else {
-        // Mode édition des jours de la semaine
         const newDays = prompt('Entrez les jours (0=Lun, 6=Dim) séparés par des virgules:', habit.days.join(','));
         if (newDays !== null) {
             habit.days = newDays.split(',').map(Number).filter(n => !isNaN(n) && n >= 0 && n <= 6);
@@ -2007,7 +2196,6 @@ async function toggleHabitDay(id, el, dateStr) {
     habit.streak = calculateStreak(habit.history, habit.days);
     await saveHabit(habit);
     renderHabits();
-    // Re-rendre le modal si ouvert
     if (document.getElementById('modalOverlay').classList.contains('show')) {
         showHabitMonth(id);
     }
@@ -2028,7 +2216,6 @@ async function checkHabit(id) {
     const today = new Date().toISOString().split('T')[0];
     if (!habit.history) habit.history = [];
     if (habit.history.includes(today)) {
-        // Uncheck
         habit.history = habit.history.filter(d => d !== today);
     } else {
         habit.history.push(today);
@@ -2045,10 +2232,8 @@ function calculateStreak(history, days) {
     let streak = 0;
     const sorted = [...history].sort();
     let checkDate = new Date();
-    // Vérifier si aujourd'hui est fait
     const todayStr = checkDate.toISOString().split('T')[0];
     if (!sorted.includes(todayStr) && days.includes(checkDate.getDay())) {
-        // Aujourd'hui pas fait, streak = 0
         return 0;
     }
     while (true) {
@@ -2122,7 +2307,6 @@ function renderYearlyReport() {
     const container = document.getElementById('yearlyReport');
     const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
     let html = `<h4>Bilan annuel</h4><div class="table-wrap"><table><thead><tr><th>Mois</th><th>Estimé</th><th>Réel</th><th>Diff</th></tr></thead><tbody>`;
-    // Simuler des données mensuelles (à partir des produits)
     const monthlyData = {};
     allProducts.forEach(p => {
         if (p.month) {
@@ -2131,7 +2315,6 @@ function renderYearlyReport() {
             monthlyData[p.month].real += p.reel || 0;
         }
     });
-    // Si pas de données mensuelles, utiliser les données globales
     if (Object.keys(monthlyData).length === 0) {
         const totalEst = allProducts.reduce((s, p) => s + (p.estime || 0), 0);
         const totalReal = allProducts.reduce((s, p) => s + (p.reel || 0), 0);
@@ -2259,6 +2442,64 @@ async function deleteProduct(id) {
 }
 
 // ================================================================
+// CSV IMPORT
+// ================================================================
+function importCSV() {
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>📤 Importer des produits depuis CSV</h3>
+        <p class="text-muted">Format: Catégorie,Nom,Quantité,Estimé,Réel,Priorité</p>
+        <input type="file" id="csvFile" accept=".csv" style="margin-bottom:10px;">
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="processCSV()">Importer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+function processCSV() {
+    const file = document.getElementById('csvFile').files[0];
+    if (!file) { showToast('Sélectionnez un fichier CSV', 'warning'); return; }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const lines = e.target.result.split('\n').filter(l => l.trim());
+        let count = 0;
+        lines.forEach(line => {
+            const cols = line.split(',').map(c => c.trim());
+            if (cols.length >= 6) {
+                const product = {
+                    category: cols[0] || 'Autre',
+                    name: cols[1] || 'Produit',
+                    qty: cols[2] || '1',
+                    estime: parseFloat(cols[3]) || 0,
+                    reel: parseFloat(cols[4]) || 0,
+                    priority: cols[5] || 'Basse',
+                    month: new Date().toLocaleString('fr', {month:'short', year:'numeric'}),
+                    checked: 0
+                };
+                const real = product.reel || 0;
+                const est = product.estime || 0;
+                if (real === 0) product.checked = 0;
+                else if (real < est) product.checked = 1;
+                else if (real === est) product.checked = 2;
+                else product.checked = 3;
+                saveProduct(product);
+                allProducts.push(product);
+                count++;
+            }
+        });
+        closeModal();
+        renderProducts();
+        updateBudgetTotals();
+        updateDashboard();
+        showToast(`✅ ${count} produits importés !`, 'success');
+        playSound('pop');
+    };
+    reader.readAsText(file);
+}
+
+// ================================================================
 // SHOPPING DAYS
 // ================================================================
 function openShoppingDayModal() {
@@ -2323,7 +2564,6 @@ function addProductToShoppingDay() {
         }
     });
     renderShoppingSelectedItems();
-    // Uncheck all
     checks.forEach(cb => cb.checked = false);
     showToast('Produits ajoutés au panier', 'success');
 }
@@ -2331,7 +2571,6 @@ function addProductToShoppingDay() {
 function updateShoppingQty(id, val) {
     const p = shoppingProductsCache.find(s => s.id === id);
     if (p) p.boughtQty = parseFloat(val) || 0;
-    // Mettre à jour le produit correspondant
     const product = allProducts.find(pr => pr.id === id);
     if (product) {
         product.reel = parseFloat(val) || 0;
@@ -2437,7 +2676,6 @@ function renderWishlist() {
             <div><button class="btn btn-primary btn-sm" onclick="openWishModal(allWishes.find(a=>a.id==='${w.id}'))">✏️</button><button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑️</button></div>
         </div>
     `).join('');
-    // Pédagogiques
     const pedaContainer = document.getElementById('pedagogicalContainer');
     if (allPedagogical.length === 0) pedaContainer.innerHTML = '<div class="text-muted">Aucun objectif</div>';
     else pedaContainer.innerHTML = allPedagogical.map(p => `
@@ -2471,13 +2709,21 @@ function openPedagogicalModal(p) {
     modal.innerHTML = `
         <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un objectif</h3>
         <input type="text" id="pedaName" placeholder="Nom" value="${p?.name || ''}" style="margin-bottom:10px;">
-        <input type="number" id="pedaProgress" placeholder="Progression (0-100)" value="${p?.progress || 0}" style="margin-bottom:10px;" min="0" max="100">
-        <div class="flex-center gap-8">
+        <input type="number" id="pedaProgress" placeholder="Progression (0-100)" value="${p?.progress || 0}" style="margin-bottom:10px;" min="0" max="100" onchange="updatePedaProgress(this)">
+        <div class="progress-bar"><div class="fill" id="pedaProgressBar" style="width:${p?.progress || 0}%;"></div></div>
+        <div id="pedaStatus" class="mt-12">${p?.progress >= 100 ? '✅ Terminé' : 'En cours...'}</div>
+        <div class="flex-center gap-8 mt-12">
             <button class="btn btn-primary" onclick="savePedagogicalFromModal('${isEdit ? p.id : ''}')">Enregistrer</button>
             <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
         </div>
     `;
     document.getElementById('modalOverlay').classList.add('show');
+}
+
+function updatePedaProgress(el) {
+    const val = parseInt(el.value) || 0;
+    document.getElementById('pedaProgressBar').style.width = Math.min(100, val) + '%';
+    document.getElementById('pedaStatus').textContent = val >= 100 ? '✅ Terminé' : 'En cours...';
 }
 
 async function savePedagogicalFromModal(id) {
@@ -2530,7 +2776,7 @@ async function saveCalendarEvent() {
     const task = { title, desc: 'Événement calendrier', domain: 'Personnel', dueDate: date, time: allDay ? '00:00' : (time || '00:00'), priority: 'Moyenne', status: 'À faire', duration: 0, subtasks: [], allDay };
     await saveTask(task);
     allTasks.push(task);
-    closeModal(); renderCalendar(); updateDashboard(); showToast('Événement ajouté !', 'success'); playSound('pop');
+    closeModal(); renderCalendar(); updateDashboard(); updatePomodoroSelect(); showToast('Événement ajouté !', 'success'); playSound('pop');
 }
 
 function addHoliday() {
@@ -2618,14 +2864,13 @@ function renderCalendar() {
                     events.push({ text: '📝 ' + e.name, type: 'exam' });
                 }
             });
-            // Holidays
             const monthDay = String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
             allHolidays.forEach(h => {
                 if (h.date === monthDay) {
                     events.push({ text: '🏖️ ' + h.name, type: 'holiday' });
                 }
             });
-            const hasPrayers = allPrayers[dateStr] && allPrayers[dateStr] >= 5;
+            const hasPrayers = allPrayers[dateStr] && allPrayers[dateStr].count >= 5;
             const isHoliday = allHolidays.some(h => h.date === monthDay);
             html += `<div class="day ${isToday ? 'today' : ''} ${hasPrayers ? 'prayer-done' : ''} ${isHoliday ? 'holiday' : ''}">
                 <div class="day-number">${d}</div>
@@ -2668,7 +2913,6 @@ function renderCalendar() {
         html += '</div>';
         container.innerHTML = html;
     } else {
-        // Week view
         let html = `<div style="display:flex;flex-direction:column;gap:8px;">`;
         let start = new Date(calendarDate);
         start.setDate(start.getDate() - start.getDay() + 1);
@@ -2929,6 +3173,112 @@ async function deleteSubject(id) {
     openSubjectModal(); renderSchedule(); playSound('woosh');
 }
 
+function openTeacherModal() {
+    const modal = document.getElementById('modalBody');
+    let html = `<h3>👨‍🏫 Professeurs</h3><div id="teacherList">`;
+    allTeachers.forEach(t => {
+        html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <span>${t.name} ${t.subject ? '- ' + t.subject : ''} ${t.phone ? '- ' + t.phone : ''}</span>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="editTeacher('${t.id}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button>
+            </div>
+        </div>`;
+    });
+    html += `</div><button class="btn btn-primary mt-12" onclick="addTeacherFromModal()">+ Ajouter un prof</button>
+        <button class="btn btn-outline mt-12" onclick="closeModal()">Fermer</button>`;
+    modal.innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+function addTeacherFromModal() {
+    const name = prompt('Nom du professeur:');
+    if (!name) return;
+    const subject = prompt('Matière enseignée:') || '';
+    const phone = prompt('Téléphone:') || '';
+    const teacher = { name, subject, phone };
+    saveTeacher(teacher);
+    allTeachers.push(teacher);
+    openTeacherModal();
+    renderSchedule();
+    playSound('pop');
+}
+
+function editTeacher(id) {
+    const teacher = allTeachers.find(t => t.id === id);
+    if (!teacher) return;
+    const name = prompt('Nom:', teacher.name);
+    if (name) { teacher.name = name; saveTeacher(teacher); openTeacherModal(); renderSchedule(); }
+}
+
+async function deleteTeacher(id) {
+    if (!confirm('Supprimer ce professeur ?')) return;
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('teachers').doc(id).delete();
+    allTeachers = allTeachers.filter(t => t.id !== id);
+    openTeacherModal(); renderSchedule(); playSound('woosh');
+}
+
+function openClassroomModal() {
+    const modal = document.getElementById('modalBody');
+    let html = `<h3>🏫 Classes</h3><div id="classroomList">`;
+    allClassrooms.forEach(c => {
+        html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <span>${c.name} ${c.building ? '- ' + c.building : ''} ${c.capacity ? '- ' + c.capacity + ' places' : ''}</span>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="editClassroom('${c.id}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteClassroom('${c.id}')">🗑️</button>
+            </div>
+        </div>`;
+    });
+    html += `</div><button class="btn btn-primary mt-12" onclick="addClassroomFromModal()">+ Ajouter une classe</button>
+        <button class="btn btn-outline mt-12" onclick="closeModal()">Fermer</button>`;
+    modal.innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+function addClassroomFromModal() {
+    const name = prompt('Nom de la classe:');
+    if (!name) return;
+    const building = prompt('Bâtiment:') || '';
+    const capacity = prompt('Capacité:') || '';
+    const classroom = { name, building, capacity };
+    saveClassroom(classroom);
+    allClassrooms.push(classroom);
+    openClassroomModal();
+    renderSchedule();
+    playSound('pop');
+}
+
+function editClassroom(id) {
+    const classroom = allClassrooms.find(c => c.id === id);
+    if (!classroom) return;
+    const name = prompt('Nom:', classroom.name);
+    if (name) { classroom.name = name; saveClassroom(classroom); openClassroomModal(); renderSchedule(); }
+}
+
+async function deleteClassroom(id) {
+    if (!confirm('Supprimer cette classe ?')) return;
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('classrooms').doc(id).delete();
+    allClassrooms = allClassrooms.filter(c => c.id !== id);
+    openClassroomModal(); renderSchedule(); playSound('woosh');
+}
+
+function editScheduleTimes() {
+    const current = scheduleTimes.join(', ');
+    const newTimes = prompt('Entrez les horaires (séparés par des virgules):', current);
+    if (newTimes) {
+        const times = newTimes.split(',').map(t => t.trim()).filter(t => t);
+        if (times.length > 0) {
+            saveScheduleTimes(times);
+            renderSchedule();
+            showToast('Horaires mis à jour', 'success');
+            playSound('pop');
+        }
+    }
+}
+
 function openCourseModal(slotDay, slotTime) {
     const modal = document.getElementById('modalBody');
     const subjectOpts = allSubjects.map(s => `<option value="${s.id}" style="background:${s.color};color:#fff;">${s.name}</option>`).join('');
@@ -2946,6 +3296,9 @@ function openCourseModal(slotDay, slotTime) {
             <option value="Cours">Cours</option>
             <option value="TD">TD</option>
             <option value="TP">TP</option>
+            <option value="DL">DL</option>
+            <option value="DS">DS</option>
+            <option value="Exam">Exam</option>
         </select>
         <div class="flex-center gap-8">
             <button class="btn btn-primary" onclick="saveCourseFromModal()">Ajouter</button>
@@ -3007,8 +3360,7 @@ async function saveExamFromModal() {
 function renderSchedule() {
     const container = document.getElementById('scheduleContainer');
     const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-    const times = ['08:00', '10:00', '14:00', '16:00'];
-    const daysEn = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const times = scheduleTimes;
     
     let html = `<div class="schedule-grid"><div class="slot-header"></div>`;
     times.forEach(t => html += `<div class="slot-header">${t}</div>`);
@@ -3020,106 +3372,95 @@ function renderSchedule() {
             let content = '';
             courses.forEach(c => {
                 const color = c.color || '#6c5ce7';
-                content += `<div class="course-block" style="background:${color};">${c.name || 'Cours'} ${c.type || ''}<br><span style="font-size:9px;opacity:0.8;">${c.teacher || ''} ${c.room || ''}</span></div>`;
+                content += `<div class="course-block" style="background:${color};" onclick="editCourse('${c.id}')">${c.name || 'Cours'} ${c.type || ''}<br><span style="font-size:9px;opacity:0.8;">${c.teacher || ''} ${c.room || ''}</span></div>`;
             });
             exams.forEach(e => {
-                content += `<div class="course-block" style="background:var(--danger);">📝 ${e.name}<br><span style="font-size:9px;opacity:0.8;">${e.room || ''}</span></div>`;
+                content += `<div class="course-block" style="background:var(--danger);" onclick="editExam('${e.id}')">📝 ${e.name}<br><span style="font-size:9px;opacity:0.8;">${e.room || ''}</span></div>`;
             });
-            html += `<div class="slot-cell">
-                ${content}
-                <button class="add-btn" onclick="openCourseModal('${day}','${time}')" title="Ajouter un cours">+</button>
-            </div>`;
+            // Une seule session par cellule
+            if (content) {
+                html += `<div class="slot-cell">${content}</div>`;
+            } else {
+                html += `<div class="slot-cell"><button class="add-btn" onclick="openCourseModal('${day}','${time}')" title="Ajouter un cours">+</button></div>`;
+            }
         });
     });
     html += '</div>';
-    // Exams list
-    html += `<div class="mt-12"><strong>📝 DS & Exams:</strong> ${allExams.map(e => `${e.name} (${e.date} ${e.time || ''})`).join(', ') || 'Aucun'}</div>`;
-    // Subjects list
-    html += `<div class="mt-12"><strong>📚 Matières:</strong> ${allSubjects.map(s => `<span style="display:inline-block;padding:2px 8px;margin:2px;border-radius:4px;background:${s.color};color:#fff;font-size:11px;">${s.name}</span>`).join(' ')}</div>`;
     container.innerHTML = html;
-}
-
-// ================================================================
-// NOTES (Book style)
-// ================================================================
-function openNoteModal(note) {
-    const isEdit = !!note;
-    const modal = document.getElementById('modalBody');
-    modal.innerHTML = `
-        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une note</h3>
-        <input type="text" id="noteTitle" placeholder="Titre" value="${note?.title || ''}" style="margin-bottom:10px;">
-        <div class="flex-center gap-8 mb-12">
-            <button class="btn btn-outline btn-sm" onclick="formatNote('bold')"><b>B</b></button>
-            <button class="btn btn-outline btn-sm" onclick="formatNote('italic')"><i>I</i></button>
-            <button class="btn btn-outline btn-sm" onclick="formatNote('underline')"><u>U</u></button>
-            <button class="btn btn-outline btn-sm" onclick="formatNote('strike')"><s>S</s></button>
-            <button class="btn btn-outline btn-sm" onclick="formatNote('insertOrderedList')">1.</button>
-            <button class="btn btn-outline btn-sm" onclick="formatNote('insertUnorderedList')">•</button>
-            <input type="color" id="noteColor" value="#6c5ce7" style="width:30px;height:30px;padding:0;border:none;cursor:pointer;" onchange="formatNote('foreColor', this.value)">
-            <select id="noteFontSize" onchange="formatNote('fontSize', this.value)" style="width:60px;">
-                <option value="1">Petit</option><option value="3">Normal</option><option value="5">Grand</option>
-            </select>
-        </div>
-        <div contenteditable="true" class="note-editor" id="noteEditor">${note?.content || ''}</div>
-        <div class="flex-center gap-8 mt-12">
-            <button class="btn btn-primary" onclick="saveNoteFromModal('${isEdit ? note.id : ''}')">Enregistrer</button>
-            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
-        </div>
-    `;
-    document.getElementById('modalOverlay').classList.add('show');
-    // Enable drawing on touch devices
-    enableDrawing();
-}
-
-function enableDrawing() {
-    const editor = document.getElementById('noteEditor');
-    let isDrawing = false;
-    let lastX, lastY;
-    editor.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) {
-            isDrawing = true;
-            const rect = editor.getBoundingClientRect();
-            lastX = e.touches[0].clientX - rect.left;
-            lastY = e.touches[0].clientY - rect.top;
+    
+    // Upcoming
+    const upcomingContainer = document.getElementById('scheduleUpcoming');
+    const now = new Date();
+    const upcoming = [];
+    allCourses.forEach(c => {
+        const daysEn = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+        const dayIdx = daysEn.indexOf(c.day);
+        const cDate = new Date(now);
+        cDate.setDate(now.getDate() + (dayIdx - now.getDay() + 7) % 7);
+        const [hour, min] = c.startTime.split(':').map(Number);
+        cDate.setHours(hour, min, 0, 0);
+        if (cDate > now) {
+            upcoming.push({ time: cDate, text: `📚 ${c.name}`, detail: `${c.teacher || ''} ${c.room || ''}` });
         }
     });
-    editor.addEventListener('touchmove', (e) => {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const rect = editor.getBoundingClientRect();
-        const x = e.touches[0].clientX - rect.left;
-        const y = e.touches[0].clientY - rect.top;
-        // Draw a line using canvas or SVG - simplified: add a span with drawing style
-        const canvas = document.createElement('canvas');
-        canvas.style.position = 'absolute';
-        canvas.style.pointerEvents = 'none';
-        // For simplicity, we'll just add a text indicator
-        editor.innerHTML += `<span style="background:var(--accent);color:transparent;padding:2px;">.</span>`;
-        lastX = x; lastY = y;
+    allExams.forEach(e => {
+        const eDate = new Date(e.date + 'T' + (e.time || '09:00'));
+        if (eDate > now) {
+            upcoming.push({ time: eDate, text: `📝 ${e.name}`, detail: `${e.room || ''}` });
+        }
     });
-    editor.addEventListener('touchend', () => { isDrawing = false; });
+    upcoming.sort((a, b) => a.time - b.time);
+    if (upcoming.length === 0) upcomingContainer.innerHTML = '<div class="text-muted">Aucun cours à venir</div>';
+    else upcomingContainer.innerHTML = upcoming.slice(0, 5).map(u => 
+        `<div style="padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <div style="font-weight:600;">${u.text}</div>
+            <div style="font-size:12px;color:var(--text-muted);">${u.time.toLocaleString('fr', {hour:'2-digit',minute:'2-digit'})} ${u.detail}</div>
+        </div>`
+    ).join('');
+    
+    // Teachers
+    const teachersContainer = document.getElementById('scheduleTeachers');
+    if (allTeachers.length === 0) teachersContainer.innerHTML = '<div class="text-muted">Aucun professeur</div>';
+    else teachersContainer.innerHTML = allTeachers.map(t => 
+        `<div style="padding:2px 0;font-size:13px;">${t.name} ${t.subject ? '- ' + t.subject : ''}</div>`
+    ).join('');
+    
+    // Classrooms
+    const classroomsContainer = document.getElementById('scheduleClassrooms');
+    if (allClassrooms.length === 0) classroomsContainer.innerHTML = '<div class="text-muted">Aucune classe</div>';
+    else classroomsContainer.innerHTML = allClassrooms.map(c => 
+        `<div style="padding:2px 0;font-size:13px;">${c.name} ${c.building ? '- ' + c.building : ''}</div>`
+    ).join('');
 }
 
-function formatNote(command, value) { 
-    if (command === 'fontSize') {
-        document.execCommand('fontSize', false, value);
-    } else {
-        document.execCommand(command, false, value);
-    }
+async function editCourse(id) {
+    const course = allCourses.find(c => c.id === id);
+    if (!course) return;
+    const newTeacher = prompt('Enseignant:', course.teacher);
+    if (newTeacher !== null) { course.teacher = newTeacher; await saveCourse(course); renderSchedule(); }
 }
 
-async function saveNoteFromModal(id) {
-    const note = { title: document.getElementById('noteTitle').value || 'Sans titre', content: document.getElementById('noteEditor').innerHTML, updatedAt: new Date().toISOString() };
-    if (id) note.id = id;
-    await saveNote(note);
-    if (!id) { allNotes.push(note); bookNotes.push(note); }
-    else { 
-        const idx = allNotes.findIndex(n => n.id === id); 
-        if (idx >= 0) allNotes[idx] = note;
-        const bidx = bookNotes.findIndex(n => n.id === id);
-        if (bidx >= 0) bookNotes[bidx] = note;
-    }
-    closeModal(); renderNotes(); showToast('Note enregistrée !', 'success'); playSound('pop');
+async function editExam(id) {
+    const exam = allExams.find(e => e.id === id);
+    if (!exam) return;
+    const newRoom = prompt('Salle:', exam.room);
+    if (newRoom !== null) { exam.room = newRoom; await saveExam(exam); renderSchedule(); }
+}
+
+// ================================================================
+// NOTES (True Book style)
+// ================================================================
+function addNewNotePage() {
+    const title = prompt('Titre de la note:');
+    if (!title) return;
+    const note = { title, content: '<p>Écrivez votre note ici...</p>', updatedAt: new Date().toISOString() };
+    saveNote(note);
+    allNotes.push(note);
+    bookNotes.push(note);
+    bookCurrentPage = bookNotes.length - 1;
+    renderNotes();
+    showToast('Nouvelle note créée !', 'success');
+    playSound('pop');
 }
 
 function renderNotes() {
@@ -3132,8 +3473,10 @@ function renderNotes() {
         );
     }
     bookNotes = [...filtered];
-    if (bookNotes.length === 0) bookNotes = [{ title: 'Aucune note', content: '<p class="text-muted">Créez votre première note en cliquant sur le bouton "+ Nouvelle note"</p>', id: 'empty' }];
-    bookCurrentPage = 0;
+    if (bookNotes.length === 0) {
+        bookNotes = [{ title: 'Aucune note', content: '<p class="text-muted">Créez votre première note en cliquant sur "+ Nouvelle note"</p>', id: 'empty' }];
+    }
+    bookCurrentPage = Math.min(bookCurrentPage, bookNotes.length - 1);
     renderBookPage();
 }
 
@@ -3142,69 +3485,259 @@ function renderBookPage() {
     const page = bookCurrentPage;
     const front = document.getElementById('bookPageFront');
     const back = document.getElementById('bookPageBack');
+    document.getElementById('pageNumLeft').textContent = page + 1;
+    document.getElementById('pageNumRight').textContent = page + 2 > total ? '' : page + 2;
     document.getElementById('bookPageInfo').textContent = `Page ${page+1} / ${total}`;
     document.getElementById('bookPrev').disabled = page === 0;
     document.getElementById('bookNext').disabled = page >= total - 1;
     
-    const note = bookNotes[page];
-    front.innerHTML = `<h3 style="margin-bottom:12px;">${note.title || 'Sans titre'}</h3><div style="font-size:14px;line-height:1.8;">${note.content || '<p class="text-muted">Contenu vide</p>'}</div>`;
-    back.innerHTML = `<h3 style="margin-bottom:12px;">${page + 1 < total ? bookNotes[page + 1].title || 'Sans titre' : 'Fin'}</h3><div style="font-size:14px;line-height:1.8;">${page + 1 < total ? (bookNotes[page + 1].content || '<p class="text-muted">Contenu vide</p>') : '<p class="text-muted">Dernière page</p>'}</div>`;
+    // Front page (current)
+    if (bookNotes[page]) {
+        document.getElementById('bookTitleLeft').textContent = bookNotes[page].title || 'Sans titre';
+        document.getElementById('bookContentLeft').innerHTML = bookNotes[page].content || '<p>Contenu vide</p>';
+        // Save content on change
+        document.getElementById('bookContentLeft').oninput = function() {
+            if (bookNotes[page] && bookNotes[page].id !== 'empty') {
+                bookNotes[page].content = this.innerHTML;
+                const idx = allNotes.findIndex(n => n.id === bookNotes[page].id);
+                if (idx >= 0) {
+                    allNotes[idx].content = this.innerHTML;
+                    saveNote(allNotes[idx]);
+                }
+            }
+        };
+        document.getElementById('bookTitleLeft').oninput = function() {
+            if (bookNotes[page] && bookNotes[page].id !== 'empty') {
+                bookNotes[page].title = this.textContent;
+                const idx = allNotes.findIndex(n => n.id === bookNotes[page].id);
+                if (idx >= 0) {
+                    allNotes[idx].title = this.textContent;
+                    saveNote(allNotes[idx]);
+                }
+            }
+        };
+    }
+    
+    // Back page (next)
+    if (page + 1 < total && bookNotes[page + 1]) {
+        document.getElementById('bookTitleRight').textContent = bookNotes[page + 1].title || 'Sans titre';
+        document.getElementById('bookContentRight').innerHTML = bookNotes[page + 1].content || '<p>Contenu vide</p>';
+        document.getElementById('bookContentRight').oninput = function() {
+            if (bookNotes[page + 1] && bookNotes[page + 1].id !== 'empty') {
+                bookNotes[page + 1].content = this.innerHTML;
+                const idx = allNotes.findIndex(n => n.id === bookNotes[page + 1].id);
+                if (idx >= 0) {
+                    allNotes[idx].content = this.innerHTML;
+                    saveNote(allNotes[idx]);
+                }
+            }
+        };
+        document.getElementById('bookTitleRight').oninput = function() {
+            if (bookNotes[page + 1] && bookNotes[page + 1].id !== 'empty') {
+                bookNotes[page + 1].title = this.textContent;
+                const idx = allNotes.findIndex(n => n.id === bookNotes[page + 1].id);
+                if (idx >= 0) {
+                    allNotes[idx].title = this.textContent;
+                    saveNote(allNotes[idx]);
+                }
+            }
+        };
+    } else {
+        document.getElementById('bookTitleRight').textContent = '';
+        document.getElementById('bookContentRight').innerHTML = '<p class="text-muted">Fin du livre</p>';
+    }
 }
 
 function bookPrev() {
     if (bookCurrentPage > 0) {
-        bookCurrentPage--;
+        bookCurrentPage -= 2;
+        if (bookCurrentPage < 0) bookCurrentPage = 0;
         renderBookPage();
         playSound('pop');
     }
 }
 
 function bookNext() {
-    if (bookCurrentPage < bookNotes.length - 1) {
-        bookCurrentPage++;
+    if (bookCurrentPage < bookNotes.length - 2) {
+        bookCurrentPage += 2;
         renderBookPage();
         playSound('pop');
+    }
+}
+
+function formatBook(command, value) {
+    const content = document.getElementById('bookContentLeft');
+    content.focus();
+    if (command === 'fontSize') {
+        document.execCommand('fontSize', false, value);
+    } else if (command === 'foreColor') {
+        document.execCommand('foreColor', false, value);
+    } else {
+        document.execCommand(command, false, null);
+    }
+    // Save automatically
+    const page = bookCurrentPage;
+    if (bookNotes[page] && bookNotes[page].id !== 'empty') {
+        bookNotes[page].content = content.innerHTML;
+        const idx = allNotes.findIndex(n => n.id === bookNotes[page].id);
+        if (idx >= 0) {
+            allNotes[idx].content = content.innerHTML;
+            saveNote(allNotes[idx]);
+        }
+    }
+}
+
+function toggleDrawingMode() {
+    isDrawingMode = !isDrawingMode;
+    const btn = document.getElementById('drawToggleBtn');
+    const content = document.getElementById('bookContentLeft');
+    if (isDrawingMode) {
+        btn.style.background = 'var(--accent)';
+        btn.style.color = '#fff';
+        content.style.cursor = 'crosshair';
+        enableDrawingOnPage();
+    } else {
+        btn.style.background = '';
+        btn.style.color = '';
+        content.style.cursor = 'text';
+        disableDrawingOnPage();
+    }
+}
+
+let drawingCanvas = null;
+let drawingCtx = null;
+
+function enableDrawingOnPage() {
+    const container = document.getElementById('bookContentLeft');
+    const canvas = document.createElement('canvas');
+    canvas.id = 'drawingCanvas';
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '1';
+    container.style.position = 'relative';
+    container.appendChild(canvas);
+    drawingCanvas = canvas;
+    const rect = container.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    drawingCtx = canvas.getContext('2d');
+    drawingCtx.strokeStyle = document.getElementById('bookColor').value || '#6c5ce7';
+    drawingCtx.lineWidth = 2;
+    drawingCtx.lineCap = 'round';
+    
+    let isDrawing = false;
+    let lastX, lastY;
+    
+    container.addEventListener('mousedown', (e) => {
+        if (!isDrawingMode) return;
+        isDrawing = true;
+        const rect = canvas.getBoundingClientRect();
+        lastX = e.clientX - rect.left;
+        lastY = e.clientY - rect.top;
+    });
+    container.addEventListener('mousemove', (e) => {
+        if (!isDrawing || !isDrawingMode) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        drawingCtx.beginPath();
+        drawingCtx.moveTo(lastX, lastY);
+        drawingCtx.lineTo(x, y);
+        drawingCtx.stroke();
+        lastX = x;
+        lastY = y;
+    });
+    container.addEventListener('mouseup', () => { isDrawing = false; });
+    container.addEventListener('mouseleave', () => { isDrawing = false; });
+    
+    // Touch events
+    container.addEventListener('touchstart', (e) => {
+        if (!isDrawingMode) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        lastX = touch.clientX - rect.left;
+        lastY = touch.clientY - rect.top;
+        isDrawing = true;
+    });
+    container.addEventListener('touchmove', (e) => {
+        if (!isDrawing || !isDrawingMode) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        drawingCtx.beginPath();
+        drawingCtx.moveTo(lastX, lastY);
+        drawingCtx.lineTo(x, y);
+        drawingCtx.stroke();
+        lastX = x;
+        lastY = y;
+    });
+    container.addEventListener('touchend', () => { isDrawing = false; });
+}
+
+function disableDrawingOnPage() {
+    if (drawingCanvas) {
+        drawingCanvas.remove();
+        drawingCanvas = null;
+        drawingCtx = null;
+    }
+}
+
+function clearNotePage() {
+    if (drawingCtx && drawingCanvas) {
+        drawingCtx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+        playSound('woosh');
     }
 }
 
 // ================================================================
 // RELIGION
 // ================================================================
+function updatePrayerLabels() {
+    const now = new Date();
+    const isFriday = now.getDay() === 5;
+    const dhuhrLabel = document.getElementById('dhuhrLabel');
+    if (dhuhrLabel) {
+        const textNode = dhuhrLabel.childNodes[1];
+        if (textNode) {
+            textNode.textContent = isFriday ? ' ☀️ الجمعة ' : ' ☀️ الظهر ';
+        }
+    }
+}
+
 function updatePrayers() {
     const prayers = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-    const now = new Date();
-    const isFriday = now.getDay() === 5; // 5 = vendredi
-    
-    // Mettre à jour les libellés des prières
-    const prayerLabels = {
-        'fajr': '☀️ الفجر',
-        'dhuhr': isFriday ? '☀️ الجمعة' : '☀️ الظهر',
-        'asr': '☀️ العصر',
-        'maghrib': '🌙 المغرب',
-        'isha': '🌙 العشاء'
-    };
-    
-    // Mettre à jour les labels dans l'UI
-    document.querySelectorAll('.prayer-check').forEach(el => {
-        const prayer = el.dataset.prayer;
-        const label = el.closest('label');
-        if (label && prayerLabels[prayer]) {
-            // Garder le checkbox mais changer le texte
-            const textNode = label.childNodes[0];
-            if (textNode) {
-                textNode.textContent = prayerLabels[prayer] + ' ';
-            }
+    const statuses = {};
+    prayers.forEach(p => {
+        const el = document.getElementById('prayer-' + p + '-status');
+        const checkbox = document.querySelector(`.prayer-check[data-prayer="${p}"]`);
+        if (!checkbox) return;
+        // Cycle: empty -> done -> jamaa -> empty
+        const current = checkbox.dataset.state || 'empty';
+        let next;
+        if (current === 'empty') next = 'done';
+        else if (current === 'done') next = 'jamaa';
+        else next = 'empty';
+        checkbox.dataset.state = next;
+        if (el) {
+            if (next === 'done') { el.textContent = '◉'; el.className = 'prayer-status done'; }
+            else if (next === 'jamaa') { el.textContent = '⭐'; el.className = 'prayer-status jamaa'; }
+            else { el.textContent = '◯'; el.className = 'prayer-status'; }
         }
+        statuses[p] = next;
     });
-    
-    const checked = prayers.filter(p => document.querySelector(`.prayer-check[data-prayer="${p}"]`).checked);
-    const count = checked.length;
-    const isJamaa = document.getElementById('prayerJamaa').checked;
-    document.getElementById('prayerStats').textContent = `✅ ${count}/5 صلوات اليوم ${isJamaa ? '⭐ جماعة' : ''}`;
+    const count = Object.values(statuses).filter(s => s === 'done' || s === 'jamaa').length;
+    document.getElementById('prayerStats').textContent = `✅ ${count}/5 صلوات اليوم`;
     const today = new Date().toISOString().split('T')[0];
     if (!allPrayers[today]) allPrayers[today] = { count: 0, jamaa: false };
     allPrayers[today].count = count;
-    allPrayers[today].jamaa = isJamaa;
+    allPrayers[today].jamaa = Object.values(statuses).filter(s => s === 'jamaa').length > 0;
     savePrayers(allPrayers);
     renderPrayerCalendar();
     playSound('ting');
@@ -3257,11 +3790,16 @@ function updateQuranSelect() {
 function openQuran() {
     const type = document.getElementById('quranType').value;
     const val = document.getElementById('quranSelect').value;
+    const display = document.getElementById('quranDisplay');
     if (type === 'surah') {
         const surah = quranSurahs.find(s => s.id == val);
-        showToast(`📖 Ouverture de la Sourate ${surah ? surah.name : val}...`, 'info');
+        if (surah) {
+            display.innerHTML = `<h4>${surah.id}. ${surah.name}</h4><div style="font-size:16px;line-height:2;">${surah.text}</div>`;
+        } else {
+            display.innerHTML = '<p class="text-muted">Sourate non trouvée</p>';
+        }
     } else {
-        showToast(`📖 Ouverture du Hizb ${val}...`, 'info');
+        display.innerHTML = `<h4>الحزب ${val}</h4><p class="text-muted">Contenu du hizb ${val}...</p>`;
     }
     playSound('ding');
 }
@@ -3318,6 +3856,20 @@ function addDhikrCategory() {
     playSound('pop');
 }
 
+function deleteDhikrCategory() {
+    const key = document.getElementById('dhikrCategory').value;
+    if (!key || key === 'morning' || key === 'evening' || key === 'sleep' || key === 'diverse') {
+        showToast('⚠️ لا يمكن حذف الأذكار الأساسية', 'warning');
+        return;
+    }
+    if (!confirm(`حذف فئة "${key}"؟`)) return;
+    delete allDhikrs[key];
+    saveDhikrs(allDhikrs);
+    initDhikrSelect();
+    showToast('✅ تم الحذف', 'success');
+    playSound('woosh');
+}
+
 function saveDhikrEdit() {
     Object.keys(allDhikrs).forEach(key => {
         const textarea = document.getElementById('dhikr_' + key);
@@ -3349,7 +3901,6 @@ function renderMarks() {
     const container = document.getElementById('marksContainer');
     if (allSemesters.length === 0) { container.innerHTML = '<div class="empty-state"><span class="big-icon">📊</span>Aucun semestre</div>'; return; }
     container.innerHTML = allSemesters.map(s => {
-        // Calculer la moyenne du semestre avec coefficients
         let total = 0, totalCoef = 0;
         (s.subjects || []).forEach(sub => {
             if (sub.average && sub.coef) {
@@ -3364,17 +3915,20 @@ function renderMarks() {
             <div><strong>Moyenne: ${avg}</strong></div>
             ${(s.subjects || []).map((sub, idx) => `
                 <div class="subject-row">
-                    <input type="text" value="${sub.name || ''}" placeholder="Matière" style="width:30%;" onchange="updateSubject('${s.id}', ${idx}, 'name', this.value)">
-                    <input type="number" value="${sub.average || ''}" placeholder="Moyenne" style="width:20%;" step="0.01" onchange="updateSubject('${s.id}', ${idx}, 'average', parseFloat(this.value) || 0)">
-                    <input type="number" value="${sub.coef || 1}" placeholder="Coef" style="width:15%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'coef', parseFloat(this.value) || 1)">
-                    <button class="btn btn-primary btn-sm" onclick="openSubjectMarksModal('${s.id}', ${idx})">📊 Détails</button>
+                    <input type="text" value="${sub.name || ''}" placeholder="Matière" style="width:25%;" onchange="updateSubject('${s.id}', ${idx}, 'name', this.value)">
+                    <input type="number" value="${sub.average || ''}" placeholder="Moyenne" style="width:18%;" step="0.01" onchange="updateSubject('${s.id}', ${idx}, 'average', parseFloat(this.value) || 0)">
+                    <input type="number" value="${sub.coef || 1}" placeholder="Coef" style="width:12%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'coef', parseFloat(this.value) || 1)">
+                    <input type="number" value="${sub.dsCoef || 1}" placeholder="DS" style="width:12%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'dsCoef', parseFloat(this.value) || 1)">
+                    <input type="number" value="${sub.tpCoef || 1}" placeholder="TP" style="width:12%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'tpCoef', parseFloat(this.value) || 1)">
+                    <input type="number" value="${sub.dlCoef || 1}" placeholder="DL" style="width:12%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'dlCoef', parseFloat(this.value) || 1)">
+                    <input type="number" value="${sub.examCoef || 1}" placeholder="Exam" style="width:12%;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'examCoef', parseFloat(this.value) || 1)">
+                    <button class="btn btn-primary btn-sm" onclick="openSubjectMarksModal('${s.id}', ${idx})">📊</button>
                     <button class="btn btn-danger btn-sm" onclick="removeSubject('${s.id}', ${idx})">✕</button>
                 </div>
             `).join('')}
             <button class="btn btn-primary btn-sm mt-12" onclick="addSubjectToSemester('${s.id}')">+ Matière</button>
         </div>
     `}).join('');
-    // Moyenne générale
     let total = 0, totalCoef = 0;
     allSemesters.forEach(s => {
         (s.subjects || []).forEach(sub => {
@@ -3393,8 +3947,8 @@ function openSubjectMarksModal(semId, idx) {
     const sub = sem.subjects[idx];
     const modal = document.getElementById('modalBody');
     let html = `<h3>📊 ${sub.name} - Détails des notes</h3>
-        <div style="margin-bottom:10px;"><strong>Moyenne actuelle: ${sub.average || 0}</strong></div>
-        <div style="margin-bottom:10px;"><strong>Coefficient: ${sub.coef || 1}</strong></div>
+        <div style="margin-bottom:10px;"><strong>Moyenne: ${sub.average || 0}</strong> | Coef: ${sub.coef || 1}</div>
+        <div style="margin-bottom:10px;">DS: ${sub.dsCoef || 1} | TP: ${sub.tpCoef || 1} | DL: ${sub.dlCoef || 1} | Exam: ${sub.examCoef || 1}</div>
         <div style="margin-bottom:10px;">
             <label>Type: <select id="markType"><option value="DS">DS</option><option value="TP">TP</option><option value="DL">DL</option><option value="Exam">Exam</option></select></label>
             <input type="number" id="markValue" placeholder="Note" step="0.01" style="width:80px;display:inline;">
@@ -3422,7 +3976,6 @@ async function addMarkToSubject(semId, idx) {
     if (!sem || !sem.subjects[idx]) return;
     if (!sem.subjects[idx].marks) sem.subjects[idx].marks = [];
     sem.subjects[idx].marks.push({ type, value });
-    // Recalculer la moyenne
     const marks = sem.subjects[idx].marks;
     const total = marks.reduce((s, m) => s + m.value, 0);
     sem.subjects[idx].average = total / marks.length;
@@ -3465,7 +4018,7 @@ async function addSubjectToSemester(semId) {
     const name = prompt('Nom de la matière:');
     if (!name) return;
     if (!sem.subjects) sem.subjects = [];
-    sem.subjects.push({ name, average: 0, coef: 1, marks: [] });
+    sem.subjects.push({ name, average: 0, coef: 1, dsCoef: 1, tpCoef: 1, dlCoef: 1, examCoef: 1, marks: [] });
     await saveSemester(sem);
     renderMarks();
     playSound('pop');
@@ -3530,21 +4083,43 @@ async function loadUserData(userId) {
 }
 
 // ================================================================
+// ACCOUNT STATS
+// ================================================================
+function updateAccountStats() {
+    const tasksDone = allTasks.filter(t => t.status === 'Terminé').length;
+    document.getElementById('accountTasksDone').textContent = tasksDone;
+    const habitsDone = allHabits.reduce((sum, h) => sum + (h.history ? h.history.length : 0), 0);
+    document.getElementById('accountHabitsDone').textContent = habitsDone;
+}
+
+// ================================================================
 // SETTINGS & ACCOUNT
 // ================================================================
 function changeLanguage(lang) {
     currentLanguage = lang;
+    // Stocker la préférence
+    localStorage.setItem('userLanguage', lang);
     showToast('🌐 Langue: ' + lang, 'info');
     playSound('pop');
+    // Appliquer la traduction (simplifiée)
+    applyLanguage(lang);
 }
 
-function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    showToast('🌓 Thème: ' + theme, 'info');
-    playSound('pop');
+function applyLanguage(lang) {
+    // Traductions basiques
+    const translations = {
+        fr: { welcome: 'Bonjour', tasks: 'Tâches', habits: 'Habitudes' },
+        en: { welcome: 'Hello', tasks: 'Tasks', habits: 'Habits' },
+        ar: { welcome: 'مرحباً', tasks: 'المهام', habits: 'العادات' },
+        tr: { welcome: 'Merhaba', tasks: 'Görevler', habits: 'Alışkanlıklar' },
+        ja: { welcome: 'こんにちは', tasks: 'タスク', habits: '習慣' }
+    };
+    const t = translations[lang] || translations.fr;
+    document.getElementById('welcomeMsg').textContent = `👋 ${t.welcome}, ${currentUser?.displayName || 'Utilisateur'} !`;
 }
 
 function changeCurrency(currency) {
+    localStorage.setItem('userCurrency', currency);
     showToast('💰 Devise: ' + currency, 'info');
     playSound('pop');
 }
@@ -3621,7 +4196,10 @@ function playSound(type) {
             ding: new Audio('data:audio/wav;base64,UklGRnwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoAAACFhoSFhIOCgYGCg4SFhoaHh4eHh4eHhoWFhIOCgoGBgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==')
         };
         const sound = sounds[type];
-        if (sound) { sound.volume = 0.3; sound.play().catch(() => {}); }
+        if (sound && document.getElementById('notifSound').checked) {
+            sound.volume = 0.3;
+            sound.play().catch(() => {});
+        }
     } catch(e) {}
 }
 
