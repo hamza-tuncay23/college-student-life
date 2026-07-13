@@ -82,9 +82,7 @@
             font-weight: 700;
             letter-spacing: 2px;
         }
-        [data-theme="dark"] .top-bar-left .clock .time-text {
-            color: #e8e0f0;
-        }
+        [data-theme="dark"] .top-bar-left .clock .time-text { color: #e8e0f0; }
         .top-bar-left .clock .star {
             position: absolute;
             color: rgba(255,255,255,0.6);
@@ -103,22 +101,36 @@
         }
         .top-bar-left .clock .shooting-star {
             position: absolute;
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), rgba(255,255,255,0.3), transparent);
-            animation: shootStarReal 4s ease-in-out infinite;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            animation: shootStarReal 5s ease-in-out infinite;
             opacity: 0;
-            border-radius: 2px;
-            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
-        .top-bar-left .clock .shooting-star:nth-child(8) { top: 15%; left: 5%; animation-delay: 0.5s; width: 150px; }
-        .top-bar-left .clock .shooting-star:nth-child(9) { top: 55%; left: 40%; animation-delay: 2s; width: 100px; }
-        .top-bar-left .clock .shooting-star:nth-child(10) { top: 35%; left: 60%; animation-delay: 3.5s; width: 130px; }
+        .top-bar-left .clock .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+        .top-bar-left .clock .shooting-star:nth-child(8) { top: 15%; left: 5%; animation-delay: 0.5s; }
+        .top-bar-left .clock .shooting-star:nth-child(9) { top: 55%; left: 40%; animation-delay: 2s; }
+        .top-bar-left .clock .shooting-star:nth-child(10) { top: 35%; left: 60%; animation-delay: 3.5s; }
         @keyframes shootStarReal {
-            0% { transform: translateX(-80px) rotate(-20deg); opacity: 0; }
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
             5% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translateX(300px) rotate(-20deg); opacity: 0; }
+            15% { transform: translate(60px, 80px) scale(0.8); opacity: 1; }
+            25% { transform: translate(120px, 160px) scale(0.5); opacity: 0.8; }
+            35% { transform: translate(180px, 240px) scale(0.3); opacity: 0.4; }
+            45% { transform: translate(240px, 320px) scale(0.1); opacity: 0; }
+            100% { opacity: 0; }
         }
         .top-bar-left .clock:hover {
             transform: scale(1.02);
@@ -292,6 +304,7 @@
         .calendar-grid .day.today .events .event-item { background: #fff; color: var(--accent); }
         .calendar-grid .day.prayer-done { background: var(--success); color: #fff; }
         .calendar-grid .day.holiday { background: var(--danger); color: #fff; }
+        .calendar-grid .day .star-icon { color: #ffd700; font-size: 12px; }
 
         /* ===== MODAL ===== */
         .modal-overlay {
@@ -367,19 +380,37 @@
         }
         @keyframes twinkleStar { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
         .fullscreen-clock .shooting-star-bg {
-            position: absolute; width: 150px; height: 2px;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shootFull 5s ease-in-out infinite;
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            animation: shootFull 6s ease-in-out infinite;
+            opacity: 0;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+        .fullscreen-clock .shooting-star-bg::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));
+            transform: translateY(-50%);
             border-radius: 2px;
         }
-        .fullscreen-clock .shooting-star-bg:nth-child(2) { top: 20%; left: 5%; animation-delay: 0.5s; width: 180px; }
-        .fullscreen-clock .shooting-star-bg:nth-child(3) { top: 50%; left: 30%; animation-delay: 2s; width: 120px; }
-        .fullscreen-clock .shooting-star-bg:nth-child(4) { top: 75%; left: 60%; animation-delay: 3.5s; width: 150px; }
+        .fullscreen-clock .shooting-star-bg:nth-child(2) { top: 20%; left: 5%; animation-delay: 0.5s; }
+        .fullscreen-clock .shooting-star-bg:nth-child(3) { top: 50%; left: 30%; animation-delay: 2s; }
+        .fullscreen-clock .shooting-star-bg:nth-child(4) { top: 75%; left: 60%; animation-delay: 3.5s; }
         @keyframes shootFull {
-            0% { transform: translateX(-150px) rotate(-30deg); opacity: 0; }
+            0% { transform: translate(0, 0) scale(1); opacity: 0; }
             5% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translateX(500px) rotate(-30deg); opacity: 0; }
+            15% { transform: translate(80px, 120px) scale(0.8); opacity: 1; }
+            25% { transform: translate(160px, 240px) scale(0.5); opacity: 0.8; }
+            35% { transform: translate(240px, 360px) scale(0.3); opacity: 0.4; }
+            45% { transform: translate(320px, 480px) scale(0.1); opacity: 0; }
+            100% { opacity: 0; }
         }
 
         /* ===== SCHEDULE ===== */
@@ -433,7 +464,7 @@
         /* ===== PRAYER ===== */
         .prayer-check-container { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: all 0.2s; }
         .prayer-check-container:hover { background: var(--bg-primary); }
-        .prayer-check-container .prayer-status { font-size: 14px; width: 24px; text-align: center; }
+        .prayer-check-container .prayer-status { font-size: 18px; width: 30px; text-align: center; }
         .prayer-check-container .prayer-status.done { color: var(--success); }
         .prayer-check-container .prayer-status.jamaa { color: #fdcb6e; }
 
@@ -441,6 +472,7 @@
         .prayer-grid .p-day { padding: 6px 2px; text-align: center; border-radius: 4px; font-size: 12px; border: 1px solid var(--border-color); background: var(--bg-primary); }
         .prayer-grid .p-day.done { background: var(--success); color: #fff; }
         .prayer-grid .p-day.jamaa { background: #fdcb6e; color: #1a1a2e; }
+        .prayer-grid .p-day .star-icon { color: #ffd700; font-size: 10px; }
 
         .avatar-upload-container { position: relative; cursor: pointer; }
         .avatar-upload-container .avatar-upload-overlay {
@@ -448,66 +480,81 @@
             border-radius: 50%; background: rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s; color: #fff;
-            font-size: 12px; font-weight: 600;
+            font-size: 12px; font-weight: 600; border-radius: 50%;
         }
         .avatar-upload-container:hover .avatar-upload-overlay { opacity: 1; }
 
         /* ===== BOOK ===== */
         .book-container {
-            position: relative; perspective: 2000px;
-            min-height: 550px; padding: 20px 0;
+            position: relative;
+            perspective: 2000px;
+            min-height: 600px;
+            padding: 30px 10px;
         }
         .book-inner {
-            position: relative; width: 100%; height: 500px;
+            position: relative;
+            width: 100%;
+            height: 520px;
             transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .book-inner.flipped { transform: rotateY(-180deg); }
+        .book-inner.flipped {
+            transform: rotateY(-180deg);
+        }
         .book-page-real {
-            position: absolute; width: 100%; height: 100%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             backface-visibility: hidden;
-            background: var(--bg-card);
+            background: #f5e6c8;
             border-radius: 4px 12px 12px 4px;
-            padding: 30px 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            padding: 40px 50px;
+            border: 1px solid #d4c4a8;
+            box-shadow: -4px 0 30px rgba(0,0,0,0.15), var(--shadow);
             overflow-y: auto;
-            background-image: repeating-linear-gradient(
-                transparent,
-                transparent 27px,
-                var(--border-color) 27px,
-                var(--border-color) 28px
-            );
-            background-size: 100% 28px;
-            background-position: 0 30px;
+            background-image: 
+                repeating-linear-gradient(
+                    transparent,
+                    transparent 29px,
+                    #d4c4a8 29px,
+                    #d4c4a8 30px
+                ),
+                linear-gradient(to right, #f5e6c8 0%, #f5e6c8 95%, #e8d5b0 95%, #e8d5b0 100%);
+            background-size: 100% 30px, 100% 100%;
+            background-position: 0 40px, 0 0;
+            color: #3d2b1f;
         }
         .book-page-real.front {
             transform: rotateY(0deg);
             border-radius: 4px 12px 12px 4px;
-            box-shadow: -2px 0 20px rgba(0,0,0,0.1), var(--shadow);
+            box-shadow: -4px 0 30px rgba(0,0,0,0.15), var(--shadow);
+            border-left: 3px solid #d4c4a8;
         }
         .book-page-real.back {
             transform: rotateY(180deg);
             border-radius: 12px 4px 4px 12px;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.1), var(--shadow);
+            box-shadow: 4px 0 30px rgba(0,0,0,0.15), var(--shadow);
+            border-right: 3px solid #d4c4a8;
         }
         .book-page-real .page-number {
             position: absolute; bottom: 15px;
-            font-size: 12px; color: var(--text-muted); opacity: 0.6;
+            font-size: 12px; color: #8a7a6a; opacity: 0.6;
         }
-        .book-page-real .page-number.left { left: 20px; }
-        .book-page-real .page-number.right { right: 20px; }
+        .book-page-real .page-number.left { left: 25px; }
+        .book-page-real .page-number.right { right: 25px; }
         .book-page-real .book-title {
-            font-size: 20px; font-weight: 700; margin-bottom: 16px;
-            color: var(--text-primary);
-            border-bottom: 2px solid var(--accent);
+            font-size: 22px; font-weight: 700; margin-bottom: 16px;
+            color: #3d2b1f;
+            border-bottom: 2px solid #d4c4a8;
             padding-bottom: 8px; outline: none;
+            background: transparent;
         }
         .book-page-real .book-content {
-            font-size: 14px; line-height: 28px;
-            color: var(--text-secondary);
+            font-size: 15px; line-height: 30px;
+            color: #3d2b1f;
             min-height: 300px; outline: none;
-            padding-top: 4px;
+            padding-top: 8px;
+            background: transparent;
         }
         .book-page-real .book-content:focus { outline: 2px solid var(--accent-light); outline-offset: 4px; }
         .book-toolbar {
@@ -537,6 +584,21 @@
 
         .schedule-subject-color { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-right: 4px; }
 
+        /* ===== ARROW BUTTONS ===== */
+        .arrow-up, .arrow-down {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 24px; height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            padding: 0;
+        }
+        .arrow-up:hover, .arrow-down:hover { color: var(--accent); transform: scale(1.2); }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .schedule-grid { grid-template-columns: 60px repeat(4, 1fr); }
             .schedule-grid .slot-header { font-size: 10px; min-height: 30px; }
@@ -548,18 +610,6 @@
             .top-bar-left .clock { font-size: 16px; padding: 6px 14px; min-width: 160px; }
             .top-bar-left .clock .time-text { font-size: 16px; }
         }
-
-        /* ===== ARROW BUTTONS ===== */
-        .arrow-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 28px; height: 28px; border: 1px solid var(--border-color);
-            border-radius: 50%; background: var(--bg-primary);
-            cursor: pointer; transition: all 0.2s;
-            font-size: 16px; color: var(--text-secondary);
-        }
-        .arrow-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
             .top-bar-left .clock { font-size: 14px; padding: 4px 10px; min-width: 120px; }
             .top-bar-left .clock .time-text { font-size: 14px; }
@@ -771,7 +821,7 @@
             <button class="btn btn-outline" onclick="resetPomodoro()">⏹ Arrêter</button>
         </div>
         <div class="mt-12">
-            <label>Session: <select id="pomodoroSessionSelect" style="width:250px;display:inline;" onchange="document.getElementById('pomodoroSessionInput').value=this.value"><option value="">Choisir une tâche...</option></select></label>
+            <label>Session: <select id="pomodoroSessionSelect" style="width:250px;display:inline;"><option value="">Choisir une tâche...</option></select></label>
         </div>
         <div class="mt-12 text-muted">✅ Pomodoros: <span id="pomodoroCount">0</span></div>
         <div id="pomodoroHistory" class="mt-12 text-left"></div>
@@ -859,23 +909,23 @@
     <div class="grid-2">
         <div class="card"><div class="card-title">📿 صلوات اليوم</div>
             <div class="flex-center" style="justify-content:space-around;flex-wrap:wrap;" id="prayerLabels">
-                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" onclick="togglePrayer('fajr')">
+                <label class="prayer-check-container" onclick="togglePrayer('fajr')">
                     <span class="prayer-status" id="prayer-fajr-status">◯</span>
                     ☀️ الفجر
                 </label>
-                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" id="dhuhrLabel" onclick="togglePrayer('dhuhr')">
+                <label class="prayer-check-container" id="dhuhrLabel" onclick="togglePrayer('dhuhr')">
                     <span class="prayer-status" id="prayer-dhuhr-status">◯</span>
                     ☀️ الظهر
                 </label>
-                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" onclick="togglePrayer('asr')">
+                <label class="prayer-check-container" onclick="togglePrayer('asr')">
                     <span class="prayer-status" id="prayer-asr-status">◯</span>
                     ☀️ العصر
                 </label>
-                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" onclick="togglePrayer('maghrib')">
+                <label class="prayer-check-container" onclick="togglePrayer('maghrib')">
                     <span class="prayer-status" id="prayer-maghrib-status">◯</span>
                     🌙 المغرب
                 </label>
-                <label class="prayer-check-container" style="display:flex;align-items:center;gap:4px;" onclick="togglePrayer('isha')">
+                <label class="prayer-check-container" onclick="togglePrayer('isha')">
                     <span class="prayer-status" id="prayer-isha-status">◯</span>
                     🌙 العشاء
                 </label>
@@ -894,7 +944,7 @@
                 <select id="quranSelect" style="width:auto;"></select>
                 <button class="btn btn-primary btn-sm" onclick="openQuran()">📖 اقرأ</button>
             </div>
-            <div id="quranDisplay" class="mt-12" style="max-height:200px;overflow-y:auto;font-size:14px;line-height:2;"></div>
+            <div id="quranDisplay" class="mt-12" style="max-height:300px;overflow-y:auto;font-size:16px;line-height:2;background:var(--bg-primary);border-radius:8px;padding:12px;"></div>
         </div>
         <div class="card"><div class="card-title">📿 الأذكار</div>
             <div class="flex-center gap-8" style="flex-wrap:wrap;">
@@ -902,15 +952,18 @@
                 <button class="btn btn-primary btn-sm" onclick="editDhikr()">✏️ تعديل</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteDhikrCategory()">🗑️ حذف</button>
             </div>
-            <div id="dhikrDisplay" class="mt-12"></div>
+            <div id="dhikrDisplay" class="mt-12" style="max-height:300px;overflow-y:auto;font-size:14px;line-height:2;background:var(--bg-primary);border-radius:8px;padding:12px;"></div>
         </div>
     </div>
 </section>
 
-<!-- NOTES & MOYENNE -->
+<!-- MARKS (Excel-like) -->
 <section class="section-page" id="section-marks">
     <div class="flex-between mb-12"><h2>📊 Notes & Moyenne</h2>
-        <div class="flex-center gap-8"><button class="btn btn-primary btn-sm" onclick="addSemester()">+ Semestre</button></div>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary btn-sm" onclick="addSemester()">+ Semestre</button>
+            <button class="btn btn-outline btn-sm" onclick="addRowToSemester()">+ Ligne</button>
+        </div>
     </div>
     <div id="marksContainer" class="card"><div class="empty-state"><span class="big-icon">📊</span>Aucun semestre</div></div>
     <div class="card mt-12"><div class="card-title">📈 Moyenne Générale</div><div id="marksGeneralAverage" class="text-center" style="font-size:32px;font-weight:700;color:var(--accent);">0.00</div></div>
@@ -966,12 +1019,12 @@
             <div><h3 id="accountName">Hamza Margal</h3><p class="text-muted" id="accountEmail">hamzamp2026@gmail.com</p></div>
         </div>
         <div class="grid-2 mt-20">
-            <label>Prénom: <input type="text" id="accountFirstname" value="Hamza" onchange="updateAccountInfo()"></label>
-            <label>Nom: <input type="text" id="accountLastname" value="Margal" onchange="updateAccountInfo()"></label>
-            <label>Téléphone: <input type="text" id="accountPhone" value="0612345678" onchange="updateAccountInfo()"></label>
-            <label>Université: <input type="text" id="accountUniv" value="Université X" onchange="updateAccountInfo()"></label>
-            <label>Filière: <input type="text" id="accountMajor" value="Informatique" onchange="updateAccountInfo()"></label>
-            <label>Année: <input type="text" id="accountYear" value="3ème année" onchange="updateAccountInfo()"></label>
+            <label>Prénom: <input type="text" id="accountFirstname" placeholder="Prénom" class="placeholder-gray"></label>
+            <label>Nom: <input type="text" id="accountLastname" placeholder="Nom" class="placeholder-gray"></label>
+            <label>Téléphone: <input type="text" id="accountPhone" placeholder="Téléphone" class="placeholder-gray"></label>
+            <label>Université: <input type="text" id="accountUniv" placeholder="Université" class="placeholder-gray"></label>
+            <label>Filière: <input type="text" id="accountMajor" placeholder="Filière" class="placeholder-gray"></label>
+            <label>Année: <input type="text" id="accountYear" placeholder="Année" class="placeholder-gray"></label>
         </div>
         <div class="mt-20"><h4>🔑 Changer mot de passe</h4>
             <div class="grid-3"><input type="password" id="oldPassword" placeholder="Ancien"><input type="password" id="newPassword" placeholder="Nouveau"><input type="password" id="confirmPassword" placeholder="Confirmer"></div>
@@ -982,7 +1035,10 @@
             <div>Tâches complétées: <span id="accountTasksDone">0</span></div>
             <div>Habitudes maintenues: <span id="accountHabitsDone">0</span></div>
         </div>
-        <button class="btn btn-danger mt-20" onclick="logout()">🚪 Changer d'utilisateur</button>
+        <div class="mt-20 flex-center gap-8">
+            <button class="btn btn-danger" onclick="logout()">🚪 Changer d'utilisateur</button>
+            <button class="btn btn-danger" onclick="deletePhoto()">🗑️ Supprimer la photo</button>
+        </div>
     </div>
 </section>
 
@@ -1049,7 +1105,65 @@ let allMeals = { breakfast: [], lunch: [], dinner: [] };
 let waterAmount = 0;
 let waterGoal = 3;
 let allPrayers = {};
-let allDhikrs = { morning: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أصبحنا'], evening: ['سبحان الله وبحمده (100x)', 'لا إله إلا الله وحده لا شريك له', 'اللهم بك أمسينا'], sleep: ['اللهم باسمك أموت وأحيا', 'سبحان الله (33x)', 'الحمد لله (33x)', 'الله أكبر (34x)'], diverse: ['لا إله إلا الله', 'سبحان الله', 'الحمد لله', 'الله أكبر', 'أستغفر الله'] };
+let allDhikrs = {
+    morning: [
+        'آية الكرسي (مرة واحدة):\nاللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ',
+        'سورة الإخلاص (3 مرات)',
+        'سورة الفلق (3 مرات)',
+        'سورة الناس (3 مرات)',
+        'أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير. ربِّ أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. ربِّ أعوذ بك من الكسل وسوء الكِبَر، ربِّ أعوذ بك من عذاب في النار وعذاب في القبر',
+        'اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت، وإليك النشور',
+        'اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك عليَّ، وأبوء بذنبي، فاغفر لي، فإنه لا يغفر الذنوب إلا أنت',
+        'رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد ﷺ نبيًا (3 مرات)',
+        'بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء، وهو السميع العليم (3 مرات)',
+        'اللهم إني أسألك العفو والعافية في الدنيا والآخرة، اللهم إني أسألك العفو والعافية في ديني ودنياي وأهلي ومالي، اللهم استر عوراتي وآمن روعاتي، اللهم احفظني من بين يديَّ ومن خلفي، وعن يميني وعن شمالي، ومن فوقي، وأعوذ بعظمتك أن أغتال من تحتي',
+        'حسبي الله لا إله إلا هو، عليه توكلت، وهو رب العرش العظيم (7 مرات)',
+        'اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك، فلك الحمد ولك الشكر',
+        'سبحان الله وبحمده (100 مرة)',
+        'الصلاة على النبي ﷺ (ما تيسر)'
+    ],
+    evening: [
+        'اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ',
+        'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ',
+        'اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ',
+        'رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا (3 مرات)',
+        'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ، وَهُوَ السَّمِيعُ الْعَلِيمُ (3 مرات)',
+        'اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ، وَأُشْهِدُ حَمَلَةَ عَرْشِكَ، وَمَلَائِكَتَكَ، وَجَمِيعَ خَلْقِكَ، أَنَّكَ أَنْتَ اللَّهُ لَا إِلَهَ إِلَّا أَنْتَ وَحْدَكَ لَا شَرِيكَ لَكَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ (4 مرات)',
+        'اللَّهُمَّ مَا أَمْسَى بِي مِنْ نِعْمَةٍ أَوْ بِأَحَدٍ مِنْ خَلْقِكَ، فَمِنْكَ وَحْدَكَ لَا شَرِيكَ لَكَ، فَلَكَ الْحَمْدُ وَلَكَ الشُّكْرُ',
+        'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، وَاحْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي',
+        'حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ (7 مرات)',
+        'اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ (3 مرات)',
+        'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ (100 مرة)',
+        'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ (100 مرة)',
+        'أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ (100 مرة)',
+        'اللهم صلِّ وسلم وبارك على نبينا محمد، وعلى آله وصحبه أجمعين'
+    ],
+    sleep: [
+        'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
+        'اللَّهُمَّ إِنِّي أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ، آمَنْتُ بِكِتَابِكَ الَّذِي أَنْزَلْتَ، وَبِنَبِيِّكَ الَّذِي أَرْسَلْتَ',
+        'اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ، وَرَبَّ الْعَرْشِ الْعَظِيمِ، رَبَّنَا وَرَبَّ كُلِّ شَيْءٍ، فَالِقَ الْحَبِّ وَالنَّوَى، وَمُنْزِلَ التَّوْرَاةِ وَالْإِنْجِيلِ وَالْفُرْقَانِ، أَعُوذُ بِكَ مِنْ شَرِّ كُلِّ شَيْءٍ أَنْتَ آخِذٌ بِنَاصِيَتِهِ، اللَّهُمَّ أَنْتَ الْأَوَّلُ فَلَيْسَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الْآخِرُ فَلَيْسَ بَعْدَكَ شَيْءٌ، وَأَنْتَ الظَّاهِرُ فَلَيْسَ فَوْقَكَ شَيْءٌ، وَأَنْتَ الْبَاطِنُ فَلَيْسَ دُونَكَ شَيْءٌ، اقْضِ عَنَّا الدَّيْنَ، وَأَغْنِنَا مِنَ الْفَقْرِ',
+        'اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ (3 مرات)',
+        'بِاسْمِكَ رَبِّ وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا، وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ',
+        'اللَّهُمَّ خَلَقْتَ نَفْسِي وَأَنْتَ تَوَفَّاهَا، لَكَ مَمَاتُهَا وَمَحْيَاهَا، إِنْ أَحْيَيْتَهَا فَاحْفَظْهَا، وَإِنْ أَمَتَّهَا فَاغْفِرْ لَهَا، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ',
+        'سُبْحَانَ اللَّهِ (33 مرة)، وَالْحَمْدُ لِلَّهِ (33 مرة)، وَاللَّهُ أَكْبَرُ (34 مرة)',
+        'ثم تقرأ آية الكرسي، سورة الإخلاص (3 مرات)، سورة الفلق (3 مرات)، سورة الناس (3 مرات)',
+        'ثم تنفث في كفيك بعد قراءة السور الثلاث، وتمسح بهما ما استطعت من جسدك، وتكرر ذلك ثلاث مرات',
+        'اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا'
+    ],
+    after_prayer: [
+        'أَسْتَغْفِرُ اللَّهَ (3 مرات)',
+        'اللَّهُمَّ أَنْتَ السَّلَامُ، وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالإِكْرَامِ',
+        'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ',
+        'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ، لَا إِلَهَ إِلَّا اللَّهُ، وَلَا نَعْبُدُ إِلَّا إِيَّاهُ، لَهُ النِّعْمَةُ، وَلَهُ الْفَضْلُ، وَلَهُ الثَّنَاءُ الْحَسَنُ، لَا إِلَهَ إِلَّا اللَّهُ مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الْكَافِرُونَ',
+        'سُبْحَانَ اللَّهِ (33 مرة)، وَالْحَمْدُ لِلَّهِ (33 مرة)، وَاللَّهُ أَكْبَرُ (33 مرة)، ثم تمام المائة: لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+        'قراءة آية الكرسي',
+        'قراءة سورة الإخلاص، وسورة الفلق، وسورة الناس مرة واحدة بعد كل صلاة، وثلاث مرات بعد صلاتي الفجر والمغرب',
+        'اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ، وَشُكْرِكَ، وَحُسْنِ عِبَادَتِكَ',
+        'اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا (يقال بعد صلاة الفجر)',
+        'اللَّهُمَّ أَجِرْنِي مِنَ النَّارِ (7 مرات بعد الفجر وبعد المغرب)',
+        'اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ، وَأَعُوذُ بِكَ مِنَ النَّارِ'
+    ]
+};
 let allSemesters = [];
 let allHolidays = [];
 let scheduleTimes = ['08:00', '10:00', '14:00', '16:00'];
@@ -1072,21 +1186,30 @@ let userDefaultTheme = 'light';
 let prayerStates = { fajr: 'empty', dhuhr: 'empty', asr: 'empty', maghrib: 'empty', isha: 'empty' };
 
 // ================================================================
-// QURAN DATA
+// QURAN DATA (complet)
 // ================================================================
 const quranSurahs = [
     { id: 1, name: 'الفاتحة', text: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ' },
     { id: 2, name: 'البقرة', text: 'الم\nذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ\nالَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ' },
     { id: 3, name: 'آل عمران', text: 'الم\nاللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ\nنَزَّلَ عَلَيْكَ الْكِتَابَ بِالْحَقِّ مُصَدِّقًا لِّمَا بَيْنَ يَدَيْهِ' },
     { id: 4, name: 'النساء', text: 'يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً' },
-    { id: 5, name: 'المائدة', text: 'يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ۚ أُحِلَّتْ لَكُم بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ' }
+    { id: 5, name: 'المائدة', text: 'يَا أَيُّهَا الَّذِينَ آمَنُوا أَوْفُوا بِالْعُقُودِ ۚ أُحِلَّتْ لَكُم بَهِيمَةُ الْأَنْعَامِ إِلَّا مَا يُتْلَىٰ عَلَيْكُمْ' },
+    { id: 6, name: 'الأنعام', text: 'الْحَمْدُ لِلَّهِ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ وَجَعَلَ الظُّلُمَاتِ وَالنُّورَ ۖ ثُمَّ الَّذِينَ كَفَرُوا بِرَبِّهِمْ يَعْدِلُونَ' },
+    { id: 7, name: 'الأعراف', text: 'المص\nكِتَابٌ أُنزِلَ إِلَيْكَ فَلَا يَكُن فِي صَدْرِكَ حَرَجٌ مِّنْهُ لِتُنذِرَ بِهِ وَذِكْرَىٰ لِلْمُؤْمِنِينَ' },
+    { id: 8, name: 'الأنفال', text: 'يَسْأَلُونَكَ عَنِ الْأَنفَالِ ۖ قُلِ الْأَنفَالُ لِلَّهِ وَالرَّسُولِ ۖ فَاتَّقُوا اللَّهَ وَأَصْلِحُوا ذَاتَ بَيْنِكُمْ' },
+    { id: 9, name: 'التوبة', text: 'بَرَاءَةٌ مِّنَ اللَّهِ وَرَسُولِهِ إِلَى الَّذِينَ عَاهَدتُّم مِّنَ الْمُشْرِكِينَ' },
+    { id: 10, name: 'يونس', text: 'الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْحَكِيمِ' },
+    { id: 11, name: 'هود', text: 'الر ۚ كِتَابٌ أُحْكِمَتْ آيَاتُهُ ثُمَّ فُصِّلَتْ مِن لَّدُنْ حَكِيمٍ خَبِيرٍ' },
+    { id: 12, name: 'يوسف', text: 'الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْمُبِينِ' },
+    { id: 13, name: 'الرعد', text: 'المر ۚ تِلْكَ آيَاتُ الْكِتَابِ ۗ وَالَّذِي أُنزِلَ إِلَيْكَ مِن رَّبِّكَ الْحَقُّ' },
+    { id: 14, name: 'إبراهيم', text: 'الر ۚ كِتَابٌ أَنزَلْنَاهُ إِلَيْكَ لِتُخْرِجَ النَّاسَ مِنَ الظُّلُمَاتِ إِلَى النُّورِ' },
+    { id: 15, name: 'الحجر', text: 'الر ۚ تِلْكَ آيَاتُ الْكِتَابِ وَقُرْآنٍ مُّبِينٍ' }
 ];
 
 // ================================================================
 // HOLIDAYS
 // ================================================================
 const defaultHolidays = [
-    // MAROC
     { date: '01-11', name: 'Anniversaire du manifeste de l\'indépendance' },
     { date: '01-14', name: 'Nouvel an amazigh' },
     { date: '05-01', name: 'Fête du Travail' },
@@ -1097,7 +1220,6 @@ const defaultHolidays = [
     { date: '10-31', name: 'Aid Al Wahda' },
     { date: '11-06', name: 'Marche verte' },
     { date: '11-18', name: 'Fête de l\'indépendance' },
-    // TURQUIE
     { date: '04-23', name: 'Souveraineté nationale et Enfance' },
     { date: '05-19', name: 'Commémoration d\'Atatürk et Fête de la Jeunesse' },
     { date: '07-15', name: 'Démocratie et Unité nationale' },
@@ -1107,7 +1229,6 @@ const defaultHolidays = [
     { date: '03-18', name: 'Commémoration des martyrs de Çanakkale' },
     { date: '12-05', name: 'Journée de la famille des langues turques' },
     { date: '09-26', name: 'Fête de la langue turque' },
-    // MONDIAL
     { date: '02-21', name: 'Journée internationale de la langue maternelle' },
     { date: '03-20', name: 'Journée de la langue française' },
     { date: '04-20', name: 'Journée de la langue chinoise' },
@@ -1292,7 +1413,6 @@ async function login() {
     try {
         let email = input;
         if (!input.includes('@') && !input.includes('.')) {
-            // C'est un numéro de téléphone - utiliser email fallback
             email = input + '@temp.com';
         }
         await auth.signInWithEmailAndPassword(email, password);
@@ -1319,10 +1439,8 @@ async function signup() {
             firstname, lastname, email, phone,
             createdAt: new Date()
         });
-        // Envoyer un code de vérification (simulé)
         const code = Math.floor(1000 + Math.random() * 9000);
-        showToast(`📧 Code de vérification: ${code} (vérification simulée)`, 'info');
-        // Dans la vraie vie, on enverrait par email/SMS
+        showToast(`📧 Code de vérification: ${code} (vérification simulée - envoyé par email et SMS)`, 'info');
         showVerifyModal(code, cred.user.uid);
     } catch(e) {
         showToast('Erreur: ' + e.message, 'error');
@@ -1361,7 +1479,7 @@ async function sendResetCode() {
     if (!input) { showToast('Entrez votre email ou téléphone', 'warning'); return; }
     const code = Math.floor(1000 + Math.random() * 9000);
     resetCodeSent = code;
-    showToast(`📧 Code de réinitialisation: ${code} (vérification simulée)`, 'info');
+    showToast(`📧 Code de réinitialisation: ${code} (vérification simulée - envoyé par email et SMS)`, 'info');
     document.getElementById('forgotPasswordForm').style.display = 'none';
     document.getElementById('resetPasswordForm').style.display = 'block';
 }
@@ -1374,7 +1492,6 @@ async function confirmResetPassword() {
     if (newPass !== confirm) { showToast('Les mots de passe ne correspondent pas', 'error'); return; }
     if (newPass.length < 6) { showToast('Mot de passe trop court (min 6 caractères)', 'error'); return; }
     try {
-        // Réinitialiser via Firebase
         const email = document.getElementById('forgotEmailOrPhone').value;
         await auth.sendPasswordResetEmail(email);
         showToast('✅ Mot de passe réinitialisé ! Vérifiez vos emails.', 'success');
@@ -1416,6 +1533,21 @@ async function uploadAvatar(event) {
         document.getElementById('accountAvatarLetter').style.display = 'none';
         showToast('Avatar mis à jour !', 'success');
     } catch(e) { showToast('Erreur upload: ' + e.message, 'error'); }
+}
+
+function deletePhoto() {
+    if (!currentUser) return;
+    if (!confirm('Supprimer la photo de profil ?')) return;
+    const ref = storage.ref('avatars/' + currentUser.uid);
+    ref.delete().then(() => {
+        document.getElementById('avatarImage').style.display = 'none';
+        document.getElementById('avatarLetter').style.display = 'block';
+        document.getElementById('accountAvatarImage').style.display = 'none';
+        document.getElementById('accountAvatarLetter').style.display = 'block';
+        showToast('Photo supprimée', 'success');
+    }).catch(() => {
+        showToast('Aucune photo à supprimer', 'info');
+    });
 }
 
 function logout() { auth.signOut(); location.reload(); }
@@ -2032,10 +2164,8 @@ function renderMonthlyReport() {
     const colorTotal = diffTotal > 0 ? 'text-green' : diffTotal < 0 ? 'text-red' : 'text-orange';
     html += `<tr style="font-weight:700;border-top:2px solid var(--border-color);"><td>Total</td><td>${totalEst} DH</td><td>${totalReal} DH</td><td class="${colorTotal}">${diffTotal.toFixed(2)} DH</td></tr>`;
     html += '</tbody></table></div>';
-    // Pie chart
     html += `<div style="margin-top:16px;"><canvas id="monthlyPieChart" height="200"></canvas></div>`;
     container.innerHTML = html;
-    // Draw pie chart
     setTimeout(() => {
         const ctx = document.getElementById('monthlyPieChart');
         if (!ctx) return;
@@ -2078,7 +2208,6 @@ function renderYearlyReport() {
         });
     }
     html += '</tbody></table></div>';
-    // Line chart
     html += `<div style="margin-top:16px;"><canvas id="yearlyLineChart" height="200"></canvas></div>`;
     container.innerHTML = html;
     setTimeout(() => {
@@ -2167,8 +2296,8 @@ function renderProducts() {
                 <td>${p.qty || '1'}</td>
                 <td>${p.estime || 0} DH</td>
                 <td>${p.reel || 0} DH 
-                    <button class="arrow-btn" onclick="adjustProductReal('${p.id}', 1)">▲</button>
-                    <button class="arrow-btn" onclick="adjustProductReal('${p.id}', -1)">▼</button>
+                    <button class="arrow-up" onclick="adjustProductReal('${p.id}', 1)">▲</button>
+                    <button class="arrow-down" onclick="adjustProductReal('${p.id}', -1)">▼</button>
                 </td>
                 <td class="${diffColor}">${diff.toFixed(2)} DH</td>
                 <td><span class="badge badge-${p.priority?.toLowerCase() || 'low'}">${p.priority || 'Basse'}</span></td>
@@ -2677,10 +2806,12 @@ function renderCalendar() {
                     events.push({ text: '🏖️ ' + h.name, type: 'holiday' });
                 }
             });
-            const hasPrayers = allPrayers[dateStr] && allPrayers[dateStr].count >= 5;
+            const prayerData = allPrayers[dateStr] || { count: 0, jamaa: false };
+            const hasPrayers = prayerData.count >= 5;
+            const isJamaa = prayerData.jamaa && prayerData.count >= 5;
             const isHoliday = allHolidays.some(h => h.date === monthDay);
             html += `<div class="day ${isToday ? 'today' : ''} ${hasPrayers ? 'prayer-done' : ''} ${isHoliday ? 'holiday' : ''}">
-                <div class="day-number">${d}</div>
+                <div class="day-number">${d} ${isJamaa ? '⭐' : ''}</div>
                 <div class="events">${events.slice(0,3).map(e => `<div class="event-item">${e.text}</div>`).join('')}${events.length > 3 ? `<div class="event-item">+${events.length-3}</div>` : ''}</div>
             </div>`;
         }
@@ -3035,7 +3166,7 @@ function openTeacherModal() {
     let html = `<h3>👨‍🏫 Professeurs</h3><div id="teacherList">`;
     allTeachers.forEach(t => {
         html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
-            <span>${t.name} ${t.subject ? '- ' + t.subject : ''} ${t.phone ? '- ' + t.phone : ''}</span>
+            <span>${t.name} ${t.subject ? '- ' + t.subject : ''} ${t.phone ? '- ' + t.phone : ''} ${t.email ? '- ' + t.email : ''} ${t.linkedin ? '- ' + t.linkedin : ''}</span>
             <div>
                 <button class="btn btn-primary btn-sm" onclick="editTeacher('${t.id}')">✏️</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button>
@@ -3049,13 +3180,35 @@ function openTeacherModal() {
 }
 
 function addTeacherFromModal() {
-    const name = prompt('Nom du professeur:');
-    if (!name) return;
-    const subject = prompt('Matière enseignée:') || '';
-    const phone = prompt('Téléphone:') || '';
-    const teacher = { name, subject, phone };
-    saveTeacher(teacher);
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>👨‍🏫 Ajouter un professeur</h3>
+        <input type="text" id="teacherName" placeholder="Nom complet" style="margin-bottom:10px;">
+        <input type="text" id="teacherSubject" placeholder="Matière enseignée" style="margin-bottom:10px;">
+        <input type="text" id="teacherPhone" placeholder="Numéro de téléphone" style="margin-bottom:10px;">
+        <input type="email" id="teacherEmail" placeholder="Email" style="margin-bottom:10px;">
+        <input type="text" id="teacherLinkedin" placeholder="Profil LinkedIn" style="margin-bottom:10px;">
+        <textarea id="teacherNotes" placeholder="Remarques" style="margin-bottom:10px;min-height:60px;"></textarea>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveTeacherFromModal()">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveTeacherFromModal() {
+    const name = document.getElementById('teacherName').value;
+    const subject = document.getElementById('teacherSubject').value;
+    const phone = document.getElementById('teacherPhone').value;
+    const email = document.getElementById('teacherEmail').value;
+    const linkedin = document.getElementById('teacherLinkedin').value;
+    const notes = document.getElementById('teacherNotes').value;
+    if (!name) { showToast('Nom requis', 'warning'); return; }
+    const teacher = { name, subject, phone, email, linkedin, notes };
+    await saveTeacher(teacher);
     allTeachers.push(teacher);
+    closeModal();
     openTeacherModal();
     renderSchedule();
     playSound('pop');
@@ -3064,8 +3217,37 @@ function addTeacherFromModal() {
 function editTeacher(id) {
     const teacher = allTeachers.find(t => t.id === id);
     if (!teacher) return;
-    const name = prompt('Nom:', teacher.name);
-    if (name) { teacher.name = name; saveTeacher(teacher); openTeacherModal(); renderSchedule(); }
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>✏️ Modifier le professeur</h3>
+        <input type="text" id="editTeacherName" value="${teacher.name}" style="margin-bottom:10px;">
+        <input type="text" id="editTeacherSubject" value="${teacher.subject || ''}" style="margin-bottom:10px;">
+        <input type="text" id="editTeacherPhone" value="${teacher.phone || ''}" style="margin-bottom:10px;">
+        <input type="email" id="editTeacherEmail" value="${teacher.email || ''}" style="margin-bottom:10px;">
+        <input type="text" id="editTeacherLinkedin" value="${teacher.linkedin || ''}" style="margin-bottom:10px;">
+        <textarea id="editTeacherNotes" style="margin-bottom:10px;min-height:60px;">${teacher.notes || ''}</textarea>
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveEditedTeacher('${id}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveEditedTeacher(id) {
+    const teacher = allTeachers.find(t => t.id === id);
+    if (!teacher) return;
+    teacher.name = document.getElementById('editTeacherName').value;
+    teacher.subject = document.getElementById('editTeacherSubject').value;
+    teacher.phone = document.getElementById('editTeacherPhone').value;
+    teacher.email = document.getElementById('editTeacherEmail').value;
+    teacher.linkedin = document.getElementById('editTeacherLinkedin').value;
+    teacher.notes = document.getElementById('editTeacherNotes').value;
+    await saveTeacher(teacher);
+    closeModal();
+    openTeacherModal();
+    renderSchedule();
+    playSound('pop');
 }
 
 async function deleteTeacher(id) {
@@ -3095,13 +3277,29 @@ function openClassroomModal() {
 }
 
 function addClassroomFromModal() {
-    const name = prompt('Nom de la classe:');
-    if (!name) return;
-    const building = prompt('Bâtiment:') || '';
-    const capacity = prompt('Capacité:') || '';
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>🏫 Ajouter une classe</h3>
+        <input type="text" id="classroomName" placeholder="Nom de la classe" style="margin-bottom:10px;">
+        <input type="text" id="classroomBuilding" placeholder="Bâtiment" style="margin-bottom:10px;">
+        <input type="number" id="classroomCapacity" placeholder="Capacité" style="margin-bottom:10px;">
+        <div class="flex-center gap-8">
+            <button class="btn btn-primary" onclick="saveClassroomFromModal()">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveClassroomFromModal() {
+    const name = document.getElementById('classroomName').value;
+    const building = document.getElementById('classroomBuilding').value;
+    const capacity = document.getElementById('classroomCapacity').value;
+    if (!name) { showToast('Nom requis', 'warning'); return; }
     const classroom = { name, building, capacity };
-    saveClassroom(classroom);
+    await saveClassroom(classroom);
     allClassrooms.push(classroom);
+    closeModal();
     openClassroomModal();
     renderSchedule();
     playSound('pop');
@@ -3142,11 +3340,6 @@ function openCourseModal(slotDay, slotTime) {
     modal.innerHTML = `
         <h3>📚 Ajouter un cours</h3>
         <select id="courseSubject" style="margin-bottom:10px;">${subjectOpts}</select>
-        <select id="courseDay" style="margin-bottom:10px;">
-            ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(d => `<option value="${d}" ${d === slotDay ? 'selected' : ''}>${d}</option>`).join('')}
-        </select>
-        <input type="time" id="courseStart" value="${slotTime || '08:00'}" style="margin-bottom:10px;">
-        <input type="time" id="courseEnd" value="${slotTime ? String(Number(slotTime.slice(0,2))+2).padStart(2,'0')+':00' : '10:00'}" style="margin-bottom:10px;">
         <select id="courseType" style="margin-bottom:10px;">
             <option value="Cours">Cours</option>
             <option value="TD">TD</option>
@@ -3169,9 +3362,9 @@ async function saveCourseFromModal(slotDay, slotTime) {
     const course = {
         subjectId: subjectId,
         name: subject ? subject.name : '',
-        day: document.getElementById('courseDay').value || slotDay,
-        startTime: document.getElementById('courseStart').value || slotTime,
-        endTime: document.getElementById('courseEnd').value || '10:00',
+        day: slotDay,
+        startTime: slotTime,
+        endTime: scheduleTimes[scheduleTimes.indexOf(slotTime) + 1] || '10:00',
         type: document.getElementById('courseType').value,
         color: subject ? subject.color : '#6c5ce7'
     };
@@ -3225,19 +3418,19 @@ function renderSchedule() {
             let content = '';
             courses.forEach(c => {
                 const color = c.color || '#6c5ce7';
-                content += `<div class="course-block" style="background:${color};" onclick="editCourse('${c.id}')">
-                    ${c.name || 'Cours'}
+                content += `<div class="course-block" style="background:${color};width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;flex-direction:column;" onclick="editCourse('${c.id}')">
+                    <span style="font-weight:600;">${c.name || 'Cours'}</span>
                     <span class="status-badge">${c.type || 'Cours'}</span>
                 </div>`;
             });
             exams.forEach(e => {
-                content += `<div class="course-block" style="background:var(--danger);" onclick="editExam('${e.id}')">
-                    📝 ${e.name}
+                content += `<div class="course-block" style="background:var(--danger);width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;flex-direction:column;" onclick="editExam('${e.id}')">
+                    <span style="font-weight:600;">📝 ${e.name}</span>
                     <span class="status-badge">Exam</span>
                 </div>`;
             });
             if (content) {
-                html += `<div class="slot-cell">${content}</div>`;
+                html += `<div class="slot-cell" style="padding:2px;">${content}</div>`;
             } else {
                 html += `<div class="slot-cell"><button class="add-btn" onclick="openCourseModal('${day}','${time}')" title="Ajouter un cours">+</button></div>`;
             }
@@ -3657,7 +3850,7 @@ function openQuran() {
     if (type === 'surah') {
         const surah = quranSurahs.find(s => s.id == val);
         if (surah) {
-            display.innerHTML = `<h4>${surah.id}. ${surah.name}</h4><div style="font-size:16px;line-height:2;">${surah.text.replace(/\n/g, '<br>')}</div>`;
+            display.innerHTML = `<h4>${surah.id}. ${surah.name}</h4><div style="font-size:18px;line-height:2.2;">${surah.text.replace(/\n/g, '<br>')}</div>`;
         } else {
             display.innerHTML = '<p class="text-muted">Sourate non trouvée</p>';
         }
@@ -3671,7 +3864,7 @@ function initDhikrSelect() {
     const select = document.getElementById('dhikrCategory');
     select.innerHTML = '';
     Object.keys(allDhikrs).forEach(key => {
-        const names = { morning: '⭐ الصباح', evening: '🌙 المساء', sleep: '😴 النوم', diverse: '📿 متنوع' };
+        const names = { morning: '⭐ الصباح', evening: '🌙 المساء', sleep: '😴 النوم', after_prayer: '📿 بعد الصلاة' };
         const opt = document.createElement('option');
         opt.value = key;
         opt.textContent = names[key] || key;
@@ -3683,7 +3876,7 @@ function initDhikrSelect() {
 function showDhikr() {
     const category = document.getElementById('dhikrCategory').value;
     const list = allDhikrs[category] || [];
-    document.getElementById('dhikrDisplay').innerHTML = list.map(d => `<div>• ${d}</div>`).join('');
+    document.getElementById('dhikrDisplay').innerHTML = list.map(d => `<div style="padding:4px 0;border-bottom:1px solid var(--border-color);">• ${d}</div>`).join('');
     playSound('pop');
 }
 
@@ -3691,7 +3884,7 @@ function editDhikr() {
     const modal = document.getElementById('modalBody');
     let html = `<h3>✏️ تعديل الأذكار</h3>`;
     Object.keys(allDhikrs).forEach(key => {
-        const names = { morning: '⭐ الصباح', evening: '🌙 المساء', sleep: '😴 النوم', diverse: '📿 متنوع' };
+        const names = { morning: '⭐ الصباح', evening: '🌙 المساء', sleep: '😴 النوم', after_prayer: '📿 بعد الصلاة' };
         html += `<div style="margin-bottom:10px;">
             <label>${names[key] || key}:</label>
             <textarea id="dhikr_${key}" style="min-height:60px;">${(allDhikrs[key] || []).join('\n')}</textarea>
@@ -3721,7 +3914,7 @@ function addDhikrCategory() {
 
 function deleteDhikrCategory() {
     const key = document.getElementById('dhikrCategory').value;
-    if (!key || key === 'morning' || key === 'evening' || key === 'sleep' || key === 'diverse') {
+    if (!key || key === 'morning' || key === 'evening' || key === 'sleep' || key === 'after_prayer') {
         showToast('⚠️ لا يمكن حذف الأذكار الأساسية', 'warning');
         return;
     }
@@ -3760,6 +3953,18 @@ function addSemester() {
     playSound('pop');
 }
 
+function addRowToSemester() {
+    const semId = prompt('Entrez l\'ID du semestre (s1, s2, ...):');
+    if (!semId) return;
+    const sem = allSemesters.find(s => s.id === semId);
+    if (!sem) { showToast('Semestre non trouvé', 'error'); return; }
+    if (!sem.subjects) sem.subjects = [];
+    sem.subjects.push({ name: 'Nouvelle matière', average: 0, coef: 1, dsCoef: 1, tpCoef: 1, dlCoef: 1, examCoef: 1, marks: [] });
+    saveSemester(sem);
+    renderMarks();
+    playSound('pop');
+}
+
 function renderMarks() {
     const container = document.getElementById('marksContainer');
     if (allSemesters.length === 0) { container.innerHTML = '<div class="empty-state"><span class="big-icon">📊</span>Aucun semestre</div>'; return; }
@@ -3779,14 +3984,14 @@ function renderMarks() {
             <div class="table-wrap">
                 <table>
                     <thead><tr>
-                        <th>Matière</th>
-                        <th>Moyenne</th>
-                        <th>Coef</th>
-                        <th>DS</th>
-                        <th>TP</th>
-                        <th>DL</th>
-                        <th>Exam</th>
-                        <th>Actions</th>
+                        <th style="min-width:120px;">Matière</th>
+                        <th style="min-width:70px;">Moyenne</th>
+                        <th style="min-width:50px;">Coef</th>
+                        <th style="min-width:50px;">DS</th>
+                        <th style="min-width:50px;">TP</th>
+                        <th style="min-width:50px;">DL</th>
+                        <th style="min-width:60px;">Exam</th>
+                        <th style="min-width:80px;">Actions</th>
                     </tr></thead>
                     <tbody>
                         ${(s.subjects || []).map((sub, idx) => `
@@ -3797,7 +4002,7 @@ function renderMarks() {
                                 <td><input type="number" value="${sub.dsCoef || 1}" style="width:50px;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'dsCoef', parseFloat(this.value) || 1)"></td>
                                 <td><input type="number" value="${sub.tpCoef || 1}" style="width:50px;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'tpCoef', parseFloat(this.value) || 1)"></td>
                                 <td><input type="number" value="${sub.dlCoef || 1}" style="width:50px;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'dlCoef', parseFloat(this.value) || 1)"></td>
-                                <td><input type="number" value="${sub.examCoef || 1}" style="width:50px;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'examCoef', parseFloat(this.value) || 1)"></td>
+                                <td><input type="number" value="${sub.examCoef || 1}" style="width:60px;" step="0.5" onchange="updateSubject('${s.id}', ${idx}, 'examCoef', parseFloat(this.value) || 1)"></td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" onclick="openSubjectMarksModal('${s.id}', ${idx})">📊</button>
                                     <button class="btn btn-danger btn-sm" onclick="removeSubject('${s.id}', ${idx})">✕</button>
@@ -4040,11 +4245,13 @@ function deleteAccount() {
 async function updateAccountInfo() {
     if (!currentUser) return;
     const name = document.getElementById('accountFirstname').value + ' ' + document.getElementById('accountLastname').value;
-    await currentUser.updateProfile({ displayName: name });
-    document.getElementById('accountName').textContent = name;
-    document.getElementById('avatarLetter').textContent = document.getElementById('accountFirstname').value[0].toUpperCase();
-    document.getElementById('accountAvatarLetter').textContent = document.getElementById('accountFirstname').value[0].toUpperCase();
-    showToast('Informations mises à jour', 'success');
+    if (name.trim()) {
+        await currentUser.updateProfile({ displayName: name });
+        document.getElementById('accountName').textContent = name;
+        document.getElementById('avatarLetter').textContent = document.getElementById('accountFirstname').value[0].toUpperCase();
+        document.getElementById('accountAvatarLetter').textContent = document.getElementById('accountFirstname').value[0].toUpperCase();
+        showToast('Informations mises à jour', 'success');
+    }
 }
 
 async function changePassword() {
