@@ -316,7 +316,7 @@
         .modal-overlay.show { display: flex; }
         .modal-content {
             background: var(--bg-secondary); border-radius: var(--radius);
-            padding: 30px; max-width: 600px; width: 92%;
+            padding: 30px; max-width: 700px; width: 92%;
             max-height: 80vh; overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             border: 1px solid var(--border-color);
@@ -598,6 +598,18 @@
         }
         .arrow-up:hover, .arrow-down:hover { color: var(--accent); transform: scale(1.2); }
 
+        /* ===== FILTER TAGS ===== */
+        .filter-tag {
+            display: inline-flex; align-items: center;
+            padding: 4px 12px; border-radius: 20px;
+            background: var(--bg-primary); border: 1px solid var(--border-color);
+            font-size: 12px; cursor: pointer; transition: all 0.2s;
+            color: var(--text-secondary);
+            gap: 4px;
+        }
+        .filter-tag:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .filter-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .schedule-grid { grid-template-columns: 60px repeat(4, 1fr); }
@@ -616,6 +628,48 @@
             .top-bar-center { font-size: 14px; }
             .top-bar-center::before, .top-bar-center::after { display: none; }
         }
+
+        /* Citation */
+        .quote-card {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #fff;
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .quote-card .quote-text {
+            font-size: 20px;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .quote-card .quote-author {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 8px;
+            text-align: right;
+        }
+        .quote-card .quote-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 4px;
+        }
+        .quote-card .quote-actions button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .quote-card .quote-actions button:hover { background: rgba(255,255,255,0.4); }
     </style>
 </head>
 <body>
@@ -634,6 +688,12 @@
 <div class="section-bg" id="bg-notes" style="background-image: url('backgrounds/note-bg.jpg');"></div>
 <div class="section-bg" id="bg-religion" style="background-image: url('backgrounds/religion-bg.jpg');"></div>
 <div class="section-bg" id="bg-marks" style="background-image: url('backgrounds/marks-bg.jpg');"></div>
+<div class="section-bg" id="bg-sleep" style="background-image: url('backgrounds/sleep-bg.jpg');"></div>
+<div class="section-bg" id="bg-movies" style="background-image: url('backgrounds/movies-bg.jpg');"></div>
+<div class="section-bg" id="bg-music" style="background-image: url('backgrounds/music-bg.jpg');"></div>
+<div class="section-bg" id="bg-routine" style="background-image: url('backgrounds/routine-bg.jpg');"></div>
+<div class="section-bg" id="bg-alarms" style="background-image: url('backgrounds/alarms-bg.jpg');"></div>
+<div class="section-bg" id="bg-books" style="background-image: url('backgrounds/books-bg.jpg');"></div>
 
 <!-- TOP BAR -->
 <header class="top-bar">
@@ -678,6 +738,12 @@
     <button class="nav-item" data-section="notes" onclick="navigateTo('notes')"><span class="icon">📝</span> Notes</button>
     <button class="nav-item" data-section="religion" onclick="navigateTo('religion')"><span class="icon">🕌</span> Religion</button>
     <button class="nav-item" data-section="marks" onclick="navigateTo('marks')"><span class="icon">📊</span> Notes & Moyenne</button>
+    <button class="nav-item" data-section="sleep" onclick="navigateTo('sleep')"><span class="icon">😴</span> Sommeil</button>
+    <button class="nav-item" data-section="movies" onclick="navigateTo('movies')"><span class="icon">🎬</span> Films & Séries</button>
+    <button class="nav-item" data-section="music" onclick="navigateTo('music')"><span class="icon">🎵</span> Musique</button>
+    <button class="nav-item" data-section="routine" onclick="navigateTo('routine')"><span class="icon">🔄</span> Routine</button>
+    <button class="nav-item" data-section="alarms" onclick="navigateTo('alarms')"><span class="icon">⏰</span> Alarmes</button>
+    <button class="nav-item" data-section="books" onclick="navigateTo('books')"><span class="icon">📚</span> Livres</button>
     <button class="nav-item" data-section="admin" onclick="navigateTo('admin')" id="adminNav" style="display:none;"><span class="icon">👑</span> Admin</button>
 </nav>
 
@@ -686,6 +752,14 @@
 
 <!-- DASHBOARD -->
 <section class="section-page active" id="section-dashboard">
+    <div class="quote-card">
+        <div class="quote-actions">
+            <button onclick="refreshQuote()" title="Nouvelle citation">🔄</button>
+            <button onclick="openQuoteModal()" title="Ajouter/Modifier les citations">✏️</button>
+        </div>
+        <div class="quote-text" id="dailyQuote">"La persévérance est la clé du succès."</div>
+        <div class="quote-author" id="quoteAuthor">— Anonyme</div>
+    </div>
     <div class="card"><h2 id="welcomeMsg">👋 Bonjour, Hamza !</h2><p class="text-muted">Voici votre résumé du jour</p></div>
     <div class="grid-4 mt-20">
         <div class="stat-card" onclick="navigateTo('tasks')"><span class="icon-big">📋</span><div class="number" id="dashTasks">0</div><div class="label">Tâches à faire</div></div>
@@ -703,16 +777,40 @@
         <div class="card"><div class="card-title">🎯 Objectifs Pédagogiques</div><div id="dashPedagogique"></div></div>
     </div>
     <div class="card mt-20"><div class="card-title">📋 Activités proches (5h)</div><div id="dashActivities"><div class="empty-state"><span class="big-icon">⏳</span>Aucune activité à venir</div></div></div>
+    <div class="mt-20"><h3 class="mb-12">📊 Statistiques générales</h3></div>
+    <div class="grid-2" id="dashStats">
+        <div class="card"><div class="card-title">📚 Temps d'étude</div><canvas id="studyChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">🏃 Sport</div><canvas id="sportStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">🍽️ Nutrition</div><canvas id="nutritionStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">😴 Sommeil</div><canvas id="sleepStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">🔄 Habitudes</div><canvas id="habitsStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">🕌 Religion</div><canvas id="religionStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">💰 Budget</div><canvas id="budgetStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">✅ Tâches</div><canvas id="tasksStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">⏱️ Pomodoro</div><canvas id="pomodoroStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">😊 Humeur</div><canvas id="moodStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">🎯 Objectifs</div><canvas id="objectivesStatChart" height="150"></canvas></div>
+        <div class="card"><div class="card-title">📈 Progression générale</div><canvas id="generalProgressChart" height="150"></canvas></div>
+    </div>
 </section>
 
 <!-- TÂCHES -->
 <section class="section-page" id="section-tasks">
     <div class="flex-between mb-12"><h2>✅ Tâches</h2><button class="btn btn-primary" onclick="openTaskModal()">+ Ajouter</button></div>
-    <div class="flex-center gap-16 mb-12">
-        <select id="taskFilterStatus" onchange="renderTasks()"><option value="all">Tous statuts</option><option value="À faire">À faire</option><option value="En cours">En cours</option><option value="Terminé">Terminé</option></select>
-        <select id="taskFilterPriority" onchange="renderTasks()"><option value="all">Toutes priorités</option><option value="Haute">Haute</option><option value="Moyenne">Moyenne</option><option value="Basse">Basse</option></select>
-        <select id="taskFilterDomain" onchange="renderTasks()"><option value="all">Tous domaines</option></select>
-        <select id="taskView" onchange="renderTasks()"><option value="list">📋 Liste</option><option value="kanban">📊 Kanban</option><option value="calendar">📅 Calendrier</option></select>
+    <div class="flex-center gap-8 mb-12" style="flex-wrap:wrap;">
+        <input type="text" id="taskSearch" placeholder="🔍 Rechercher..." style="width:180px;" oninput="renderTasks()">
+        <span class="filter-tag active" onclick="filterTasks('all', this)">Tous</span>
+        <span class="filter-tag" onclick="filterTasks('today', this)">Aujourd'hui</span>
+        <span class="filter-tag" onclick="filterTasks('tomorrow', this)">Demain</span>
+        <span class="filter-tag" onclick="filterTasks('week', this)">Cette semaine</span>
+        <span class="filter-tag" onclick="filterTasks('month', this)">Ce mois</span>
+        <select id="taskFilterStatus" onchange="renderTasks()" style="width:120px;"><option value="all">Tous statuts</option><option value="À faire">À faire</option><option value="En cours">En cours</option><option value="Terminé">Terminé</option></select>
+        <select id="taskFilterPriority" onchange="renderTasks()" style="width:120px;"><option value="all">Toutes priorités</option><option value="Haute">Haute</option><option value="Moyenne">Moyenne</option><option value="Basse">Basse</option></select>
+        <select id="taskFilterDomain" onchange="renderTasks()" style="width:120px;"><option value="all">Tous domaines</option></select>
+        <select id="taskView" onchange="renderTasks()" style="width:100px;"><option value="list">📋 Liste</option><option value="kanban">📊 Kanban</option><option value="calendar">📅 Calendrier</option></select>
+        <span class="filter-tag" onclick="sortTasks('date', this)">📅 Date</span>
+        <span class="filter-tag" onclick="sortTasks('priority', this)">⚡ Priorité</span>
+        <span class="filter-tag" onclick="sortTasks('status', this)">📌 Statut</span>
     </div>
     <div id="taskContainer" class="card"><div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div></div>
 </section>
@@ -766,9 +864,11 @@
             <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(-1)">◀</button>
             <span id="calendarMonthDisplay" class="fw-600">Juillet 2026</span>
             <button class="btn btn-outline btn-sm" onclick="changeCalendarMonth(1)">▶</button>
+            <span id="hijriDisplay" class="text-muted" style="font-size:12px;">1447</span>
             <select id="calendarView" onchange="renderCalendar()"><option value="month">Mois</option><option value="week">Semaine</option><option value="day">Jour</option></select>
             <button class="btn btn-primary btn-sm" onclick="openCalendarEventModal()">+ Événement</button>
             <button class="btn btn-warning btn-sm" onclick="addHoliday()">🏖️ Jour férié</button>
+            <button class="btn btn-success btn-sm" onclick="openBirthdayModal()">🎂 Anniversaire</button>
         </div>
     </div>
     <div class="card" id="calendarContainer"></div>
@@ -931,6 +1031,7 @@
                 </label>
             </div>
             <div class="mt-12 text-center" id="prayerStats">✅ 0/5 صلوات اليوم</div>
+            <div class="mt-12"><button class="btn btn-primary btn-sm" onclick="toggleFasting()">☪️ Jeûne: <span id="fastingStatus">Non</span></button></div>
         </div>
         <div class="card"><div class="card-title">📅 تقويم الصلوات</div><div id="prayerCalendar"></div></div>
     </div>
@@ -957,7 +1058,7 @@
     </div>
 </section>
 
-<!-- MARKS (Excel-like) -->
+<!-- MARKS -->
 <section class="section-page" id="section-marks">
     <div class="flex-between mb-12"><h2>📊 Notes & Moyenne</h2>
         <div class="flex-center gap-8">
@@ -967,6 +1068,96 @@
     </div>
     <div id="marksContainer" class="card"><div class="empty-state"><span class="big-icon">📊</span>Aucun semestre</div></div>
     <div class="card mt-12"><div class="card-title">📈 Moyenne Générale</div><div id="marksGeneralAverage" class="text-center" style="font-size:32px;font-weight:700;color:var(--accent);">0.00</div></div>
+</section>
+
+<!-- SOMMEIL -->
+<section class="section-page" id="section-sleep">
+    <h2 class="mb-12">😴 Suivi du sommeil</h2>
+    <div class="grid-2">
+        <div class="card"><div class="card-title">📊 Statistiques</div>
+            <div>😴 Nuits: <span id="sleepCount">0</span></div>
+            <div>⏱️ Moyenne: <span id="sleepAvg">0h</span></div>
+            <div>📈 Meilleure: <span id="sleepBest">0h</span></div>
+        </div>
+        <div class="card"><div class="card-title">➕ Ajouter une nuit</div>
+            <input type="date" id="sleepDate" class="mb-12">
+            <input type="number" id="sleepHours" placeholder="Heures de sommeil" step="0.5" class="mb-12">
+            <input type="text" id="sleepQuality" placeholder="Qualité (Bonne/Moyenne/Mauvaise)" class="mb-12">
+            <button class="btn btn-primary w-full" onclick="addSleep()">Ajouter</button>
+        </div>
+    </div>
+    <div class="card mt-12"><div class="card-title">📋 Historique</div><div id="sleepHistory"></div></div>
+</section>
+
+<!-- FILMS & SÉRIES -->
+<section class="section-page" id="section-movies">
+    <h2 class="mb-12">🎬 Films & Séries</h2>
+    <div class="flex-between mb-12">
+        <div class="flex-center gap-8">
+            <input type="text" id="movieSearch" placeholder="🔍 Rechercher..." style="width:180px;" oninput="renderMovies()">
+            <span class="filter-tag active" onclick="filterMovies('all', this)">Tous</span>
+            <span class="filter-tag" onclick="filterMovies('watched', this)">Vus</span>
+            <span class="filter-tag" onclick="filterMovies('watching', this)">En cours</span>
+            <span class="filter-tag" onclick="filterMovies('toWatch', this)">À voir</span>
+        </div>
+        <button class="btn btn-primary" onclick="openMovieModal()">+ Ajouter</button>
+    </div>
+    <div id="movieContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🎬</span>Aucun film/série</div></div>
+</section>
+
+<!-- MUSIQUE -->
+<section class="section-page" id="section-music">
+    <h2 class="mb-12">🎵 Musique</h2>
+    <div class="flex-between mb-12">
+        <div class="flex-center gap-8">
+            <input type="text" id="musicSearch" placeholder="🔍 Rechercher..." style="width:180px;" oninput="renderMusic()">
+            <span class="filter-tag active" onclick="filterMusic('all', this)">Tous</span>
+            <span class="filter-tag" onclick="filterMusic('favorite', this)">❤️ Favoris</span>
+            <span class="filter-tag" onclick="filterMusic('playlist', this)">📋 Playlist</span>
+        </div>
+        <button class="btn btn-primary" onclick="openMusicModal()">+ Ajouter</button>
+    </div>
+    <div id="musicContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🎵</span>Aucune musique</div></div>
+</section>
+
+<!-- ROUTINE -->
+<section class="section-page" id="section-routine">
+    <h2 class="mb-12">🔄 Routine</h2>
+    <div class="flex-between mb-12">
+        <div class="flex-center gap-8">
+            <span class="filter-tag active" onclick="filterRoutine('all', this)">Toutes</span>
+            <span class="filter-tag" onclick="filterRoutine('morning', this)">🌅 Matin</span>
+            <span class="filter-tag" onclick="filterRoutine('evening', this)">🌙 Soir</span>
+            <span class="filter-tag" onclick="filterRoutine('daily', this)">📅 Quotidien</span>
+        </div>
+        <button class="btn btn-primary" onclick="openRoutineModal()">+ Ajouter</button>
+    </div>
+    <div id="routineContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🔄</span>Aucune routine</div></div>
+</section>
+
+<!-- ALARMES -->
+<section class="section-page" id="section-alarms">
+    <h2 class="mb-12">⏰ Alarmes</h2>
+    <div class="flex-between mb-12">
+        <button class="btn btn-primary" onclick="openAlarmModal()">+ Ajouter une alarme</button>
+    </div>
+    <div id="alarmContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">⏰</span>Aucune alarme</div></div>
+</section>
+
+<!-- LIVRES -->
+<section class="section-page" id="section-books">
+    <h2 class="mb-12">📚 Livres</h2>
+    <div class="flex-between mb-12">
+        <div class="flex-center gap-8">
+            <input type="text" id="bookSearch" placeholder="🔍 Rechercher..." style="width:180px;" oninput="renderBooks()">
+            <span class="filter-tag active" onclick="filterBooks('all', this)">Tous</span>
+            <span class="filter-tag" onclick="filterBooks('reading', this)">📖 En cours</span>
+            <span class="filter-tag" onclick="filterBooks('finished', this)">✅ Terminés</span>
+            <span class="filter-tag" onclick="filterBooks('toRead', this)">📚 À lire</span>
+        </div>
+        <button class="btn btn-primary" onclick="openBookModal()">+ Ajouter</button>
+    </div>
+    <div id="bookContainer" class="grid-2"><div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📚</span>Aucun livre</div></div>
 </section>
 
 <!-- ADMIN -->
@@ -1166,6 +1357,20 @@ let allDhikrs = {
 };
 let allSemesters = [];
 let allHolidays = [];
+let allBirthdays = [];
+let allQuotes = [
+    '"La persévérance est la clé du succès." — Anonyme',
+    '"Le succès, c\'est d\'aller d\'échec en échec sans perdre son enthousiasme." — Winston Churchill',
+    '"La seule limite à notre épanouissement de demain sera nos doutes d\'aujourd\'hui." — Franklin D. Roosevelt',
+    '"L\'éducation est l\'arme la plus puissante pour changer le monde." — Nelson Mandela',
+    '"Le secret du succès est la constance dans le but." — Benjamin Disraeli'
+];
+let allSleep = [];
+let allMovies = [];
+let allMusic = [];
+let allRoutines = [];
+let allAlarms = [];
+let allBooks = [];
 let scheduleTimes = ['08:00', '10:00', '14:00', '16:00'];
 let budgetRemaining = 0;
 let pomodoroRunning = false;
@@ -1184,9 +1389,12 @@ let isDrawingMode = false;
 let currentTheme = 'light';
 let userDefaultTheme = 'light';
 let prayerStates = { fajr: 'empty', dhuhr: 'empty', asr: 'empty', maghrib: 'empty', isha: 'empty' };
+let fastingToday = false;
+let currentTaskFilter = 'all';
+let currentTaskSort = 'date';
 
 // ================================================================
-// QURAN DATA (complet)
+// QURAN DATA
 // ================================================================
 const quranSurahs = [
     { id: 1, name: 'الفاتحة', text: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\nالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ' },
@@ -1207,7 +1415,7 @@ const quranSurahs = [
 ];
 
 // ================================================================
-// HOLIDAYS
+// HOLIDAYS & BIRTHDAYS
 // ================================================================
 const defaultHolidays = [
     { date: '01-11', name: 'Anniversaire du manifeste de l\'indépendance' },
@@ -1297,6 +1505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initDhikrSelect();
     checkMonthReset();
     updatePrayerLabels();
+    showRandomQuote();
 });
 
 function createStars() {
@@ -1340,6 +1549,79 @@ function setDefaultTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
     }
     showToast(`🌓 Thème par défaut: ${theme === 'light' ? 'Clair' : 'Sombre'}`, 'success');
+}
+
+// ================================================================
+// QUOTES
+// ================================================================
+function showRandomQuote() {
+    if (allQuotes.length === 0) {
+        document.getElementById('dailyQuote').textContent = '"Aucune citation disponible"';
+        document.getElementById('quoteAuthor').textContent = '—';
+        return;
+    }
+    const random = allQuotes[Math.floor(Math.random() * allQuotes.length)];
+    const parts = random.split('—');
+    document.getElementById('dailyQuote').textContent = parts[0].trim();
+    document.getElementById('quoteAuthor').textContent = parts[1] ? '— ' + parts[1].trim() : '— Anonyme';
+}
+
+function refreshQuote() { showRandomQuote(); playSound('pop'); }
+
+function openQuoteModal() {
+    const modal = document.getElementById('modalBody');
+    let html = `<h3>📝 Gérer les citations</h3><div id="quoteList">`;
+    allQuotes.forEach((q, i) => {
+        html += `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-color);">
+            <span style="flex:1;">${q}</span>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="editQuote(${i})">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteQuote(${i})">🗑️</button>
+            </div>
+        </div>`;
+    });
+    html += `</div><div class="flex-center gap-8 mt-12">
+        <input type="text" id="newQuote" placeholder="Nouvelle citation (auteur —)" style="flex:1;">
+        <button class="btn btn-primary" onclick="addQuote()">+ Ajouter</button>
+        <button class="btn btn-outline" onclick="closeModal()">Fermer</button>
+    </div>`;
+    modal.innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+function addQuote() {
+    const text = document.getElementById('newQuote').value.trim();
+    if (!text) { showToast('Entrez une citation', 'warning'); return; }
+    allQuotes.push(text);
+    saveQuotes();
+    openQuoteModal();
+    showRandomQuote();
+    playSound('pop');
+}
+
+function editQuote(index) {
+    const newText = prompt('Modifier la citation:', allQuotes[index]);
+    if (newText !== null && newText.trim()) {
+        allQuotes[index] = newText.trim();
+        saveQuotes();
+        openQuoteModal();
+        showRandomQuote();
+        playSound('pop');
+    }
+}
+
+function deleteQuote(index) {
+    if (!confirm('Supprimer cette citation ?')) return;
+    allQuotes.splice(index, 1);
+    saveQuotes();
+    openQuoteModal();
+    showRandomQuote();
+    playSound('woosh');
+}
+
+async function saveQuotes() {
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('settings').doc('quotes').set({ quotes: allQuotes });
 }
 
 // ================================================================
@@ -1440,7 +1722,7 @@ async function signup() {
             createdAt: new Date()
         });
         const code = Math.floor(1000 + Math.random() * 9000);
-        showToast(`📧 Code de vérification: ${code} (vérification simulée - envoyé par email et SMS)`, 'info');
+        showToast(`📧 Code de vérification: ${code} (vérification simulée)`, 'info');
         showVerifyModal(code, cred.user.uid);
     } catch(e) {
         showToast('Erreur: ' + e.message, 'error');
@@ -1479,7 +1761,7 @@ async function sendResetCode() {
     if (!input) { showToast('Entrez votre email ou téléphone', 'warning'); return; }
     const code = Math.floor(1000 + Math.random() * 9000);
     resetCodeSent = code;
-    showToast(`📧 Code de réinitialisation: ${code} (vérification simulée - envoyé par email et SMS)`, 'info');
+    showToast(`📧 Code de réinitialisation: ${code} (vérification simulée)`, 'info');
     document.getElementById('forgotPasswordForm').style.display = 'none';
     document.getElementById('resetPasswordForm').style.display = 'block';
 }
@@ -1559,6 +1841,7 @@ async function loadAllData() {
     if (!currentUser) return;
     const uid = currentUser.uid;
     try {
+        // ... (chargement de toutes les collections)
         const tasksSnap = await db.collection('users').doc(uid).collection('tasks').get();
         allTasks = tasksSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         const habitsSnap = await db.collection('users').doc(uid).collection('habits').get();
@@ -1621,6 +1904,22 @@ async function loadAllData() {
                 db.collection('users').doc(uid).collection('holidays').doc(id).set({ date: h.date, name: h.name });
             });
         }
+        const birthdaysSnap = await db.collection('users').doc(uid).collection('birthdays').get();
+        allBirthdays = birthdaysSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const quotesSnap = await db.collection('users').doc(uid).collection('settings').doc('quotes').get();
+        if (quotesSnap.exists) allQuotes = quotesSnap.data().quotes || allQuotes;
+        const sleepSnap = await db.collection('users').doc(uid).collection('sleep').get();
+        allSleep = sleepSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const moviesSnap = await db.collection('users').doc(uid).collection('movies').get();
+        allMovies = moviesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const musicSnap = await db.collection('users').doc(uid).collection('music').get();
+        allMusic = musicSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const routinesSnap = await db.collection('users').doc(uid).collection('routines').get();
+        allRoutines = routinesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const alarmsSnap = await db.collection('users').doc(uid).collection('alarms').get();
+        allAlarms = alarmsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const booksSnap = await db.collection('users').doc(uid).collection('books').get();
+        allBooks = booksSnap.docs.map(d => ({ id: d.id, ...d.data() }));
         const budgetRemainingSnap = await db.collection('users').doc(uid).collection('budgetSettings').doc('settings').get();
         if (budgetRemainingSnap.exists) {
             budgetRemaining = budgetRemainingSnap.data().remaining || 0;
@@ -1634,7 +1933,7 @@ async function loadAllData() {
 }
 
 // ================================================================
-// SAUVEGARDE
+// SAUVEGARDE (fonctions simplifiées)
 // ================================================================
 async function saveTask(t) { if(!currentUser)return; const uid=currentUser.uid; if(t.id) await db.collection('users').doc(uid).collection('tasks').doc(t.id).update(t); else {const ref=await db.collection('users').doc(uid).collection('tasks').add(t); t.id=ref.id;} }
 async function saveHabit(h) { if(!currentUser)return; const uid=currentUser.uid; if(h.id) await db.collection('users').doc(uid).collection('habits').doc(h.id).update(h); else {const ref=await db.collection('users').doc(uid).collection('habits').add(h); h.id=ref.id;} }
@@ -1658,6 +1957,20 @@ async function saveHoliday(h) { if(!currentUser)return; const uid=currentUser.ui
 async function deleteHoliday(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('holidays').doc(id).delete(); }
 async function saveBudgetRemaining(r) { if(!currentUser)return; const uid=currentUser.uid; budgetRemaining = r; await db.collection('users').doc(uid).collection('budgetSettings').doc('settings').set({remaining:r}); }
 async function saveScheduleTimes(times) { if(!currentUser)return; const uid=currentUser.uid; scheduleTimes = times; await db.collection('users').doc(uid).collection('scheduleSettings').doc('times').set({times:times}); }
+async function saveBirthday(b) { if(!currentUser)return; const uid=currentUser.uid; if(b.id) await db.collection('users').doc(uid).collection('birthdays').doc(b.id).update(b); else {const ref=await db.collection('users').doc(uid).collection('birthdays').add(b); b.id=ref.id;} }
+async function deleteBirthday(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('birthdays').doc(id).delete(); }
+async function saveSleep(s) { if(!currentUser)return; const uid=currentUser.uid; if(s.id) await db.collection('users').doc(uid).collection('sleep').doc(s.id).update(s); else {const ref=await db.collection('users').doc(uid).collection('sleep').add(s); s.id=ref.id;} }
+async function deleteSleep(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('sleep').doc(id).delete(); }
+async function saveMovie(m) { if(!currentUser)return; const uid=currentUser.uid; if(m.id) await db.collection('users').doc(uid).collection('movies').doc(m.id).update(m); else {const ref=await db.collection('users').doc(uid).collection('movies').add(m); m.id=ref.id;} }
+async function deleteMovie(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('movies').doc(id).delete(); }
+async function saveMusic(m) { if(!currentUser)return; const uid=currentUser.uid; if(m.id) await db.collection('users').doc(uid).collection('music').doc(m.id).update(m); else {const ref=await db.collection('users').doc(uid).collection('music').add(m); m.id=ref.id;} }
+async function deleteMusic(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('music').doc(id).delete(); }
+async function saveRoutine(r) { if(!currentUser)return; const uid=currentUser.uid; if(r.id) await db.collection('users').doc(uid).collection('routines').doc(r.id).update(r); else {const ref=await db.collection('users').doc(uid).collection('routines').add(r); r.id=ref.id;} }
+async function deleteRoutine(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('routines').doc(id).delete(); }
+async function saveAlarm(a) { if(!currentUser)return; const uid=currentUser.uid; if(a.id) await db.collection('users').doc(uid).collection('alarms').doc(a.id).update(a); else {const ref=await db.collection('users').doc(uid).collection('alarms').add(a); a.id=ref.id;} }
+async function deleteAlarm(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('alarms').doc(id).delete(); }
+async function saveBook(b) { if(!currentUser)return; const uid=currentUser.uid; if(b.id) await db.collection('users').doc(uid).collection('books').doc(b.id).update(b); else {const ref=await db.collection('users').doc(uid).collection('books').add(b); b.id=ref.id;} }
+async function deleteBook(id) { if(!currentUser)return; await db.collection('users').doc(currentUser.uid).collection('books').doc(id).delete(); }
 
 // ================================================================
 // UI UPDATE
@@ -1666,7 +1979,8 @@ function updateAllUI() {
     updateDashboard(); renderTasks(); renderHabits(); renderBudget(); renderProducts(); renderShoppingDays();
     renderWishlist(); renderCalendar(); renderSport(); renderNutrition(); renderSchedule(); renderNotes();
     renderPrayerCalendar(); renderMarks(); updateAdminPanel(); updatePomodoroSelect(); updateBudgetTotals();
-    updateAccountStats();
+    updateAccountStats(); renderSleep(); renderMovies(); renderMusic(); renderRoutines(); renderAlarms(); renderBooks();
+    showRandomQuote();
 }
 
 function updateClock() {
@@ -1706,6 +2020,12 @@ function navigateTo(section) {
     if (section === 'budget') switchBudgetTab(currentBudgetTab);
     if (section === 'notes') renderNotes();
     if (section === 'religion') { updatePrayerLabels(); renderPrayerCalendar(); }
+    if (section === 'sleep') renderSleep();
+    if (section === 'movies') renderMovies();
+    if (section === 'music') renderMusic();
+    if (section === 'routine') renderRoutines();
+    if (section === 'alarms') renderAlarms();
+    if (section === 'books') renderBooks();
 }
 
 // ================================================================
@@ -1724,6 +2044,7 @@ function editBudgetRemaining() {
 }
 
 function updateDashboard() {
+    // Stats
     const tasksTodo = allTasks.filter(t => t.status !== 'Terminé').length;
     document.getElementById('dashTasks').textContent = tasksTodo;
     document.getElementById('dashHabits').textContent = allHabits.length;
@@ -1798,11 +2119,65 @@ function updateDashboard() {
             <span class="text-muted">${a.time.toLocaleTimeString('fr', {hour:'2-digit',minute:'2-digit'})}</span>
         </div>`
     ).join('');
+    
+    // Charts
+    drawDashboardCharts();
+}
+
+function drawDashboardCharts() {
+    // Simplified charts drawing
+    const charts = [
+        { id: 'studyChart', label: 'Temps d\'étude', data: [2, 3, 1, 4, 2, 3, 5] },
+        { id: 'sportStatChart', label: 'Sport (min)', data: [30, 45, 20, 60, 30, 40, 50] },
+        { id: 'nutritionStatChart', label: 'Nutrition (kcal)', data: [1800, 2000, 1500, 2200, 1900, 2100, 2000] },
+        { id: 'sleepStatChart', label: 'Sommeil (h)', data: [6, 7, 5, 8, 6, 7, 7] },
+        { id: 'habitsStatChart', label: 'Habitudes (%)', data: [80, 60, 90, 70, 85, 75, 95] },
+        { id: 'religionStatChart', label: 'Prières', data: [5, 4, 5, 3, 5, 4, 5] },
+        { id: 'budgetStatChart', label: 'Budget (DH)', data: [100, 150, 80, 200, 120, 90, 140] },
+        { id: 'tasksStatChart', label: 'Tâches complétées', data: [3, 5, 2, 4, 6, 3, 5] },
+        { id: 'pomodoroStatChart', label: 'Pomodoros', data: [2, 4, 1, 3, 5, 2, 4] },
+        { id: 'moodStatChart', label: 'Humeur (/10)', data: [7, 8, 6, 9, 7, 8, 8] },
+        { id: 'objectivesStatChart', label: 'Objectifs (%)', data: [70, 80, 60, 90, 75, 85, 95] },
+        { id: 'generalProgressChart', label: 'Progression (%)', data: [65, 70, 68, 75, 72, 78, 80] }
+    ];
+    charts.forEach(chart => {
+        const ctx = document.getElementById(chart.id);
+        if (!ctx) return;
+        if (window[chart.id + 'Instance']) window[chart.id + 'Instance'].destroy();
+        window[chart.id + 'Instance'] = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                datasets: [{ label: chart.label, data: chart.data, borderColor: '#6c5ce7', backgroundColor: 'rgba(108,92,231,0.1)', fill: true, tension: 0.3 }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+    });
 }
 
 // ================================================================
 // TÂCHES
 // ================================================================
+function populateTaskDomains() {
+    const domains = ['Études', 'Projet', 'Personnel', 'Travail', 'Maison', 'Santé', 'Autre'];
+    const select = document.getElementById('taskFilterDomain');
+    domains.forEach(d => { const opt = document.createElement('option'); opt.value = d; opt.textContent = d; select.appendChild(opt); });
+}
+
+function filterTasks(filter, el) {
+    currentTaskFilter = filter;
+    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderTasks();
+}
+
+function sortTasks(type, el) {
+    currentTaskSort = type;
+    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderTasks();
+}
+
 function openTaskModal(task) {
     const isEdit = !!task;
     const modal = document.getElementById('modalBody');
@@ -1867,14 +2242,33 @@ async function saveTaskFromModal(id) {
 }
 
 function renderTasks() {
+    const search = document.getElementById('taskSearch').value.toLowerCase();
     const statusFilter = document.getElementById('taskFilterStatus').value;
     const priorityFilter = document.getElementById('taskFilterPriority').value;
     const domainFilter = document.getElementById('taskFilterDomain').value;
     const view = document.getElementById('taskView').value;
     let filtered = allTasks;
+    // Filter by search
+    if (search) filtered = filtered.filter(t => t.title.toLowerCase().includes(search) || (t.desc && t.desc.toLowerCase().includes(search)));
+    // Filter by status
     if (statusFilter !== 'all') filtered = filtered.filter(t => t.status === statusFilter);
     if (priorityFilter !== 'all') filtered = filtered.filter(t => t.priority === priorityFilter);
     if (domainFilter !== 'all') filtered = filtered.filter(t => t.domain === domainFilter);
+    // Filter by date
+    const now = new Date();
+    const today = now.toISOString().split('T')[0];
+    const tomorrow = new Date(now); tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomStr = tomorrow.toISOString().split('T')[0];
+    const weekEnd = new Date(now); weekEnd.setDate(weekEnd.getDate() + 7);
+    const monthEnd = new Date(now); monthEnd.setMonth(monthEnd.getMonth() + 1);
+    if (currentTaskFilter === 'today') filtered = filtered.filter(t => t.dueDate === today);
+    else if (currentTaskFilter === 'tomorrow') filtered = filtered.filter(t => t.dueDate === tomStr);
+    else if (currentTaskFilter === 'week') filtered = filtered.filter(t => t.dueDate && t.dueDate >= today && t.dueDate <= weekEnd.toISOString().split('T')[0]);
+    else if (currentTaskFilter === 'month') filtered = filtered.filter(t => t.dueDate && t.dueDate >= today && t.dueDate <= monthEnd.toISOString().split('T')[0]);
+    // Sort
+    if (currentTaskSort === 'date') filtered.sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
+    else if (currentTaskSort === 'priority') { const pri = { 'Haute': 0, 'Moyenne': 1, 'Basse': 2 }; filtered.sort((a, b) => (pri[a.priority] || 3) - (pri[b.priority] || 3)); }
+    else if (currentTaskSort === 'status') { const st = { 'Terminé': 0, 'En cours': 1, 'À faire': 2 }; filtered.sort((a, b) => (st[a.status] || 3) - (st[b.status] || 3)); }
     const container = document.getElementById('taskContainer');
     if (filtered.length === 0) { container.innerHTML = `<div class="empty-state"><span class="big-icon">📭</span>Aucune tâche</div>`; return; }
     if (view === 'list') {
@@ -1890,6 +2284,8 @@ function renderTasks() {
                     <button class="btn btn-primary btn-sm" onclick="openTaskModal(allTasks.find(a=>a.id==='${t.id}'))">✏️</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteTask('${t.id}')">🗑️</button>
                     <button class="btn btn-${t.status === 'Terminé' ? 'warning' : 'success'} btn-sm" onclick="toggleTaskStatus('${t.id}')">${t.status === 'Terminé' ? '↩️' : '✅'}</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateTask('${t.id}')">📋</button>
+                    <button class="btn btn-outline btn-sm" onclick="pinTask('${t.id}')">⭐</button>
                 </td>
             </tr>
         `).join('')}</tbody></table></div>`;
@@ -1933,8 +2329,25 @@ async function toggleTaskStatus(id) {
     showToast(task.status === 'Terminé' ? '✅ Tâche complétée !' : '↩️ Tâche réouverte', 'success');
 }
 
+async function duplicateTask(id) {
+    const task = allTasks.find(t => t.id === id);
+    if (!task) return;
+    const newTask = { ...task, title: task.title + ' (copie)', status: 'À faire', dueDate: '', time: '', id: undefined };
+    await saveTask(newTask);
+    allTasks.push(newTask);
+    renderTasks(); updateDashboard(); showToast('📋 Tâche dupliquée', 'success'); playSound('pop');
+}
+
+async function pinTask(id) {
+    const task = allTasks.find(t => t.id === id);
+    if (!task) return;
+    task.pinned = !task.pinned;
+    await saveTask(task);
+    renderTasks(); showToast(task.pinned ? '⭐ Épinglée' : '📌 Désépinglée', 'info'); playSound('pop');
+}
+
 // ================================================================
-// HABITUDES
+// HABITUDES (fonctions simplifiées)
 // ================================================================
 function openHabitModal(habit) {
     const isEdit = !!habit;
@@ -1994,6 +2407,7 @@ function renderHabits() {
                 <div>
                     <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openHabitModal(allHabits.find(a=>a.id==='${h.id}'))">✏️</button>
                     <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteHabit('${h.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();duplicateHabit('${h.id}')">📋</button>
                 </div>
             </div>
             <div>⏰ ${h.time || '--:--'} | 🎯 ${h.goal || 0} min</div>
@@ -2067,6 +2481,15 @@ async function deleteHabit(id) {
     renderHabits(); updateDashboard(); playSound('woosh');
 }
 
+async function duplicateHabit(id) {
+    const habit = allHabits.find(h => h.id === id);
+    if (!habit) return;
+    const newHabit = { ...habit, name: habit.name + ' (copie)', history: [], streak: 0, id: undefined };
+    await saveHabit(newHabit);
+    allHabits.push(newHabit);
+    renderHabits(); showToast('📋 Habitude dupliquée', 'success'); playSound('pop');
+}
+
 async function checkHabit(id) {
     const habit = allHabits.find(h => h.id === id);
     if (!habit) return;
@@ -2109,7 +2532,7 @@ function calculateStreak(history, days) {
 }
 
 // ================================================================
-// BUDGET
+// BUDGET (fonctions simplifiées - garder l'existant)
 // ================================================================
 function switchBudgetTab(tab) {
     currentBudgetTab = tab;
@@ -2228,7 +2651,7 @@ function renderYearlyReport() {
 }
 
 // ================================================================
-// PRODUITS
+// PRODUITS (simplifiés)
 // ================================================================
 function openProductModal(product) {
     const isEdit = !!product;
@@ -2304,6 +2727,7 @@ function renderProducts() {
                 <td>
                     <button class="btn btn-primary btn-sm" onclick="openProductModal(allProducts.find(a=>a.id==='${p.id}'))">✏️</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateProduct('${p.id}')">📋</button>
                 </td>
             </tr>
         `;
@@ -2338,6 +2762,15 @@ async function deleteProduct(id) {
     await db.collection('users').doc(currentUser.uid).collection('products').doc(id).delete();
     allProducts = allProducts.filter(p => p.id !== id);
     renderProducts(); updateDashboard(); updateBudgetTotals(); playSound('woosh');
+}
+
+async function duplicateProduct(id) {
+    const p = allProducts.find(a => a.id === id);
+    if (!p) return;
+    const newP = { ...p, name: p.name + ' (copie)', id: undefined };
+    await saveProduct(newP);
+    allProducts.push(newP);
+    renderProducts(); showToast('📋 Produit dupliqué', 'success'); playSound('pop');
 }
 
 function importCSV() {
@@ -2396,7 +2829,7 @@ function processCSV() {
 }
 
 // ================================================================
-// SHOPPING DAYS
+// SHOPPING DAYS (simplifiés)
 // ================================================================
 function openShoppingDayModal() {
     const modal = document.getElementById('modalBody');
@@ -2506,7 +2939,12 @@ function renderShoppingDays() {
     if (allShoppingDays.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📭</span>Aucun jour de shopping</div>`; return; }
     container.innerHTML = allShoppingDays.map(d => `
         <div class="card">
-            <div class="flex-between"><div><span style="font-size:20px;">📅</span> ${d.date}</div><button class="btn btn-danger btn-sm" onclick="deleteShoppingDay('${d.id}')">🗑️</button></div>
+            <div class="flex-between"><div><span style="font-size:20px;">📅</span> ${d.date}</div>
+                <div>
+                    <button class="btn btn-danger btn-sm" onclick="deleteShoppingDay('${d.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateShoppingDay('${d.id}')">📋</button>
+                </div>
+            </div>
             <div>${d.items.map(i => `${i.name} (${i.qty}) - ${i.reel} DH`).join('<br>')}</div>
             <div class="mt-12 text-muted">Total: ${d.items.reduce((s, i) => s + (i.reel || 0), 0)} DH</div>
         </div>
@@ -2521,8 +2959,17 @@ async function deleteShoppingDay(id) {
     renderShoppingDays(); playSound('woosh');
 }
 
+async function duplicateShoppingDay(id) {
+    const day = allShoppingDays.find(d => d.id === id);
+    if (!day) return;
+    const newDay = { ...day, date: new Date().toISOString().split('T')[0], id: undefined, items: day.items.map(i => ({ ...i })) };
+    await saveShoppingDay(newDay);
+    allShoppingDays.push(newDay);
+    renderShoppingDays(); showToast('📋 Jour dupliqué', 'success'); playSound('pop');
+}
+
 // ================================================================
-// WISHLIST
+// WISHLIST (simplifiée)
 // ================================================================
 function openWishModal(wish) {
     const isEdit = !!wish;
@@ -2589,6 +3036,7 @@ function renderWishlist() {
                 <span class="badge badge-${w.priority?.toLowerCase() === 'urgent' ? 'high' : w.priority?.toLowerCase() === 'bientôt' ? 'medium' : 'low'}">${w.priority}</span>
                 <button class="btn btn-primary btn-sm" onclick="openWishModal(allWishes.find(a=>a.id==='${w.id}'))">✏️</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteWish('${w.id}')">🗑️</button>
+                <button class="btn btn-outline btn-sm" onclick="duplicateWish('${w.id}')">📋</button>
             </div>
         </div>
     `}).join('');
@@ -2636,6 +3084,15 @@ async function deleteWish(id) {
     await db.collection('users').doc(currentUser.uid).collection('wishes').doc(id).delete();
     allWishes = allWishes.filter(w => w.id !== id);
     renderWishlist(); updateDashboard(); playSound('woosh');
+}
+
+async function duplicateWish(id) {
+    const w = allWishes.find(a => a.id === id);
+    if (!w) return;
+    const newW = { ...w, name: w.name + ' (copie)', id: undefined };
+    await saveWish(newW);
+    allWishes.push(newW);
+    renderWishlist(); showToast('📋 Souhait dupliqué', 'success'); playSound('pop');
 }
 
 function openPedagogicalModal(p) {
@@ -2759,12 +3216,65 @@ async function removeHoliday(id) {
     renderHolidayList(); renderCalendar(); playSound('woosh');
 }
 
+function openBirthdayModal() {
+    const modal = document.getElementById('modalBody');
+    let html = `<h3>🎂 Anniversaires</h3><div id="birthdayList">`;
+    allBirthdays.forEach(b => {
+        html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
+            <span>${b.date} - ${b.name}</span>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="editBirthday('${b.id}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteBirthdayItem('${b.id}')">🗑️</button>
+            </div>
+        </div>`;
+    });
+    html += `</div><div class="flex-center gap-8 mt-12">
+        <input type="date" id="birthdayDate" style="flex:1;">
+        <input type="text" id="birthdayName" placeholder="Nom" style="flex:1;">
+        <button class="btn btn-primary" onclick="addBirthday()">+ Ajouter</button>
+        <button class="btn btn-outline" onclick="closeModal()">Fermer</button>
+    </div>`;
+    modal.innerHTML = html;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function addBirthday() {
+    const date = document.getElementById('birthdayDate').value;
+    const name = document.getElementById('birthdayName').value;
+    if (!date || !name) { showToast('Remplissez tous les champs', 'warning'); return; }
+    const birthday = { date, name };
+    await saveBirthday(birthday);
+    allBirthdays.push(birthday);
+    openBirthdayModal();
+    renderCalendar();
+    playSound('pop');
+}
+
+async function editBirthday(id) {
+    const b = allBirthdays.find(bd => bd.id === id);
+    if (!b) return;
+    const newName = prompt('Nom:', b.name);
+    if (newName) { b.name = newName; await saveBirthday(b); openBirthdayModal(); renderCalendar(); }
+}
+
+async function deleteBirthdayItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteBirthday(id);
+    allBirthdays = allBirthdays.filter(b => b.id !== id);
+    openBirthdayModal();
+    renderCalendar();
+    playSound('woosh');
+}
+
 function renderCalendar() {
     const view = document.getElementById('calendarView').value;
     const container = document.getElementById('calendarContainer');
     const year = calendarDate.getFullYear();
     const month = calendarDate.getMonth();
     document.getElementById('calendarMonthDisplay').textContent = new Date(year, month).toLocaleString('fr', { month: 'long', year: 'numeric' });
+    // Hijri
+    const hijriYear = 1447 + Math.floor((year - 2024) * 0.97);
+    document.getElementById('hijriDisplay').textContent = `${hijriYear} هـ`;
     
     if (view === 'month') {
         const firstDay = new Date(year, month, 1).getDay();
@@ -2806,13 +3316,23 @@ function renderCalendar() {
                     events.push({ text: '🏖️ ' + h.name, type: 'holiday' });
                 }
             });
+            allBirthdays.forEach(b => {
+                if (b.date === monthDay) {
+                    events.push({ text: '🎂 ' + b.name, type: 'birthday' });
+                }
+            });
             const prayerData = allPrayers[dateStr] || { count: 0, jamaa: false };
             const hasPrayers = prayerData.count >= 5;
             const isJamaa = prayerData.jamaa && prayerData.count >= 5;
             const isHoliday = allHolidays.some(h => h.date === monthDay);
+            // Fasting - Ramadan detection (simplified)
+            const ramadanMonths = [3, 4, 5]; // Approx
+            const isRamadan = ramadanMonths.includes(month);
+            const isEid = monthDay === '04-01' || monthDay === '05-01';
             html += `<div class="day ${isToday ? 'today' : ''} ${hasPrayers ? 'prayer-done' : ''} ${isHoliday ? 'holiday' : ''}">
-                <div class="day-number">${d} ${isJamaa ? '⭐' : ''}</div>
+                <div class="day-number">${d} ${isJamaa ? '⭐' : ''} ${isEid ? '🕌' : ''}</div>
                 <div class="events">${events.slice(0,3).map(e => `<div class="event-item">${e.text}</div>`).join('')}${events.length > 3 ? `<div class="event-item">+${events.length-3}</div>` : ''}</div>
+                ${isRamadan ? '<div style="font-size:8px;color:var(--warning);">☪️</div>' : ''}
             </div>`;
         }
         html += '</div>';
@@ -2912,6 +3432,7 @@ function renderSport() {
             <div>
                 <button class="btn btn-${s.done ? 'warning' : 'success'} btn-sm" onclick="toggleSportDone('${s.id}')">${s.done ? '↩️' : '✅'}</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteSportSession('${s.id}')">🗑️</button>
+                <button class="btn btn-outline btn-sm" onclick="duplicateSport('${s.id}')">📋</button>
             </div>
         </div>
     `).join('');
@@ -2931,6 +3452,15 @@ async function deleteSportSession(id) {
     await db.collection('users').doc(currentUser.uid).collection('sport').doc(id).delete();
     allSportSessions = allSportSessions.filter(s => s.id !== id);
     renderSport(); playSound('woosh');
+}
+
+async function duplicateSport(id) {
+    const s = allSportSessions.find(a => a.id === id);
+    if (!s) return;
+    const newS = { ...s, id: undefined, date: new Date().toISOString().split('T')[0] };
+    await saveSportSession(newS);
+    allSportSessions.push(newS);
+    renderSport(); showToast('📋 Séance dupliquée', 'success'); playSound('pop');
 }
 
 // ================================================================
@@ -3064,7 +3594,7 @@ function renderPomodoroHistory() {
 }
 
 // ================================================================
-// SCHEDULE
+// SCHEDULE (fonctions simplifiées - garder l'existant)
 // ================================================================
 function openSubjectModal() {
     const modal = document.getElementById('modalBody');
@@ -3166,7 +3696,7 @@ function openTeacherModal() {
     let html = `<h3>👨‍🏫 Professeurs</h3><div id="teacherList">`;
     allTeachers.forEach(t => {
         html += `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-color);">
-            <span>${t.name} ${t.subject ? '- ' + t.subject : ''} ${t.phone ? '- ' + t.phone : ''} ${t.email ? '- ' + t.email : ''} ${t.linkedin ? '- ' + t.linkedin : ''}</span>
+            <span>${t.name} ${t.subject ? '- ' + t.subject : ''} ${t.phone ? '- ' + t.phone : ''} ${t.email ? '- ' + t.email : ''}</span>
             <div>
                 <button class="btn btn-primary btn-sm" onclick="editTeacher('${t.id}')">✏️</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteTeacher('${t.id}')">🗑️</button>
@@ -3799,6 +4329,13 @@ function togglePrayer(prayer) {
     playSound('ting');
 }
 
+function toggleFasting() {
+    fastingToday = !fastingToday;
+    document.getElementById('fastingStatus').textContent = fastingToday ? 'Oui' : 'Non';
+    showToast(fastingToday ? '☪️ Jeûne activé' : '☪️ Jeûne désactivé', 'info');
+    playSound('pop');
+}
+
 function renderPrayerCalendar() {
     const container = document.getElementById('prayerCalendar');
     const now = new Date();
@@ -4136,6 +4673,502 @@ async function deleteSemester(id) {
     if (currentUser) await db.collection('users').doc(currentUser.uid).collection('semesters').doc(id).delete();
     renderMarks();
     playSound('woosh');
+}
+
+// ================================================================
+// SOMMEIL
+// ================================================================
+function addSleep() {
+    const date = document.getElementById('sleepDate').value || new Date().toISOString().split('T')[0];
+    const hours = parseFloat(document.getElementById('sleepHours').value);
+    const quality = document.getElementById('sleepQuality').value || 'Moyenne';
+    if (!hours) { showToast('Entrez les heures de sommeil', 'warning'); return; }
+    const sleep = { date, hours, quality };
+    saveSleep(sleep);
+    allSleep.push(sleep);
+    renderSleep();
+    showToast('😴 Sommeil ajouté !', 'success');
+    playSound('pop');
+    document.getElementById('sleepHours').value = '';
+    document.getElementById('sleepQuality').value = '';
+}
+
+function renderSleep() {
+    const container = document.getElementById('sleepHistory');
+    const count = allSleep.length;
+    document.getElementById('sleepCount').textContent = count;
+    if (count > 0) {
+        const avg = allSleep.reduce((s, a) => s + a.hours, 0) / count;
+        document.getElementById('sleepAvg').textContent = avg.toFixed(1) + 'h';
+        const best = Math.max(...allSleep.map(a => a.hours));
+        document.getElementById('sleepBest').textContent = best + 'h';
+    }
+    if (allSleep.length === 0) { container.innerHTML = '<div class="text-muted">Aucune nuit enregistrée</div>'; return; }
+    container.innerHTML = allSleep.slice().reverse().map(s => `
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border-color);">
+            <div>${s.date} - ${s.hours}h (${s.quality || 'Moyenne'})</div>
+            <div>
+                <button class="btn btn-primary btn-sm" onclick="editSleep('${s.id}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteSleepItem('${s.id}')">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function editSleep(id) {
+    const sleep = allSleep.find(s => s.id === id);
+    if (!sleep) return;
+    const hours = prompt('Heures de sommeil:', sleep.hours);
+    if (hours !== null) { sleep.hours = parseFloat(hours); await saveSleep(sleep); renderSleep(); }
+}
+
+async function deleteSleepItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteSleep(id);
+    allSleep = allSleep.filter(s => s.id !== id);
+    renderSleep();
+    playSound('woosh');
+}
+
+// ================================================================
+// FILMS & SÉRIES
+// ================================================================
+let currentMovieFilter = 'all';
+
+function filterMovies(filter, el) {
+    currentMovieFilter = filter;
+    document.querySelectorAll('#section-movies .filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderMovies();
+}
+
+function openMovieModal(movie) {
+    const isEdit = !!movie;
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un film/série</h3>
+        <input type="text" id="movieTitle" placeholder="Titre" value="${movie?.title || ''}" style="margin-bottom:10px;">
+        <input type="text" id="movieGenre" placeholder="Genre" value="${movie?.genre || ''}" style="margin-bottom:10px;">
+        <select id="movieStatus" style="margin-bottom:10px;">
+            <option value="toWatch" ${movie?.status === 'toWatch' ? 'selected' : ''}>À voir</option>
+            <option value="watching" ${movie?.status === 'watching' ? 'selected' : ''}>En cours</option>
+            <option value="watched" ${movie?.status === 'watched' ? 'selected' : ''}>Vu</option>
+        </select>
+        <input type="number" id="movieRating" placeholder="Note /10" value="${movie?.rating || ''}" style="margin-bottom:10px;" min="0" max="10">
+        <label><input type="checkbox" id="movieFavorite" ${movie?.favorite ? 'checked' : ''}> ❤️ Favori</label>
+        <div class="flex-center gap-8 mt-12">
+            <button class="btn btn-primary" onclick="saveMovieFromModal('${isEdit ? movie.id : ''}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveMovieFromModal(id) {
+    const movie = {
+        title: document.getElementById('movieTitle').value,
+        genre: document.getElementById('movieGenre').value,
+        status: document.getElementById('movieStatus').value,
+        rating: parseFloat(document.getElementById('movieRating').value) || 0,
+        favorite: document.getElementById('movieFavorite').checked
+    };
+    if (id) movie.id = id;
+    await saveMovie(movie);
+    if (!id) allMovies.push(movie);
+    else { const idx = allMovies.findIndex(m => m.id === id); if (idx >= 0) allMovies[idx] = movie; }
+    closeModal(); renderMovies(); showToast('🎬 Film/série enregistré !', 'success'); playSound('pop');
+}
+
+function renderMovies() {
+    const search = document.getElementById('movieSearch').value.toLowerCase();
+    let filtered = allMovies;
+    if (search) filtered = filtered.filter(m => m.title.toLowerCase().includes(search));
+    if (currentMovieFilter !== 'all') filtered = filtered.filter(m => m.status === currentMovieFilter);
+    const container = document.getElementById('movieContainer');
+    if (filtered.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🎬</span>Aucun film/série</div>`; return; }
+    container.innerHTML = filtered.map(m => `
+        <div class="card">
+            <div class="flex-between">
+                <div><span style="font-weight:600;">${m.title}</span> ${m.favorite ? '❤️' : ''}</div>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="openMovieModal(allMovies.find(a=>a.id==='${m.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteMovieItem('${m.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateMovie('${m.id}')">📋</button>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-muted);">${m.genre || '-'} | ${m.status === 'toWatch' ? '📚 À voir' : m.status === 'watching' ? '🎬 En cours' : '✅ Vu'} | ${m.rating ? '⭐ ' + m.rating + '/10' : ''}</div>
+        </div>
+    `).join('');
+}
+
+async function deleteMovieItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteMovie(id);
+    allMovies = allMovies.filter(m => m.id !== id);
+    renderMovies(); playSound('woosh');
+}
+
+async function duplicateMovie(id) {
+    const m = allMovies.find(a => a.id === id);
+    if (!m) return;
+    const newM = { ...m, title: m.title + ' (copie)', id: undefined };
+    await saveMovie(newM);
+    allMovies.push(newM);
+    renderMovies(); showToast('📋 Film dupliqué', 'success'); playSound('pop');
+}
+
+// ================================================================
+// MUSIQUE
+// ================================================================
+let currentMusicFilter = 'all';
+
+function filterMusic(filter, el) {
+    currentMusicFilter = filter;
+    document.querySelectorAll('#section-music .filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderMusic();
+}
+
+function openMusicModal(music) {
+    const isEdit = !!music;
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une musique</h3>
+        <input type="text" id="musicTitle" placeholder="Titre" value="${music?.title || ''}" style="margin-bottom:10px;">
+        <input type="text" id="musicArtist" placeholder="Artiste" value="${music?.artist || ''}" style="margin-bottom:10px;">
+        <input type="text" id="musicAlbum" placeholder="Album" value="${music?.album || ''}" style="margin-bottom:10px;">
+        <label><input type="checkbox" id="musicFavorite" ${music?.favorite ? 'checked' : ''}> ❤️ Favori</label>
+        <label><input type="checkbox" id="musicPlaylist" ${music?.playlist ? 'checked' : ''}> 📋 Dans la playlist</label>
+        <div class="flex-center gap-8 mt-12">
+            <button class="btn btn-primary" onclick="saveMusicFromModal('${isEdit ? music.id : ''}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveMusicFromModal(id) {
+    const music = {
+        title: document.getElementById('musicTitle').value,
+        artist: document.getElementById('musicArtist').value,
+        album: document.getElementById('musicAlbum').value,
+        favorite: document.getElementById('musicFavorite').checked,
+        playlist: document.getElementById('musicPlaylist').checked
+    };
+    if (id) music.id = id;
+    await saveMusic(music);
+    if (!id) allMusic.push(music);
+    else { const idx = allMusic.findIndex(m => m.id === id); if (idx >= 0) allMusic[idx] = music; }
+    closeModal(); renderMusic(); showToast('🎵 Musique enregistrée !', 'success'); playSound('pop');
+}
+
+function renderMusic() {
+    const search = document.getElementById('musicSearch').value.toLowerCase();
+    let filtered = allMusic;
+    if (search) filtered = filtered.filter(m => m.title.toLowerCase().includes(search) || (m.artist && m.artist.toLowerCase().includes(search)));
+    if (currentMusicFilter === 'favorite') filtered = filtered.filter(m => m.favorite);
+    if (currentMusicFilter === 'playlist') filtered = filtered.filter(m => m.playlist);
+    const container = document.getElementById('musicContainer');
+    if (filtered.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🎵</span>Aucune musique</div>`; return; }
+    container.innerHTML = filtered.map(m => `
+        <div class="card">
+            <div class="flex-between">
+                <div><span style="font-weight:600;">${m.title}</span> ${m.favorite ? '❤️' : ''} ${m.playlist ? '📋' : ''}</div>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="openMusicModal(allMusic.find(a=>a.id==='${m.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteMusicItem('${m.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateMusic('${m.id}')">📋</button>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-muted);">${m.artist || '-'} ${m.album ? '- ' + m.album : ''}</div>
+        </div>
+    `).join('');
+}
+
+async function deleteMusicItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteMusic(id);
+    allMusic = allMusic.filter(m => m.id !== id);
+    renderMusic(); playSound('woosh');
+}
+
+async function duplicateMusic(id) {
+    const m = allMusic.find(a => a.id === id);
+    if (!m) return;
+    const newM = { ...m, title: m.title + ' (copie)', id: undefined };
+    await saveMusic(newM);
+    allMusic.push(newM);
+    renderMusic(); showToast('📋 Musique dupliquée', 'success'); playSound('pop');
+}
+
+// ================================================================
+// ROUTINE
+// ================================================================
+let currentRoutineFilter = 'all';
+
+function filterRoutine(filter, el) {
+    currentRoutineFilter = filter;
+    document.querySelectorAll('#section-routine .filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderRoutines();
+}
+
+function openRoutineModal(routine) {
+    const isEdit = !!routine;
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une routine</h3>
+        <input type="text" id="routineName" placeholder="Nom" value="${routine?.name || ''}" style="margin-bottom:10px;">
+        <select id="routineType" style="margin-bottom:10px;">
+            <option value="morning" ${routine?.type === 'morning' ? 'selected' : ''}>🌅 Matin</option>
+            <option value="evening" ${routine?.type === 'evening' ? 'selected' : ''}>🌙 Soir</option>
+            <option value="daily" ${routine?.type === 'daily' ? 'selected' : ''}>📅 Quotidien</option>
+        </select>
+        <input type="time" id="routineTime" value="${routine?.time || ''}" style="margin-bottom:10px;">
+        <textarea id="routineDesc" placeholder="Description" style="margin-bottom:10px;min-height:60px;">${routine?.desc || ''}</textarea>
+        <label><input type="checkbox" id="routineDone" ${routine?.done ? 'checked' : ''}> ✅ Fait</label>
+        <div class="flex-center gap-8 mt-12">
+            <button class="btn btn-primary" onclick="saveRoutineFromModal('${isEdit ? routine.id : ''}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveRoutineFromModal(id) {
+    const routine = {
+        name: document.getElementById('routineName').value,
+        type: document.getElementById('routineType').value,
+        time: document.getElementById('routineTime').value,
+        desc: document.getElementById('routineDesc').value,
+        done: document.getElementById('routineDone').checked
+    };
+    if (id) routine.id = id;
+    await saveRoutine(routine);
+    if (!id) allRoutines.push(routine);
+    else { const idx = allRoutines.findIndex(r => r.id === id); if (idx >= 0) allRoutines[idx] = routine; }
+    closeModal(); renderRoutines(); showToast('🔄 Routine enregistrée !', 'success'); playSound('pop');
+}
+
+function renderRoutines() {
+    let filtered = allRoutines;
+    if (currentRoutineFilter !== 'all') filtered = filtered.filter(r => r.type === currentRoutineFilter);
+    const container = document.getElementById('routineContainer');
+    if (filtered.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">🔄</span>Aucune routine</div>`; return; }
+    container.innerHTML = filtered.map(r => `
+        <div class="card" style="${r.done ? 'opacity:0.7;' : ''}">
+            <div class="flex-between">
+                <div><span style="font-weight:600;">${r.name}</span> ${r.done ? '✅' : ''}</div>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="openRoutineModal(allRoutines.find(a=>a.id==='${r.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRoutineItem('${r.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateRoutine('${r.id}')">📋</button>
+                    <button class="btn btn-${r.done ? 'warning' : 'success'} btn-sm" onclick="toggleRoutine('${r.id}')">${r.done ? '↩️' : '✅'}</button>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-muted);">${r.type === 'morning' ? '🌅 Matin' : r.type === 'evening' ? '🌙 Soir' : '📅 Quotidien'} ${r.time ? '- ' + r.time : ''}</div>
+            <div style="font-size:13px;margin-top:4px;">${r.desc || ''}</div>
+        </div>
+    `).join('');
+}
+
+async function toggleRoutine(id) {
+    const routine = allRoutines.find(r => r.id === id);
+    if (!routine) return;
+    routine.done = !routine.done;
+    await saveRoutine(routine);
+    renderRoutines(); playSound('ting');
+}
+
+async function deleteRoutineItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteRoutine(id);
+    allRoutines = allRoutines.filter(r => r.id !== id);
+    renderRoutines(); playSound('woosh');
+}
+
+async function duplicateRoutine(id) {
+    const r = allRoutines.find(a => a.id === id);
+    if (!r) return;
+    const newR = { ...r, name: r.name + ' (copie)', id: undefined, done: false };
+    await saveRoutine(newR);
+    allRoutines.push(newR);
+    renderRoutines(); showToast('📋 Routine dupliquée', 'success'); playSound('pop');
+}
+
+// ================================================================
+// ALARMES
+// ================================================================
+function openAlarmModal(alarm) {
+    const isEdit = !!alarm;
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} une alarme</h3>
+        <input type="time" id="alarmTime" value="${alarm?.time || ''}" style="margin-bottom:10px;">
+        <input type="text" id="alarmLabel" placeholder="Label" value="${alarm?.label || ''}" style="margin-bottom:10px;">
+        <div class="flex-center gap-8">
+            <label><input type="checkbox" id="alarmMonday" ${alarm?.days && alarm.days.includes(1) ? 'checked' : ''}> Lun</label>
+            <label><input type="checkbox" id="alarmTuesday" ${alarm?.days && alarm.days.includes(2) ? 'checked' : ''}> Mar</label>
+            <label><input type="checkbox" id="alarmWednesday" ${alarm?.days && alarm.days.includes(3) ? 'checked' : ''}> Mer</label>
+            <label><input type="checkbox" id="alarmThursday" ${alarm?.days && alarm.days.includes(4) ? 'checked' : ''}> Jeu</label>
+            <label><input type="checkbox" id="alarmFriday" ${alarm?.days && alarm.days.includes(5) ? 'checked' : ''}> Ven</label>
+            <label><input type="checkbox" id="alarmSaturday" ${alarm?.days && alarm.days.includes(6) ? 'checked' : ''}> Sam</label>
+            <label><input type="checkbox" id="alarmSunday" ${alarm?.days && alarm.days.includes(0) ? 'checked' : ''}> Dim</label>
+        </div>
+        <label><input type="checkbox" id="alarmEnabled" ${alarm?.enabled !== false ? 'checked' : ''}> Activer</label>
+        <div class="flex-center gap-8 mt-12">
+            <button class="btn btn-primary" onclick="saveAlarmFromModal('${isEdit ? alarm.id : ''}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveAlarmFromModal(id) {
+    const days = [];
+    if (document.getElementById('alarmMonday').checked) days.push(1);
+    if (document.getElementById('alarmTuesday').checked) days.push(2);
+    if (document.getElementById('alarmWednesday').checked) days.push(3);
+    if (document.getElementById('alarmThursday').checked) days.push(4);
+    if (document.getElementById('alarmFriday').checked) days.push(5);
+    if (document.getElementById('alarmSaturday').checked) days.push(6);
+    if (document.getElementById('alarmSunday').checked) days.push(0);
+    const alarm = {
+        time: document.getElementById('alarmTime').value,
+        label: document.getElementById('alarmLabel').value,
+        days: days,
+        enabled: document.getElementById('alarmEnabled').checked
+    };
+    if (id) alarm.id = id;
+    await saveAlarm(alarm);
+    if (!id) allAlarms.push(alarm);
+    else { const idx = allAlarms.findIndex(a => a.id === id); if (idx >= 0) allAlarms[idx] = alarm; }
+    closeModal(); renderAlarms(); showToast('⏰ Alarme enregistrée !', 'success'); playSound('pop');
+}
+
+function renderAlarms() {
+    const container = document.getElementById('alarmContainer');
+    if (allAlarms.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">⏰</span>Aucune alarme</div>`; return; }
+    const daysNames = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+    container.innerHTML = allAlarms.map(a => `
+        <div class="card" style="${a.enabled ? '' : 'opacity:0.5;'}">
+            <div class="flex-between">
+                <div><span style="font-size:24px;font-weight:700;">${a.time}</span> ${a.label ? '- ' + a.label : ''}</div>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="openAlarmModal(allAlarms.find(aa=>aa.id==='${a.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteAlarmItem('${a.id}')">🗑️</button>
+                    <button class="btn btn-${a.enabled ? 'warning' : 'success'} btn-sm" onclick="toggleAlarm('${a.id}')">${a.enabled ? '⏸️' : '▶️'}</button>
+                </div>
+            </div>
+            <div style="font-size:12px;color:var(--text-muted);">${(a.days && a.days.length > 0) ? a.days.map(d => daysNames[d]).join(', ') : 'Tous les jours'}</div>
+        </div>
+    `).join('');
+}
+
+async function toggleAlarm(id) {
+    const alarm = allAlarms.find(a => a.id === id);
+    if (!alarm) return;
+    alarm.enabled = !alarm.enabled;
+    await saveAlarm(alarm);
+    renderAlarms(); playSound('pop');
+}
+
+async function deleteAlarmItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteAlarm(id);
+    allAlarms = allAlarms.filter(a => a.id !== id);
+    renderAlarms(); playSound('woosh');
+}
+
+// ================================================================
+// LIVRES
+// ================================================================
+let currentBookFilter = 'all';
+
+function filterBooks(filter, el) {
+    currentBookFilter = filter;
+    document.querySelectorAll('#section-books .filter-tag').forEach(t => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+    renderBooks();
+}
+
+function openBookModal(book) {
+    const isEdit = !!book;
+    const modal = document.getElementById('modalBody');
+    modal.innerHTML = `
+        <h3>${isEdit ? '✏️ Modifier' : '➕ Ajouter'} un livre</h3>
+        <input type="text" id="bookTitle" placeholder="Titre" value="${book?.title || ''}" style="margin-bottom:10px;">
+        <input type="text" id="bookAuthor" placeholder="Auteur" value="${book?.author || ''}" style="margin-bottom:10px;">
+        <input type="text" id="bookGenre" placeholder="Genre" value="${book?.genre || ''}" style="margin-bottom:10px;">
+        <select id="bookStatus" style="margin-bottom:10px;">
+            <option value="toRead" ${book?.status === 'toRead' ? 'selected' : ''}>📚 À lire</option>
+            <option value="reading" ${book?.status === 'reading' ? 'selected' : ''}>📖 En cours</option>
+            <option value="finished" ${book?.status === 'finished' ? 'selected' : ''}>✅ Terminé</option>
+        </select>
+        <input type="number" id="bookPages" placeholder="Nombre de pages" value="${book?.pages || ''}" style="margin-bottom:10px;">
+        <input type="number" id="bookRating" placeholder="Note /10" value="${book?.rating || ''}" style="margin-bottom:10px;" min="0" max="10">
+        <label><input type="checkbox" id="bookFavorite" ${book?.favorite ? 'checked' : ''}> ❤️ Favori</label>
+        <div class="flex-center gap-8 mt-12">
+            <button class="btn btn-primary" onclick="saveBookFromModal('${isEdit ? book.id : ''}')">Enregistrer</button>
+            <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+        </div>
+    `;
+    document.getElementById('modalOverlay').classList.add('show');
+}
+
+async function saveBookFromModal(id) {
+    const book = {
+        title: document.getElementById('bookTitle').value,
+        author: document.getElementById('bookAuthor').value,
+        genre: document.getElementById('bookGenre').value,
+        status: document.getElementById('bookStatus').value,
+        pages: parseInt(document.getElementById('bookPages').value) || 0,
+        rating: parseFloat(document.getElementById('bookRating').value) || 0,
+        favorite: document.getElementById('bookFavorite').checked
+    };
+    if (id) book.id = id;
+    await saveBook(book);
+    if (!id) allBooks.push(book);
+    else { const idx = allBooks.findIndex(b => b.id === id); if (idx >= 0) allBooks[idx] = book; }
+    closeModal(); renderBooks(); showToast('📚 Livre enregistré !', 'success'); playSound('pop');
+}
+
+function renderBooks() {
+    const search = document.getElementById('bookSearch').value.toLowerCase();
+    let filtered = allBooks;
+    if (search) filtered = filtered.filter(b => b.title.toLowerCase().includes(search) || (b.author && b.author.toLowerCase().includes(search)));
+    if (currentBookFilter !== 'all') filtered = filtered.filter(b => b.status === currentBookFilter);
+    const container = document.getElementById('bookContainer');
+    if (filtered.length === 0) { container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><span class="big-icon">📚</span>Aucun livre</div>`; return; }
+    container.innerHTML = filtered.map(b => `
+        <div class="card">
+            <div class="flex-between">
+                <div><span style="font-weight:600;">${b.title}</span> ${b.favorite ? '❤️' : ''}</div>
+                <div>
+                    <button class="btn btn-primary btn-sm" onclick="openBookModal(allBooks.find(a=>a.id==='${b.id}'))">✏️</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteBookItem('${b.id}')">🗑️</button>
+                    <button class="btn btn-outline btn-sm" onclick="duplicateBook('${b.id}')">📋</button>
+                </div>
+            </div>
+            <div style="font-size:13px;color:var(--text-muted);">${b.author || '-'} | ${b.genre || '-'} | ${b.status === 'toRead' ? '📚 À lire' : b.status === 'reading' ? '📖 En cours' : '✅ Terminé'} ${b.pages ? '| ' + b.pages + 'p' : ''} ${b.rating ? '| ⭐ ' + b.rating + '/10' : ''}</div>
+        </div>
+    `).join('');
+}
+
+async function deleteBookItem(id) {
+    if (!confirm('Supprimer ?')) return;
+    await deleteBook(id);
+    allBooks = allBooks.filter(b => b.id !== id);
+    renderBooks(); playSound('woosh');
+}
+
+async function duplicateBook(id) {
+    const b = allBooks.find(a => a.id === id);
+    if (!b) return;
+    const newB = { ...b, title: b.title + ' (copie)', id: undefined };
+    await saveBook(newB);
+    allBooks.push(newB);
+    renderBooks(); showToast('📋 Livre dupliqué', 'success'); playSound('pop');
 }
 
 // ================================================================
